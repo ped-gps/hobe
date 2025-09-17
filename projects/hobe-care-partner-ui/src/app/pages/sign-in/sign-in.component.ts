@@ -69,7 +69,7 @@ export class SignInComponent implements OnInit {
 			
 			const credentials: Credentials = {
 				...this.form.getRawValue(),
-				appType: AppType.RECEPTIONIST
+				appType: AppType.PARTNER
 			}
 
 			await this._authenticationService.token(credentials);
