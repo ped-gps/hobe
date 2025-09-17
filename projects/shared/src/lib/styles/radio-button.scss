@@ -1,19 +1,22 @@
-p-radiobutton {
-    .p-radiobutton {
+.p-radiobutton {
+	&:not(.p-radiobutton-checked) {
+		.p-radiobutton-icon {
+			display: none !important;
+		}
+	}
 
-        &:not(.p-radiobutton-checked) {
-            .p-radiobutton-icon {
-                display: none !important;
-            }
-        }
+	&.p-radiobutton-checked {
+		.p-radiobutton-box {
+			border: 1px solid #cecece;
+		}
+	}
 
-        .p-radiobutton-box {
-            background: var(--color-white) !important;
-            border: 1px solid #CECECE;
-        }
+	.p-radiobutton-box {
+		background: var(--color-white) !important;
+		border: 1px solid #cecece;
+	}
 
-        .p-radiobutton-icon {
-            background: var(--color-blue) !important;
-        }
-    }
+	.p-radiobutton-icon {
+		background: var(--color-blue) !important;
+	}
 }

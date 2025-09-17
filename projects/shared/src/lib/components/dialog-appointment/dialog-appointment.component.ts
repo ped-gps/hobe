@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -12,6 +12,7 @@ import { SelectModule } from 'primeng/select';
 
 import { AlertType } from '../../enums/alert-type';
 import { AppointmentSituation } from '../../enums/appointment-situation';
+import { UserProfile } from '../../enums/user-profile';
 import { Appointment } from '../../models/appointments';
 import { Client } from '../../models/client';
 import { HealthProfessional } from '../../models/health-professional';
@@ -69,6 +70,7 @@ export class DialogAppointmentComponent implements OnInit {
 		private readonly _alertService: AlertService,
 		private readonly _appointmentService: AppointmentService,
 		private readonly _authenticationService: AuthenticationService,
+		private readonly _changeDetector: ChangeDetectorRef,
 		private readonly _dialogConfig: DynamicDialogConfig,
 		private readonly _dialogRef: DynamicDialogRef,
 		private readonly _dialogService: DialogService,
@@ -99,6 +101,7 @@ export class DialogAppointmentComponent implements OnInit {
 
 		await this._fetchData();
 		this._buildForm();
+		this._changeDetector.detectChanges();
 	}
 
 	getErrorMessage(form: FormGroup | FormArray, controlName: string) {
@@ -137,6 +140,7 @@ export class DialogAppointmentComponent implements OnInit {
 				const { client } = result;
 				this.form.get('client')?.patchValue(client);
 				this.selectedClient = client;
+				this._changeDetector.detectChanges();
 			}
 		});
 	}
@@ -170,6 +174,7 @@ export class DialogAppointmentComponent implements OnInit {
 				
 				this.form.get('value')?.patchValue(procedure.value);
 				this.selectedProcedure = result.procedure;
+				this._changeDetector.detectChanges();
 			}
 		});
 	}
@@ -267,8 +272,16 @@ export class DialogAppointmentComponent implements OnInit {
 	}
 
 	private async _fetchData() {
-		this.partner = await this._authenticationService.retrieveUser();
+		const user = await this._authenticationService.retrieveUser();
 		
+		if (user.profile === UserProfile.PARTNER) {
+			this.partner = user;
+		}
+
+		if (user.profile === UserProfile.RECEPTIONIST) {
+			this.partner = user.partner;
+		}
+
 		const medicalInsurancesPage = await this._medicalInsuranceService.search(-1, -1, 'name', 'asc', {
 			partnerId: this.partner.id
 		});
@@ -277,5 +290,7 @@ export class DialogAppointmentComponent implements OnInit {
 			label: medicalInsurance.name,
 			value: medicalInsurance
 		}));
+
+		this._changeDetector.detectChanges();
 	}
 }

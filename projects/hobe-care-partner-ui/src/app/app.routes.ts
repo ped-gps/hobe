@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authenticationGuard, Route, LayoutComponent } from '@hobe/shared';
+import { authenticationGuard, Route } from '@hobe/shared';
 
 export const routes: Routes = [
     {

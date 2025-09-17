@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -61,6 +61,7 @@ export class DialogProcedureSelectionComponent implements OnInit {
 
 	constructor(
 		private readonly _alertService: AlertService,
+		private readonly _changeDetector: ChangeDetectorRef,
 		private readonly _dialogConfig: DynamicDialogConfig,
 		private readonly _dialogRef: DynamicDialogRef,
 		private readonly _procedureService: ProcedureService,
@@ -167,6 +168,7 @@ export class DialogProcedureSelectionComponent implements OnInit {
                     type: 'PROCEDURE',
                 }));
                 this.totalElements = proceduresPage.page.totalElements;
+
 			}
 
 			if (this.selectedProcedureSource === ProcedureSource.MARKETPLACE) {
@@ -192,6 +194,7 @@ export class DialogProcedureSelectionComponent implements OnInit {
 			}
 		} finally {
 			this.isLoading = false;
+			this._changeDetector.detectChanges();
 		}
 	}
 }

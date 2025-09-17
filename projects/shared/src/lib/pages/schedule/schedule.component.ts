@@ -9,16 +9,18 @@ import { ButtonModule } from 'primeng/button';
 import { DialogService } from 'primeng/dynamicdialog';
 import { SelectModule } from 'primeng/select';
 
-import {
-    Appointment,
-    AppointmentService,
-    AppointmentSituationUtils,
-    AuthenticationService,
-    DateUtils,
-    DialogAppointmentComponent,
-    HealthProfessional,
-    HealthProfessionalService,
-    Partner
+import { UserProfile } from '../../enums/user-profile';
+
+import { 
+    Appointment, 
+    AppointmentService, 
+    AppointmentSituationUtils, 
+    AuthenticationService, 
+    DateUtils, 
+    DialogAppointmentComponent, 
+    HealthProfessional, 
+    HealthProfessionalService, 
+    Partner 
 } from '@hobe/shared';
 
 @Component({
@@ -136,8 +138,16 @@ export class ScheduleComponent implements OnInit {
     }
 
     private async _fetchData() {
-        this.partner = await this._authenticationService.retrieveUser();
+        const user = await this._authenticationService.retrieveUser();
         
+        if (user.profile === UserProfile.PARTNER) {
+            this.partner = user;
+        }
+
+        if (user.profile === UserProfile.RECEPTIONIST) {
+            this.partner = user.partner;
+        }
+
         const { content, page } = await this._healthProfessionalService.search(-1, -1, 'name', 'asc', { 
             partnerId: this.partner.id
         });
@@ -146,6 +156,8 @@ export class ScheduleComponent implements OnInit {
             label: healthProfessional.name,
             value: healthProfessional
         }));
+
+        this._changeDetector.detectChanges();
 
         if (page.totalElements > 0) {
             this.selectedHealthProfessional = content[0];

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -48,6 +48,7 @@ export class DialogClientSelectionComponent implements OnInit {
 
 	constructor(
 		private readonly _alertService: AlertService,
+		private readonly _changeDetector: ChangeDetectorRef,
 		private readonly _clientService: ClientService,
 		private readonly _dialogRef: DynamicDialogRef,
 	) {}
@@ -104,6 +105,7 @@ export class DialogClientSelectionComponent implements OnInit {
 
 			this.clients = clientsPage.content;
 			this.totalElements = clientsPage.page.totalElements;
+			this._changeDetector.detectChanges();
 		} finally {
 			this.isLoading = false;
 		}

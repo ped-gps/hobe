@@ -6,14 +6,14 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 
-import {
+import { 
 	AppType,
-	AuthenticationService,
-	Credentials,
-	FormUtils,
-	HintComponent,
+	AuthenticationService, 
+	Credentials, 
+	FormUtils, 
+	HintComponent, 
 	OperatorUtils,
-	Route
+	Route 
 } from '@hobe/shared';
 
 @Component({
@@ -92,7 +92,7 @@ export class SignInComponent implements OnInit {
 		this._authenticationService.getAuthentication().subscribe(() => {
 
 			if (this._authenticationService.isAuthenticated()) {
-				this._router.navigate([Route.DASHBOARD]);
+				this._router.navigate([Route.SCHEDULE]);
 			}
 		});
 	}
