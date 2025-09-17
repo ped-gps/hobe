@@ -1,0 +1,14 @@
+.hint {
+    padding-left: 16px;
+
+    small {
+
+        &.error {
+            color: var(--color-red);
+        }
+
+        &:not(.error) {
+            color: var(--color-white);
+        }
+    }
+}

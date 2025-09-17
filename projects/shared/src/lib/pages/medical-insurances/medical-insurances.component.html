@@ -1,0 +1,130 @@
+<div id="medical-insurances">
+    <header>
+        <div class="title">
+            <h1>Convênios</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="filters-actions">
+            <div class="filters">
+                <div class="filter">
+                    <div class="input name">
+                        <p-iconfield>
+                            <input
+                                pInputText
+                                type="text"
+                                placeholder="Pesquisar"
+                                [(ngModel)]="textFilter"
+                                (input)="onInputChange()"
+                            />
+                            <p-inputicon styleClass="pi pi-search" />
+                        </p-iconfield>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <div class="action">
+                    <p-button 
+                        label="Adicionar convênio"
+                        class="button-blue-white button-icon-end"
+                        (onClick)="onAddMedicalInsurance()"
+                    >
+                        <span class="material-symbols-rounded">add</span>
+                    </p-button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table">
+            <p-table
+                [value]="medicalInsurances"
+                [rows]="size"
+                [totalRecords]="totalElements"
+                [lazy]="true"
+                [paginator]="true"
+                [scrollable]="true"
+                [loading]="isLoading"
+                [first]="page * size"
+                [sortField]="'name'"
+                (onPage)="onPageChange($event)"
+                (onSort)="onSortChange($event)"
+            >
+                <ng-template #header>
+                    <tr>
+                        <th
+                            pSortableColumn="name"
+                            style="width: 45%; text-align: center"
+                        >
+                            Nome <p-sortIcon field="name" />
+                        </th>
+                        <th
+                            pSortableColumn="phone"
+                            style="width: 20%; text-align: center"
+                        >
+                            Telefone <p-sortIcon field="phone" />
+                        </th>
+
+                        <th
+                            pSortableColumn="code"
+                            style="width: 25%; text-align: center"
+                        >
+                            Código <p-sortIcon field="code" />
+                        </th>
+                        <th style="width: 10%; text-align: center">Ações</th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-medicalInsurance>
+                    <tr class="procedure">
+                        <td style="text-align: left">
+                            <span class="procedure-name">{{
+                                medicalInsurance.name
+                            }}</span>
+                        </td>
+                        <td style="text-align: center">
+                            <span class="procedure-code">{{
+                                medicalInsurance.phone | phone
+                            }}</span>
+                        </td>
+                        <td style="text-align: center">
+                            <span class="procedure-value">{{
+                                medicalInsurance.code
+                            }}</span>
+                        </td>
+                        <td style="text-align: center">
+                            <p-button
+                                class="button-transparent-gray button-icon"
+                                [rounded]="true"
+                                [text]="true"
+                                [loading]="isSubmitting"
+                                (onClick)="
+                                    selectedMedicalInsurance = medicalInsurance;
+                                    medicalInsuranceMenu.toggle($event)
+                                "
+                            >
+                                <span class="material-symbols-rounded">
+                                    more_vert
+                                </span>
+                            </p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template #emptymessage>
+                    <tr>
+                        <td colspan="4" style="text-align: center">
+                            Nenhum registro encontrado
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </main>
+</div>
+
+<p-menu
+    #medicalInsuranceMenu
+    appendTo="body"
+    [popup]="true"
+    [model]="medicalInsuranceMenuOptions"
+/>

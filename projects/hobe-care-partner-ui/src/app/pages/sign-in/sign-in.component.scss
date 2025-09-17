@@ -1,0 +1,95 @@
+#sign-in {
+    background-image: url("/backgrounds/sign-in.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+
+    main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+
+        .card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .form {
+                background-color: var(--color-blue);
+                border-top-left-radius: 20px;
+                border-bottom-left-radius: 20px;
+                height: 600px;
+                padding: 64px 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 400px;
+
+                form {
+                    width: 100%;
+
+                    .logo {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .greetings {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        
+                        .label {
+                            color: var(--color-yellow);
+                            font-size: 32px;
+                            font-weight: 600;
+                        }
+
+                        .description {
+                            color: var(--color-white);
+                            font-size: 14px;
+                            font-weight: 400;
+                        }
+                    }
+
+                    .forgot-password {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+
+                        .label {
+                            cursor: pointer;
+                            color: var(--color-yellow);
+                            font-size: 14px;
+                            font-weight: 400;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+
+            .banner {
+                background-color: #e7d9ce;
+                border-top-right-radius: 20px;
+                border-bottom-right-radius: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 600px;
+            }
+        }
+    }
+}
+
+::ng-deep {
+    #sign-in {
+        .form {
+            label {
+                color: var(--color-white);
+            }
+        }
+    }
+}

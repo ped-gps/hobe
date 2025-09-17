@@ -1,0 +1,41 @@
+<div id="toolbar">
+    <div class="content">
+        <div class="buttons">
+            <p-button
+                class="button-icon button-transparent-gray"
+                [rounded]="true"
+                [text]="true"
+            >
+                <span class="material-symbols-rounded"> notifications </span>
+            </p-button>
+        </div>
+
+        <div class="user" *ngIf="user" (click)="userMenu.toggle($event)">
+            <div class="picture">
+                @if (user.picture) {
+                    <img [src]="user.picture.path" alt="User Picture" />
+                } @else {
+                    <span class="material-symbols-rounded"> person </span>
+                }
+            </div>
+
+            <div class="name">
+                <span>{{ user.name }}</span>
+            </div>
+
+            <div class="icon">
+                <span class="material-symbols-rounded">
+                    keyboard_arrow_down
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Menu -->
+<p-menu 
+    #userMenu 
+    appendTo="body"
+    [model]="userMenuItems" 
+    [popup]="true" 
+/>

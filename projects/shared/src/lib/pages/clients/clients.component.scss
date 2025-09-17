@@ -1,0 +1,51 @@
+#clients {
+    header {
+        margin-bottom: 24px;
+
+        .title h1 {
+            color: var(--color-black);
+            font-size: 24px;
+            font-weight: 600;
+        }
+    }
+
+    main {
+
+        .filters-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 24px;
+            margin-bottom: 24px;
+
+            .filters {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                gap: 24px;
+
+                .filter {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: 8px;
+
+                    .input {
+                        &.name {
+                            width: 350px;
+                        }
+                        &.source {
+                            width: 200px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .table {
+            .procedure span {
+                color: #89959A !important;
+            }
+        }
+    }
+}

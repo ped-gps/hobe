@@ -1,0 +1,184 @@
+<div id="dashboard">
+    <header>
+        <div class="title">
+            <h1>Dashboard</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="filters">
+            <div class="filter">
+                <div class="label">
+                    <span>Profissional</span>
+                </div>
+
+                <div class="input professional">
+                    <p-select
+                        [options]="healthProfessionalOptions"
+                        placeholder="Selecione"
+                        [(ngModel)]="selectedHealthProfessional"
+                        (onChange)="onHealthProfessionalChange()"
+                    />
+                </div>
+            </div>
+            <div class="filter">
+                <div class="label">
+                    <span>Período</span>
+                </div>
+
+                <div class="input period">
+                    <p-datepicker
+                        appendTo="body"
+                        placeholder="Selecione"
+                        dateFormat="dd/mm/yy"
+                        selectionMode="range"
+                        [(ngModel)]="selectedPeriod"
+                        (onSelect)="onPeriodChange()"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="statistics">
+            <div class="content">
+                <div class="statistic">
+                    <div class="value">
+                        <span>{{ appointmentStatistics ? appointmentStatistics.pending : 0 }}</span>
+                    </div>
+
+                    <div class="label">
+                        <span>Pacientes Agendados</span>
+                    </div>
+                </div>
+
+                <p-divider layout="vertical" />
+
+                <div class="statistic">
+                    <div class="value">
+                        <span>{{ appointmentStatistics ? appointmentStatistics.waiting : 0 }}</span>
+                    </div>
+
+                    <div class="label">
+                        <span>Pacientes Confirmados</span>
+                    </div>
+                </div>
+
+                <p-divider layout="vertical" />
+
+                <div class="statistic">
+                    <div class="value">
+                        <span>{{ appointmentStatistics ? appointmentStatistics.concluded : 0 }}</span>
+                    </div>
+
+                    <div class="label">
+                        <span>Pacientes Atendidos</span>
+                    </div>
+                </div>
+
+                <p-divider layout="vertical" />
+
+                <div class="statistic">
+                    <div class="value">
+                        <span>{{ appointmentStatistics ? appointmentStatistics.absent : 0 }}</span>
+                    </div>
+
+                    <div class="label">
+                        <span>Pacientes Faltaram</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-overview">
+            <div class="title">
+                <div class="label">
+                    <h4>Atendimentos no período</h4>
+                </div>
+            </div>
+
+            <div class="data">
+                <div class="chart-container">
+                    <p-chart
+                        type="line"
+                        class="chart"
+                        width="100%" 
+                        height="100%"
+                        [data]="chartData"
+                        [options]="chartOptions"
+                    />
+                </div>
+
+                <div class="statistic">
+                    <div class="label">
+                        <span>Tempo médio de atendimento</span>
+                    </div>
+
+                    <div class="icon">
+                        <span class="material-symbols-rounded"> alarm </span>
+                    </div>
+
+                    <div class="value">
+                        <span>
+                            {{ (medicalAppointmentOverview ? medicalAppointmentOverview.averageAttendanceDurationMinutes : 0) + ' min' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="title">
+                <div class="label">
+                    <h4>Extrato dos atendimentos</h4>
+                </div>
+
+                <div class="link" 
+                    [routerLink]="[`/${Route.MEDICAL_APPOINTMENTS_EXTRACT}`, ]"
+                    [queryParams]="{professional: selectedHealthProfessional ? selectedHealthProfessional.id : ''}"    
+                >
+                    <span>Ver mais</span>
+                </div>
+            </div>
+
+            <div class="table">
+                <p-table
+                    [value]="medicalAppointments"
+                >
+                    <ng-template #header>
+                        <tr>
+                            <th style="width: 15%; text-align: center;">Data</th>
+                            <th style="width: 30%; text-align: center;">Paciente</th>
+                            <th style="width: 30%; text-align: center;">Procedimento</th>
+                            <th style="width: 10%; text-align: center;">Valor</th>
+                            <th style="width: 10%; text-align: center;">Repasse</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-medicalAppointment>
+                        <tr>
+                            <td style="text-align: center;">
+                                {{ medicalAppointment.createdDate | date : "dd/MM/yyyy HH:mm"}}
+                            </td>
+                            <td style="text-align: start;">
+                                {{ medicalAppointment.client.name }}
+                            </td>
+                            <td style="text-align: start;">
+                                {{ getProcedureName(medicalAppointment) }}
+                            </td>
+                            <td style="text-align: center;">
+                                {{ getProcedureValue(medicalAppointment) | currency }}
+                            </td>
+                            <td style="text-align: center;">
+                                {{ medicalAppointment.payoutTotal | currency}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #emptymessage>
+                        <tr>
+                            <td colspan="5" style="text-align: center">
+                                Nenhum registro encontrado
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </main>
+</div>

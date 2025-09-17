@@ -1,0 +1,114 @@
+.fc {
+    .fc-scrollgrid {
+        border-radius: 10px;
+        padding-right: 12px;
+        padding-bottom: 12px;
+        border: 1px solid #d9d9d9;
+    }
+
+    .fc-timegrid-axis {
+        border: none;
+    }
+
+    .fc-col-header-cell {
+        border: none;
+    }
+
+    .fc-scrollgrid-section-sticky {
+        th {
+            border: none;
+        }
+    }
+
+    .fc-scrollgrid-section-body {
+        td {
+            border: none;
+        }
+    }
+
+    .fc-prev-button,
+    .fc-next-button {
+        background-color: #f1f2f6;
+        border: 1px solid #d9d9d9;
+        border-radius: 5px;
+        padding: 12px;
+        height: 48px;
+        width: 48px;
+
+        .fc-icon {
+            color: var(--color-gray);
+        }
+
+        &:active,
+        &:hover {
+            background-color: rgba($color: #f1f2f6, $alpha: 0.5) !important;
+            border: 1px solid #d9d9d9 !important;
+            color: var(--color-gray) !important;
+        }
+    }
+
+    .fc-today-button, 
+    .fc-timeGridDay-button,
+    .fc-timeGridWeek-button {
+        background-color: #f1f2f6 !important;
+        border: 1px solid #d9d9d9 !important;
+        border-radius: 5px !important;
+        padding: 12px !important;
+        height: 48px !important;
+        color: var(--color-gray) !important;
+
+        &:disabled {
+            background-color: #f1f2f6 !important;
+            border: 1px solid #d9d9d9 !important;
+            color: var(--color-gray) !important;
+        }
+
+        &:active,
+        &:hover {
+            background-color: rgba($color: #f1f2f6, $alpha: 0.5) !important;
+            border: 1px solid #d9d9d9 !important;
+            color: var(--color-gray) !important;
+        }
+    }
+
+    .fc-toolbar-title {
+        color: var(--color-gray) !important;
+    }
+
+    .fc-timegrid-slot-lane {
+        background-color: #f1f2ef !important;
+        border: none;
+        border-bottom: 1px solid #fff;
+    }
+
+    .fc-scrollgrid-shrink {
+        background-color: transparent !important;
+        border: none;
+    }
+
+    .fc-timegrid-slot-minor {
+        border: none;
+        border-bottom: 1px solid #fff;
+    }
+
+    .fc-v-event {
+        background: #6a7a5633;
+        border: 1px solid #6a7a5633;
+
+        .fc-event-main {
+            color: var(--color-gray);
+        }
+    }
+
+    .fc-col-header-cell-cushion {
+        color: var(--color-gray) !important;
+        padding: 12px !important;
+    }
+
+    .fc-timegrid-slot-label-cushion {
+        color: var(--color-gray);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 0px 12px;
+    }
+}

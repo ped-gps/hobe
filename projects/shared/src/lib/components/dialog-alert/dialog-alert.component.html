@@ -1,0 +1,62 @@
+<div id="dialog-alert">
+    <main>
+        <div class="responsive-row" style="margin-bottom: 10px">
+            <div class="responsive-col-12">
+                <div class="icon">
+                    <div *ngIf="type === 'ERROR'">
+                        <img src="../../../assets/svgs/error.svg" width="100px" />
+                    </div>
+
+                    <div *ngIf="type === 'SUCCESS'">
+                        <img src="../../../assets/svgs/success.svg" width="100px" />
+                    </div>
+
+                    <div *ngIf="type === 'ATTENTION'">
+                        <img src="../../../assets/svgs/attention.svg" width="100px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="responsive-row">
+            <div class="responsive-col-12">
+                <p class="title">{{ title }}</p>
+            </div>
+        </div>
+
+        <div class="responsive-row" style="margin-bottom: 0;">
+            <div class="responsive-col-12">
+                <p class="message">{{ message }}</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="button" *ngIf="!isConfirmation">
+            <p-button
+                label="Ok"
+                [ngClass]="
+                    type === 'SUCCESS'
+                        ? 'button-green-white'
+                        : 'button-orange-white'
+                "
+                (onClick)="close()"
+            />
+        </div>
+
+        <div class="button" *ngIf="isConfirmation">
+            <p-button
+                label="Confirmar"
+                class="button-yellow-black"
+                (onClick)="confirm()"
+            />
+        </div>
+        <div class="button" *ngIf="isConfirmation">
+            <p-button
+                label="Cancelar"
+                class="button-transparent-black"
+                (onClick)="cancel()"
+            />
+        </div>
+    </footer>
+</div>

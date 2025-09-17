@@ -1,0 +1,66 @@
+<div id="sidebar">
+    <div class="header">
+        <img src="assets/svgs/logo-partner.svg" alt="Logo image" width="175px" />
+    </div>
+
+    <div class="content">
+        <div class="links">
+            <div class="link" [routerLink]="Route.DASHBOARD" routerLinkActive="active">
+                <div class="icon">
+                    <span class="material-symbols-rounded"> analytics </span>
+                </div>
+
+                <div class="label">
+                    <span>Dashboard</span>
+                </div>
+            </div>
+            <div class="link" [routerLink]="Route.SCHEDULE" routerLinkActive="active">
+                <div class="icon">
+                    <span class="material-symbols-rounded">
+                        calendar_month
+                    </span>
+                </div>
+
+                <div class="label">
+                    <span>Agenda</span>
+                </div>
+            </div>
+            <div class="link" [routerLink]="Route.CLIENTS">
+                <div class="icon">
+                    <span class="material-symbols-rounded"> group </span>
+                </div>
+
+                <div class="label">
+                    <span>Pacientes</span>
+                </div>
+            </div>
+            <div class="link" [routerLink]="Route.PROFESSIONALS">
+                <div class="icon">
+                    <span class="material-symbols-rounded"> stethoscope </span>
+                </div>
+
+                <div class="label">
+                    <span>Profissionais</span>
+                </div>
+            </div>
+            <div class="link" [routerLink]="Route.PROCEDURES">
+                <div class="icon">
+                    <span class="material-symbols-rounded"> contract </span>
+                </div>
+
+                <div class="label">
+                    <span>Procedimentos</span>
+                </div>
+            </div>
+            <div class="link" [routerLink]="Route.MEDICAL_INSURANCES">
+                <div class="icon">
+                    <span class="material-symbols-rounded"> handshake </span>
+                </div>
+
+                <div class="label">
+                    <span>Convênios</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

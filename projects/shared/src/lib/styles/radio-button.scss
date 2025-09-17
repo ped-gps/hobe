@@ -1,0 +1,19 @@
+p-radiobutton {
+    .p-radiobutton {
+
+        &:not(.p-radiobutton-checked) {
+            .p-radiobutton-icon {
+                display: none !important;
+            }
+        }
+
+        .p-radiobutton-box {
+            background: var(--color-white) !important;
+            border: 1px solid #CECECE;
+        }
+
+        .p-radiobutton-icon {
+            background: var(--color-blue) !important;
+        }
+    }
+}

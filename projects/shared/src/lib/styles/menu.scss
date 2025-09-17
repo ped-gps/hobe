@@ -1,0 +1,21 @@
+.p-menu {
+    background-color: var(--color-white) !important;
+    border: 1px solid #E3E5E9 !important;
+    
+    .p-menu-list {
+        .p-menu-item {
+            .p-menu-item-content {
+                color: var(--color-black);
+
+                &:hover {
+                    background-color: rgba($color: #000000, $alpha: 0.1);
+                    color: var(--color-black);
+                }
+
+                .p-menu-item-link {
+                    gap: 12px;
+                }
+            }
+        }
+    }
+}

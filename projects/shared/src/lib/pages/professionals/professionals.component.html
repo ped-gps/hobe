@@ -1,0 +1,275 @@
+<div id="health-professionals">
+    <header>
+        <div class="tabs">
+            <div 
+                class="tab" 
+                [class.active]="selectedTab === 'health-professionals'"
+                (click)="onTabChange('health-professionals')"
+            >
+                <h1>Profissionais de Saúde</h1>
+            </div>
+
+            <div 
+                class="tab" 
+                [class.active]="selectedTab === 'receptionists'"
+                (click)="onTabChange('receptionists')"
+            >
+                <h1>Recepcionistas</h1>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <ng-container *ngIf="selectedTab === 'health-professionals'">
+            <ng-container *ngTemplateOutlet="healthProfessionalsTemplate"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="selectedTab === 'receptionists'">
+            <ng-container *ngTemplateOutlet="receptionistsTemplate"></ng-container>
+        </ng-container>
+    </main>
+</div>
+
+<ng-template #healthProfessionalsTemplate>
+    <div class="filters-actions">
+        <div class="filters">
+            <div class="filter">
+                <div class="input name">
+                    <p-iconfield>
+                        <input
+                            pInputText
+                            type="text"
+                            placeholder="Pesquisar"
+                            [(ngModel)]="textFilter"
+                            (input)="onInputChange()"
+                        />
+                        <p-inputicon styleClass="pi pi-search" />
+                    </p-iconfield>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <div class="action">
+                <p-button 
+                    label="Adicionar profissional"
+                    class="button-blue-white button-icon-end"
+                    (onClick)="onAddHealthProfessional()"
+                >
+                    <span class="material-symbols-rounded">add</span>
+                </p-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table">
+        <p-table
+            [value]="healthProfessionals"
+            [rows]="size"
+            [totalRecords]="totalElements"
+            [lazy]="true"
+            [paginator]="true"
+            [scrollable]="true"
+            [loading]="isLoading"
+            [first]="page * size"
+            [sortField]="'name'"
+            (onPage)="onPageChange($event)"
+            (onSort)="onSortChange($event)"
+        >
+            <ng-template #header>
+                <tr>
+                    <th
+                        pSortableColumn="name"
+                        style="width: 40%; text-align: center"
+                    >
+                        Nome <p-sortIcon field="name" />
+                    </th>
+                    <th
+                        pSortableColumn="email"
+                        style="width: 30%; text-align: center"
+                    >
+                        E-mail <p-sortIcon field="email" />
+                    </th>
+
+                    <th
+                        pSortableColumn="phone"
+                        style="width: 20%; text-align: center"
+                    >
+                        Telefone <p-sortIcon field="phone" />
+                    </th>
+                    <th style="width: 10%; text-align: center">Ações</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-healthProfessional>
+                <tr class="procedure">
+                    <td style="text-align: left">
+                        <span class="health-professional-name">{{
+                            healthProfessional.name
+                        }}</span>
+                    </td>
+                    <td style="text-align: center">
+                        <span class="health-professional-email">
+                            {{ healthProfessional.email }}
+                        </span>
+                    </td>
+                    <td style="text-align: center">
+                        <span class="health-professional-phone">
+                            {{ healthProfessional.phone | phone }}
+                        </span>
+                    </td>
+                    <td style="text-align: center">
+                        <p-button
+                            class="button-transparent-gray button-icon"
+                            [rounded]="true"
+                            [text]="true"
+                            [loading]="isSubmitting"
+                            (onClick)="
+                                selectedHealthProfessional = healthProfessional;
+                                healthProfessionalMenu.toggle($event)
+                            "
+                        >
+                            <span class="material-symbols-rounded">
+                                more_vert
+                            </span>
+                        </p-button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="4" style="text-align: center">
+                        Nenhum registro encontrado
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</ng-template>
+
+<ng-template #receptionistsTemplate>
+    <div class="filters-actions">
+        <div class="filters">
+            <div class="filter">
+                <div class="input name">
+                    <p-iconfield>
+                        <input
+                            pInputText
+                            type="text"
+                            placeholder="Pesquisar"
+                            [(ngModel)]="textFilter"
+                        />
+                        <p-inputicon styleClass="pi pi-search" />
+                    </p-iconfield>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <div class="action">
+                <p-button 
+                    label="Adicionar recepcionista"
+                    class="button-blue-white button-icon-end"
+                    (onClick)="onAddReceptionist()"
+                >
+                    <span class="material-symbols-rounded">add</span>
+                </p-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table">
+        <p-table
+            [value]="receptionists"
+            [rows]="size"
+            [totalRecords]="totalElements"
+            [lazy]="true"
+            [paginator]="true"
+            [scrollable]="true"
+            [loading]="isLoading"
+            [first]="page * size"
+            [sortField]="'name'"
+            (onPage)="onPageChange($event)"
+            (onSort)="onSortChange($event)"
+        >
+            <ng-template #header>
+                <tr>
+                    <th
+                        pSortableColumn="name"
+                        style="width: 40%; text-align: center"
+                    >
+                        Nome <p-sortIcon field="name" />
+                    </th>
+                    <th
+                        pSortableColumn="email"
+                        style="width: 30%; text-align: center"
+                    >
+                        E-mail <p-sortIcon field="email" />
+                    </th>
+
+                    <th
+                        pSortableColumn="phone"
+                        style="width: 20%; text-align: center"
+                    >
+                        Telefone <p-sortIcon field="phone" />
+                    </th>
+                    <th style="width: 10%; text-align: center">Ações</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-receptionist>
+                <tr class="procedure">
+                    <td style="text-align: left">
+                        <span class="receptionist-name">{{
+                            receptionist.name
+                        }}</span>
+                    </td>
+                    <td style="text-align: center">
+                        <span class="receptionist-email">
+                            {{ receptionist.email }}
+                        </span>
+                    </td>
+                    <td style="text-align: center">
+                        <span class="receptionist-phone">
+                            {{ receptionist.phone | phone }}
+                        </span>
+                    </td>
+                    <td style="text-align: center">
+                        <p-button
+                            class="button-transparent-gray button-icon"
+                            [rounded]="true"
+                            [text]="true"
+                            [loading]="isSubmitting"
+                            (onClick)="
+                                selectedReceptionist = receptionist;
+                                receptionistMenu.toggle($event)
+                            "
+                        >
+                            <span class="material-symbols-rounded">
+                                more_vert
+                            </span>
+                        </p-button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="4" style="text-align: center">
+                        Nenhum registro encontrado
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</ng-template>
+
+<p-menu
+    #healthProfessionalMenu
+    appendTo="body"
+    [popup]="true"
+    [model]="healthProfessionalMenuOptions"
+/>
+
+<p-menu
+    #receptionistMenu
+    appendTo="body"
+    [popup]="true"
+    [model]="receptionistMenuOptions"
+/>

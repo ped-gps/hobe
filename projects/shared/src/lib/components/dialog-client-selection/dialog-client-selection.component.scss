@@ -1,0 +1,37 @@
+#dialog-client-selection {
+    width: 900px;
+    max-height: 90%;
+
+    main {
+        margin-bottom: 24px;
+
+        .filters {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-bottom: 24px;
+            
+            .filter {
+                &.name {
+                    width: 300px;
+                }
+            }
+        }
+    }
+
+    footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+::ng-deep {
+
+    #dialog-client-selection {
+
+        .p-inputtext, .p-select {
+            background-color: #f1f2f6 !important;
+        }
+    }
+}

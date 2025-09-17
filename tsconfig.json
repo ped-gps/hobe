@@ -1,8 +1,7 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
@@ -14,6 +13,9 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
+    "paths": {
+      "@hobe/shared": ["projects/shared/src/public-api.ts"]
+    },
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022"
@@ -23,5 +25,19 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "references": [
+    { "path": "./projects/hobe-partner-ui/tsconfig.app.json" },
+    { "path": "./projects/hobe-partner-ui/tsconfig.spec.json" },
+    { "path": "./projects/hobe-care-partner-ui/tsconfig.app.json" },
+    { "path": "./projects/hobe-care-partner-ui/tsconfig.spec.json" },
+    { "path": "./projects/hobe-care-professional-ui/tsconfig.app.json" },
+    { "path": "./projects/hobe-care-professional-ui/tsconfig.spec.json" },
+    { "path": "./projects/hobe-care-receptionist-ui/tsconfig.app.json" },
+    { "path": "./projects/hobe-care-receptionist-ui/tsconfig.spec.json" },
+    { "path": "./projects/hobe-admin-ui/tsconfig.app.json" },
+    { "path": "./projects/hobe-admin-ui/tsconfig.spec.json" },
+    { "path": "./projects/shared/tsconfig.lib.json" },
+    { "path": "./projects/shared/tsconfig.spec.json" }
+  ]
 }

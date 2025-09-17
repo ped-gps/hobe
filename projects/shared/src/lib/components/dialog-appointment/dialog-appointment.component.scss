@@ -1,0 +1,23 @@
+#dialog-appointment {
+    width: 600px;
+    max-height: 90%;
+
+    main {
+        margin-bottom: 24px;
+    }
+
+    footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+::ng-deep {
+
+    #dialog-appointment {
+
+        .p-inputtext, .p-select {
+            background-color: #f1f2f6 !important;
+        }
+    }
+}

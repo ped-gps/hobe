@@ -1,0 +1,28 @@
+#layout {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .page {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+
+        .toolbar {
+            border-bottom: 1px solid #e2e5e9;
+            padding: 24px 64px;
+            width: 100%;
+        }
+
+        .route {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            padding: 24px 64px;
+            width: 100%;
+        }
+    }
+}

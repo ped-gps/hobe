@@ -1,0 +1,47 @@
+<div id="schedule">
+    <header>
+        <div class="title">
+            <h1>Agenda</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="filters-actions">
+            <div class="filters">
+                <div class="filter">
+                    <div class="label">
+                        <span>Profissional</span>
+                    </div>
+
+                    <div class="input professional">
+                        <p-select
+                            [options]="healthProfessionalOptions"
+                            placeholder="Selecione"
+                            [(ngModel)]="selectedHealthProfessional"
+                            (onChange)="onHealthProfessionalChange()"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <div class="action">
+                    <p-button 
+                        label="Novo Agendamento"
+                        class="button-blue-white button-icon-end"
+                        (onClick)="onAddAppointment()"
+                        [disabled]="!selectedHealthProfessional"
+                    >
+                        <span class="material-symbols-rounded">add</span>
+                    </p-button>
+                </div>
+            </div>
+        </div>
+
+        <div class="schedule">
+            <full-calendar 
+                [options]="calendarOptions"
+            />
+        </div>
+    </main>
+</div>

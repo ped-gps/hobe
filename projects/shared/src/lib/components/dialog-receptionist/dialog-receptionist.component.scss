@@ -1,0 +1,23 @@
+#dialog-receptionist {
+    width: 900px;
+    max-height: 90%;
+
+    main {
+        margin-bottom: 24px;
+    }
+
+    footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+::ng-deep {
+
+    #dialog-receptionist {
+
+        .p-inputtext, .p-select {
+            background-color: #f1f2f6 !important;
+        }
+    }
+}
