@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -10,15 +10,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 
-import {
-	AuthenticationService,
-	Client,
-	ClientService,
-	DialogClientComponent,
-	OperatorUtils,
-	Partner,
-	PhonePipe
-} from '@hobe/shared';
+import { DialogClientComponent } from '../../components/dialog-client/dialog-client.component';
+import { Client } from '../../models/client';
+import { Partner } from '../../models/partner';
+import { PhonePipe } from '../../pipes/phone.pipe';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ClientService } from '../../services/client.service';
+import { OperatorUtils } from '../../utils/operator.util';
 
 @Component({
     selector: 'app-clients',

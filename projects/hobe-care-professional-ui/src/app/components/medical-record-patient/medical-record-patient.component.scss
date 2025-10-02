@@ -1,0 +1,79 @@
+#medical-record-patient {
+
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .patient-details {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.01);
+
+        @media (max-width: 1024px) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .patient-avatar {
+            min-width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .patient-info {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+
+            .patient-name {
+                font-size: 16px;
+                font-weight: 600;
+            }
+
+            .patient-meta {
+                display: flex;
+                gap: 64px;
+
+                .patient-meta-section {
+                    > div {
+                        display: flex;
+                        align-items: center;
+                        gap: 32px;
+                        margin-bottom: 8px;
+
+                        @media (max-width: 1024px) {
+                            margin-bottom: 16px;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            gap: 8px;
+                        }
+
+                        span {
+                            min-width: 50%;
+                            color: var(--color-gray);
+                            font-size: 14px;
+                        }
+
+                        .type {
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+#medical-record-attendance{
+    form {
+        gap: 0px !important;
+
+        .input-field {
+            label {
+                color: var(--color-gray) !important;
+                font-size: 14px !important;
+                font-weight: 600 !important;
+            }
+        }
+
+        .imc-underweight {
+            color: var(--color-blue) !important;
+        }
+
+        .imc-normal {
+            color: var(--color-green) !important;
+        }
+
+        .imc-overweight {
+            color: var(--color-yellow) !important;
+        }
+
+        .imc-obesity-grade-1,
+        .imc-obesity-grade-2,
+        .imc-obesity-grade-3 {
+            color: var(--color-red) !important;
+        }
+    }
+}

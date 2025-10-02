@@ -3,6 +3,8 @@ export enum Route {
     DASHBOARD = 'dashboard',
     MEDICAL_APPOINTMENTS_EXTRACT = 'medical-appointments-extract',
     MEDICAL_INSURANCES = 'medical-insurances',
+    MEDICAL_RECORD = 'medical-record/:id',
+    MEDICAL_SCHEDULE = 'medical-schedule',
     PROCEDURES = 'procedures',
     PROFESSIONALS = 'professionals',
     PROFILE = 'profile',

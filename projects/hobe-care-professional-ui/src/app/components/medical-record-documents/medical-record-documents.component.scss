@@ -1,0 +1,28 @@
+#medical-record-documents {
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 12px;
+
+        .editor {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+
+            > div {
+                display: flex;
+                gap: 24px;
+            }
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+        }
+    }
+}

@@ -7,20 +7,24 @@
 
     <main>
         <div class="filters">
-            <div class="filter">
-                <div class="label">
-                    <span>Profissional</span>
-                </div>
+            
+            @if (user.profile === UserProfile.PARTNER) {
+                <div class="filter">
+                    <div class="label">
+                        <span>Profissional</span>
+                    </div>
 
-                <div class="input professional">
-                    <p-select
-                        [options]="healthProfessionalOptions"
-                        placeholder="Selecione"
-                        [(ngModel)]="selectedHealthProfessional"
-                        (onChange)="onHealthProfessionalChange()"
-                    />
+                    <div class="input professional">
+                        <p-select
+                            [options]="healthProfessionalOptions"
+                            placeholder="Selecione"
+                            [(ngModel)]="selectedHealthProfessional"
+                            (onChange)="onHealthProfessionalChange()"
+                        />
+                    </div>
                 </div>
-            </div>
+            }
+            
             <div class="filter">
                 <div class="label">
                     <span>Período</span>

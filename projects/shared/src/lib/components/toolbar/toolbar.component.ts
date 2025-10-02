@@ -11,7 +11,7 @@ import { HealthProfessional } from '../../models/health-professional';
 import { Partner } from '../../models/partner';
 import { Receptionist } from '../../models/receptionist';
 import { AuthenticationService } from '../../services/authentication.service';
-import { OperatorUtils } from '../../utils/operator.util';
+import { UserPictureComponent } from '../user-picture/user-picture.component';
 
 @Component({
 	selector: 'app-toolbar',
@@ -22,7 +22,8 @@ import { OperatorUtils } from '../../utils/operator.util';
 		CommonModule,
 		MenuModule,
 		SkeletonModule,
-		Menu
+		Menu,
+		UserPictureComponent
 	],
 })
 export class ToolbarComponent implements OnInit {
@@ -56,19 +57,12 @@ export class ToolbarComponent implements OnInit {
 			}
 		];
 
-		this._fetchData();
-	}
+		this._authenticationService.getAuthentication().subscribe(async authentication => {
 
-	private async _fetchData() {
-
-		this.isLoading = true;
-		await OperatorUtils.delay(500);
-
-		try {
-			this.user = await this._authenticationService.retrieveUser();
-			this._changeDetector.detectChanges();
-		} finally {
-			this.isLoading = false;
-		}
+			if (authentication) {
+				this.user = await this._authenticationService.retrieveUser();
+				this._changeDetector.detectChanges();
+			}
+		});
 	}
 }

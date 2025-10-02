@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 import { Route } from '../../enums/route';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UserProfile } from './../../enums/user-profile';
@@ -25,9 +26,15 @@ export class SidebarComponent implements OnInit {
 	) {}
 
 	async ngOnInit(): Promise<void> {
-		const { profile } = await this._authenticationService.retrieveUser();
-		this.profile = profile;
-		this._changeDetector.detectChanges();
+
+		this._authenticationService.getAuthentication().subscribe(async authentication => {
+
+			if (authentication) {
+				const { profile } = await this._authenticationService.retrieveUser();
+				this.profile = profile;
+				this._changeDetector.detectChanges();
+			}
+		});
 	}
 
 	hasDashboard() {

@@ -8,16 +8,18 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 
-import {
-	AuthenticationService,
-	DateUtils,
-	HealthProfessional,
-	HealthProfessionalService,
-	MedicalAppointment,
-	MedicalAppointmentService,
-	OperatorUtils,
-	Partner
-} from '@hobe/shared';
+import { LoadingComponent } from '../../components/loading/loading.component';
+import { UserProfile } from '../../enums/user-profile';
+import { HealthProfessional } from '../../models/health-professional';
+import { MedicalAppointment } from '../../models/medical-appointment';
+import { MedicalAppointmentExtractPrintRequest } from '../../models/medical-appointment-extract-print-request';
+import { Partner } from '../../models/partner';
+import { User } from '../../models/user';
+import { AuthenticationService } from '../../services/authentication.service';
+import { HealthProfessionalService } from '../../services/health-professional.service';
+import { MedicalAppointmentService } from '../../services/medical-appointment.service';
+import { DateUtils } from '../../utils/date.util';
+import { OperatorUtils } from '../../utils/operator.util';
 
 @Component({
     selector: 'app-medical-appointments-extract',
@@ -28,6 +30,7 @@ import {
 		CommonModule,
 		DatePickerModule,
 		FormsModule,
+		LoadingComponent,
 		SelectModule,
 		TableModule,
 	],
@@ -36,13 +39,15 @@ export class MedicalAppointmentsExtractComponent implements OnInit {
 
 	partner!: Partner;
 	medicalAppointments: Array<MedicalAppointment> = [];
-	payoutTotal: number = 0;
-
 	healthProfessionalsOptions!: Array<SelectItem>;
 	selectedHealthProfessional!: HealthProfessional;
 	selectedPeriod!: Array<Date>;
+	user!: User;
 	
 	isLoading: boolean = false;
+	payoutTotal: number = 0;
+
+	UserProfile = UserProfile;
 
 	constructor(
 		private readonly _activatedRoute: ActivatedRoute,
@@ -127,21 +132,42 @@ export class MedicalAppointmentsExtractComponent implements OnInit {
 		const startDate = DateUtils.formatDateWithoutTimezone(this.selectedPeriod[0]).split('T')[0];
 		const endDate = DateUtils.formatDateWithoutTimezone(this.selectedPeriod[1]).split('T')[0];
 
-		const blob = await this._medicalAppointmentService.printExtract(
-			this.selectedHealthProfessional,
-			this.medicalAppointments,
-			startDate,
-			endDate,
-			this.payoutTotal
-		);
+		const requestBody: MedicalAppointmentExtractPrintRequest = {
+			startDate: startDate,
+			endDate: endDate,
+			healthProfessional: this.selectedHealthProfessional,
+			medicalAppointments: this.medicalAppointments,
+			payoutTotal: this.payoutTotal
+		}
 
+		const blob = await this._medicalAppointmentService.printExtract(requestBody);
 		const url = window.URL.createObjectURL(blob);
 		window.open(url);
 	}
 
 	private async _fetchData() {
 
-		this.partner = await this._authenticationService.retrieveUser();
+		await OperatorUtils.delay(1000);
+
+		const user = await this._authenticationService.retrieveUser();
+		this.user = user;
+
+		if (user.profile === UserProfile.HEALTH_PROFESSIONAL) {
+			this.selectedHealthProfessional = user;
+			this.partner = user.partner;
+		}
+		
+		if (user.profile === UserProfile.PARTNER) {
+			this.partner = user.partner;
+		}
+		
+		this._changeDetector.detectChanges();
+
+		await this._retrieveHealthProfessionals();
+		await this._retrieveMedicalAppointments();		
+	}
+
+	private async _retrieveHealthProfessionals() {
 
 		const { content, page } = await this._healthProfessionalService.search(-1, -1, 'name', 'asc', {
 			partnerId: this.partner.id
@@ -151,8 +177,6 @@ export class MedicalAppointmentsExtractComponent implements OnInit {
 			label: healthProfessional.name,
 			value: healthProfessional
 		}));
-
-		this._changeDetector.detectChanges();
 
 		if (page.totalElements > 0) {
 
@@ -167,9 +191,9 @@ export class MedicalAppointmentsExtractComponent implements OnInit {
 			} else {
 				this.selectedHealthProfessional = content[0];
 			}
-
-			await this._retrieveMedicalAppointments();
 		}
+
+		this._changeDetector.detectChanges();
 	}
 
 	private async _retrieveMedicalAppointments() {
@@ -192,8 +216,7 @@ export class MedicalAppointmentsExtractComponent implements OnInit {
 			this.payoutTotal = content.map(m => m.payoutTotal).reduce((prev, current) => prev + current, 0);
 		} finally {
 			this.isLoading = false;
+			this._changeDetector.detectChanges();
 		}
-		
-		this._changeDetector.detectChanges();
 	}
 }

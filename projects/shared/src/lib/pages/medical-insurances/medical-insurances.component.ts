@@ -10,16 +10,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 
-import {
-	AlertService,
-	AuthenticationService,
-	DialogMedicalInsuranceComponent,
-	MedicalInsurance,
-	MedicalInsuranceService,
-	OperatorUtils,
-	Partner,
-	PhonePipe
-} from '@hobe/shared';
+import { DialogMedicalInsuranceComponent } from '../../components/dialog-medical-insurance/dialog-medical-insurance.component';
+import { MedicalInsurance } from '../../models/medical-insurance';
+import { Partner } from '../../models/partner';
+import { PhonePipe } from '../../pipes/phone.pipe';
+import { AlertService } from '../../services/alert.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { MedicalInsuranceService } from '../../services/medical-insurance.service';
+import { OperatorUtils } from '../../utils/operator.util';
 
 @Component({
 	selector: 'app-medical-insurances',
@@ -38,6 +36,7 @@ import {
 	],
 })
 export class MedicalInsurancesComponent implements OnInit {
+	
 	partner!: Partner;
     medicalInsurances: Array<MedicalInsurance> = [];
     isLoading: boolean = false;

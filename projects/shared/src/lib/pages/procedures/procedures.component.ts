@@ -11,19 +11,17 @@ import { MenuModule } from 'primeng/menu';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 
-import {
-    AlertService,
-    AuthenticationService,
-    DialogProcedureComponent,
-    OperatorUtils,
-    Partner,
-    Procedure,
-    ProcedureService,
-    ProcedureSource,
-    ProcedureSourceUtils,
-    Service,
-    ServiceService
-} from '@hobe/shared';
+import { DialogProcedureComponent } from '../../components/dialog-procedure/dialog-procedure.component';
+import { ProcedureSource } from '../../enums/procedure-source';
+import { Partner } from '../../models/partner';
+import { Procedure } from '../../models/procedure';
+import { Service } from '../../models/service';
+import { AlertService } from '../../services/alert.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ProcedureService } from '../../services/procedure.service';
+import { ServiceService } from '../../services/service.service';
+import { OperatorUtils } from '../../utils/operator.util';
+import { ProcedureSourceUtils } from '../../utils/procedure-source.util';
 
 @Component({
     selector: 'app-procedures',

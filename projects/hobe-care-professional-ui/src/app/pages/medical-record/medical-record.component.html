@@ -1,0 +1,109 @@
+<main id="medical-record">
+    @if(!isLoading) {
+        <header class="medical-record-header">
+            <h1>Prontuário</h1>
+            <p-breadcrumb [model]="items"> </p-breadcrumb>
+        </header>
+
+        <section class="patient-details-card">
+            <app-medical-record-patient
+                [client]="client"
+                [appointment]="appointment" 
+            />
+        </section>
+
+        <section class="medical-record-content">
+            <aside class="medical-record-sidebar">
+                <p-button
+                    label="Iniciar Atendimento"
+                    class="button-blue-white"
+                    *ngIf="!medicalAppointment"
+                    (click)="onStartMedicalAppointment()"
+                />
+                <p-button
+                    label="Finalizar Atendimento"
+                    class="button-green-white"
+                    *ngIf="isMedicalAppointmentInProgress()"
+                    (click)="onFinishMedicalAppointment()"
+                />
+                <div class="timer">
+                    <span>Tempo:</span>
+                    <span>{{ timer }}</span>
+                </div>
+                <nav class="sidebar-menu">
+                    <button
+                        *ngFor="let section of sections"
+                        class="menu-item"
+                        [class.active]="activeSection === section.key"
+                        (click)="activeSection = section.key"
+                        [disabled]="isSectionDisabled(section.key)"
+                        [ngStyle]="
+                            isSectionDisabled(section.key)
+                                ? { opacity: 0.2, cursor: 'not-allowed' }
+                                : {}
+                        "
+                    >
+                        {{ section.label }}
+                    </button>
+                </nav>
+            </aside>
+            
+            <section class="medical-record-main">
+                <ng-container [ngSwitch]="activeSection">
+                    <ng-container *ngSwitchCase="'resumo'">
+                        <app-medical-record-resume
+                            [client]="client"
+                            [healthProfessional]="healthProfessional"
+                        />
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'anamnesis'">
+                        <app-medical-record-anamnesis
+                            [anamnesis]="medicalAppointment ? medicalAppointment.anamnesis : undefined"
+                            [readOnly]="isMedicalAppointmentConcluded()"
+                            (anamnesisFormChange)="onAnamnesisFormChange($event)"
+                        />
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'atendimento'">
+                        <app-medical-record-attendance
+                            [medicalAppointment]="medicalAppointment"
+                            [readOnly]="isMedicalAppointmentConcluded()"
+                            (attendanceFormChange)="onAttendanceFormChange($event)"
+                        />
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'prescricoes'">
+                        <app-medical-record-prescription
+                            [medicalAppointment]="medicalAppointment"
+                            [prescriptionValues]="medicalAppointment.prescription"
+                            (prescriptionChange)="onPrescriptionChange($event)"
+                        />
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'documentos'">
+                        <app-medical-record-documents 
+                            [medicalAppointment]="medicalAppointment"
+                        />
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'imagens'">
+                        <app-medical-record-attachments
+                            [attachments]="attachments"
+                            [readonly]="isMedicalAppointmentConcluded()"
+                            (attachmentsChange)="onAttachmentsChange($event)"
+                        />
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'observacoes'">
+                        <app-medical-record-observations
+                            [medicalObservation]="medicalAppointment ? medicalAppointment.medicalObservation : undefined"
+                            [readOnly]="isMedicalAppointmentConcluded()"
+                            (medicalObservationFormChange)="onMedicalObservationFormChange($event)"
+                        />
+                    </ng-container>
+                </ng-container>
+            </section>
+        </section>
+    }
+</main>

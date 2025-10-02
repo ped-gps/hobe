@@ -9,19 +9,18 @@ import { ButtonModule } from 'primeng/button';
 import { DialogService } from 'primeng/dynamicdialog';
 import { SelectModule } from 'primeng/select';
 
+import { DialogAppointmentComponent } from '../../components/dialog-appointment/dialog-appointment.component';
 import { UserProfile } from '../../enums/user-profile';
-
-import { 
-    Appointment, 
-    AppointmentService, 
-    AppointmentSituationUtils, 
-    AuthenticationService, 
-    DateUtils, 
-    DialogAppointmentComponent, 
-    HealthProfessional, 
-    HealthProfessionalService, 
-    Partner 
-} from '@hobe/shared';
+import { Appointment } from '../../models/appointments';
+import { HealthProfessional } from '../../models/health-professional';
+import { Partner } from '../../models/partner';
+import { AppointmentService } from '../../services/appointment.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { HealthProfessionalService } from '../../services/health-professional.service';
+import { AppointmentSituationUtils } from '../../utils/appointment-situation.util';
+import { DateUtils } from '../../utils/date.util';
+import { User } from '../../models/user';
+import { DialogAppointmentProfessionalComponent } from '../../components/dialog-appointment-professional/dialog-appointment-professional.component';
 
 @Component({
     selector: 'app-schedule',
@@ -38,10 +37,10 @@ import {
 export class ScheduleComponent implements OnInit {
 
     partner!: Partner;
-    
     healthProfessionalOptions!: Array<SelectItem>;
     selectedAppointment!: Appointment;
     selectedHealthProfessional!: HealthProfessional;
+    user!: User;
 
     calendarOptions: CalendarOptions = {
         plugins: [timeGridPlugin],
@@ -93,6 +92,8 @@ export class ScheduleComponent implements OnInit {
         },
     };
 
+    UserProfile = UserProfile;
+
     constructor(
         private readonly _appointmentService: AppointmentService,
         private readonly _authenticationService: AuthenticationService,
@@ -103,7 +104,6 @@ export class ScheduleComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         await this._fetchData();
-        this._changeDetector.markForCheck();
     }
 
     onAddAppointment() {
@@ -139,6 +139,7 @@ export class ScheduleComponent implements OnInit {
 
     private async _fetchData() {
         const user = await this._authenticationService.retrieveUser();
+        this.user = user;
         
         if (user.profile === UserProfile.PARTNER) {
             this.partner = user;
@@ -148,19 +149,14 @@ export class ScheduleComponent implements OnInit {
             this.partner = user.partner;
         }
 
-        const { content, page } = await this._healthProfessionalService.search(-1, -1, 'name', 'asc', { 
-            partnerId: this.partner.id
-        });
+        if (user.profile === UserProfile.HEALTH_PROFESSIONAL) {
+            this.selectedHealthProfessional = user;
+            this.partner = user.partner;
+        }
 
-        this.healthProfessionalOptions = content.map(healthProfessional => ({
-            label: healthProfessional.name,
-            value: healthProfessional
-        }));
-
-        this._changeDetector.detectChanges();
-
-        if (page.totalElements > 0) {
-            this.selectedHealthProfessional = content[0];
+        await this._retrieveHealthProfessionals();
+        
+        if (this.selectedHealthProfessional) {
             await this._retrieveAppointments();
         }
     }
@@ -188,27 +184,74 @@ export class ScheduleComponent implements OnInit {
             start: appointment.date + 'T' + appointment.time,
             appointment
         }));
+
+        this._changeDetector.markForCheck();
+    }
+
+    private async _retrieveHealthProfessionals() {
+        
+        const { content, page } = await this._healthProfessionalService.search(-1, -1, 'name', 'asc', { 
+            partnerId: this.partner.id
+        });
+
+        this.healthProfessionalOptions = content.map(healthProfessional => ({
+            label: healthProfessional.name,
+            value: healthProfessional
+        }));
+
+        
+        if (page.totalElements > 0) {
+            if (!this.selectedHealthProfessional) {
+                this.selectedHealthProfessional = this.healthProfessionalOptions[0].value;
+            } else {
+                this.selectedHealthProfessional = this.healthProfessionalOptions.find(o => o.value.id === this.selectedHealthProfessional.id)?.value;
+            }
+        }
+
+        this._changeDetector.markForCheck();
     }
 
     private _showDialogAppointment(appointment?: Appointment) {
 
-        this._dialogService
-            .open(DialogAppointmentComponent, {
-                draggable: true,
-                modal: true,
-                header: 'Agendamento',
-                closable: true,
-                closeOnEscape: false,
-                data: {
-                    appointment: appointment,
-                    healthProfessional: this.selectedHealthProfessional
-                },
-                styleClass: 'dialog-appointment',
-            })
-            .onClose.subscribe((result) => {
-                if (result && result.change) {
-                    this._retrieveAppointments();
-                }
-            });
+        if (this.user.profile === UserProfile.HEALTH_PROFESSIONAL) {
+            
+            this._dialogService
+                .open(DialogAppointmentProfessionalComponent, {
+                    draggable: true,
+                    modal: true,
+                    header: 'Agendamento',
+                    closable: true,
+                    closeOnEscape: false,
+                    data: {
+                        appointment: appointment,
+                    },
+                    styleClass: 'dialog-appointment',
+                })
+                .onClose.subscribe((result) => {
+                    if (result && result.change) {
+                        this._retrieveAppointments();
+                    }
+                });
+        } else {
+
+            this._dialogService
+                .open(DialogAppointmentComponent, {
+                    draggable: true,
+                    modal: true,
+                    header: 'Agendamento',
+                    closable: true,
+                    closeOnEscape: false,
+                    data: {
+                        appointment: appointment,
+                        healthProfessional: this.selectedHealthProfessional
+                    },
+                    styleClass: 'dialog-appointment',
+                })
+                .onClose.subscribe((result) => {
+                    if (result && result.change) {
+                        this._retrieveAppointments();
+                    }
+                });
+        }
     }
 }

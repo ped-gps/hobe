@@ -1,98 +1,100 @@
 <div id="sidebar">
-    <div class="header">
-        @if (profile === UserProfile.ADMINISTRATOR) {
-
-        }
-
-        @if (profile === UserProfile.HEALTH_PROFESSIONAL) {
-
-        }
-
-        @if (profile === UserProfile.PARTNER) {
-            <img src="assets/svgs/logo-partner.svg" alt="Logo image" width="175px" />
-        }
-
-        @if (profile === UserProfile.RECEPTIONIST) {
-            <img src="assets/svgs/logo-receptionist.svg" alt="Logo image" width="175px" />
-        }
-    </div>
-
-    <div class="content">
-        <div class="links">
-            
-            @if(hasDashboard()) {
-                <div class="link" [routerLink]="Route.DASHBOARD" routerLinkActive="active">
-                    <div class="icon">
-                        <span class="material-symbols-rounded"> analytics </span>
-                    </div>
-
-                    <div class="label">
-                        <span>Dashboard</span>
-                    </div>
-                </div>
+    @if (profile) {
+        <div class="header">
+            @if (profile === UserProfile.ADMINISTRATOR) {
+                <img src="assets/svgs/logo-administrator.svg" alt="Logo image" width="175px" />
             }
 
-            @if (hasSchedule()) {
-                <div class="link" [routerLink]="Route.SCHEDULE" routerLinkActive="active">
-                    <div class="icon">
-                        <span class="material-symbols-rounded">
-                            calendar_month
-                        </span>
-                    </div>
-
-                    <div class="label">
-                        <span>Agenda</span>
-                    </div>
-                </div>
+            @if (profile === UserProfile.HEALTH_PROFESSIONAL) {
+                <img src="assets/svgs/logo-health-professional.svg" alt="Logo image" width="175px" />
             }
 
-            @if (hasPatients()) {
-                <div class="link" [routerLink]="Route.CLIENTS">
-                    <div class="icon">
-                        <span class="material-symbols-rounded"> group </span>
-                    </div>
-
-                    <div class="label">
-                        <span>Pacientes</span>
-                    </div>
-                </div>
+            @if (profile === UserProfile.PARTNER) {
+                <img src="assets/svgs/logo-partner.svg" alt="Logo image" width="175px" />
             }
 
-            @if(hasProfessionals()) {
-                <div class="link" [routerLink]="Route.PROFESSIONALS">
-                    <div class="icon">
-                        <span class="material-symbols-rounded"> stethoscope </span>
-                    </div>
-
-                    <div class="label">
-                        <span>Profissionais</span>
-                    </div>
-                </div>
-            }
-
-            @if(hasProcedures()) {
-                <div class="link" [routerLink]="Route.PROCEDURES">
-                    <div class="icon">
-                        <span class="material-symbols-rounded"> contract </span>
-                    </div>
-
-                    <div class="label">
-                        <span>Procedimentos</span>
-                    </div>
-                </div>
-            }
-            
-            @if (hasMedicalInsurances()) {
-                <div class="link" [routerLink]="Route.MEDICAL_INSURANCES">
-                    <div class="icon">
-                        <span class="material-symbols-rounded"> handshake </span>
-                    </div>
-
-                    <div class="label">
-                        <span>Convênios</span>
-                    </div>
-                </div>
+            @if (profile === UserProfile.RECEPTIONIST) {
+                <img src="assets/svgs/logo-receptionist.svg" alt="Logo image" width="175px" />
             }
         </div>
-    </div>
+
+        <div class="content">
+            <div class="links">
+                
+                @if(hasDashboard()) {
+                    <div class="link" [routerLink]="Route.DASHBOARD" routerLinkActive="active">
+                        <div class="icon">
+                            <span class="material-symbols-rounded"> analytics </span>
+                        </div>
+
+                        <div class="label">
+                            <span>Dashboard</span>
+                        </div>
+                    </div>
+                }
+
+                @if (hasSchedule()) {
+                    <div class="link" [routerLink]="Route.SCHEDULE" routerLinkActive="active">
+                        <div class="icon">
+                            <span class="material-symbols-rounded">
+                                calendar_month
+                            </span>
+                        </div>
+
+                        <div class="label">
+                            <span>Agenda</span>
+                        </div>
+                    </div>
+                }
+
+                @if (hasPatients()) {
+                    <div class="link" [routerLink]="Route.CLIENTS">
+                        <div class="icon">
+                            <span class="material-symbols-rounded"> group </span>
+                        </div>
+
+                        <div class="label">
+                            <span>Pacientes</span>
+                        </div>
+                    </div>
+                }
+
+                @if(hasProfessionals()) {
+                    <div class="link" [routerLink]="Route.PROFESSIONALS">
+                        <div class="icon">
+                            <span class="material-symbols-rounded"> stethoscope </span>
+                        </div>
+
+                        <div class="label">
+                            <span>Profissionais</span>
+                        </div>
+                    </div>
+                }
+
+                @if(hasProcedures()) {
+                    <div class="link" [routerLink]="Route.PROCEDURES">
+                        <div class="icon">
+                            <span class="material-symbols-rounded"> contract </span>
+                        </div>
+
+                        <div class="label">
+                            <span>Procedimentos</span>
+                        </div>
+                    </div>
+                }
+                
+                @if (hasMedicalInsurances()) {
+                    <div class="link" [routerLink]="Route.MEDICAL_INSURANCES">
+                        <div class="icon">
+                            <span class="material-symbols-rounded"> handshake </span>
+                        </div>
+
+                        <div class="label">
+                            <span>Convênios</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
 </div>

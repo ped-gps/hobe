@@ -1,0 +1,41 @@
+<div id="medical-record-attachments">
+    @if (!readonly) {
+        <app-upload-files
+            (fileSelected)="onFilesReceived($event)"
+        />
+    }
+    
+    <div 
+        class="input-field media-list"
+        *ngIf="attachments && attachments.length > 0"
+    >
+        @if (attachments && attachments.length > 0) { 
+            @for(media of attachments; track media.id) {
+                <div class="image-container">
+                    <div class="image-info">
+                        <img class="image" [src]="media.path" alt="Imagem da " />
+                        @if(!media.createdByUser) {
+                            <div class="media-details">
+                                <span class="media-name" *ngIf="!media.saved">
+                                    {{ media.file?.name }}
+                                </span>
+                                <span class="media-size" *ngIf="!media.saved">
+                                    {{ media.file!.size | fileSize }}
+                                </span>
+                            </div>
+                        }
+                    </div>
+                    <p-button
+                        icon="pi pi-trash"
+                        class="button-remove"
+                        [rounded]="true"
+                        [text]="true"
+                        [raised]="true"
+                        [disabled]="readonly"
+                        (onClick)="onAttachmentRemove(media)"
+                    />
+                </div>
+            } 
+        }
+    </div>
+</div>

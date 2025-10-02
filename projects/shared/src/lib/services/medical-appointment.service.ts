@@ -1,12 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 import { AlertType } from '../enums/alert-type';
-import { HealthProfessional } from '../models/health-professional';
 import { MedicalAppointment } from '../models/medical-appointment';
+import { MedicalAppointmentDocumentPrintRequest } from '../models/medical-appointment-document-print-request';
+import { MedicalAppointmentExtractPrintRequest } from '../models/medical-appointment-extract-print-request';
 import { MedicalAppointmentOverview } from '../models/medical-appointment-overview';
 import { Page } from '../models/page';
+import { PrescribedExamsPrintRequest } from '../models/prescribed-exams-print-request';
+import { PrescribedMedicationsPrintRequest } from '../models/prescribed-medications-print-request';
+import { PrescribedVaccinesPrintRequest } from '../models/prescribed-vaccines-print-request';
+import { FileLoaded } from '../utils/file.util';
 import { AbstractService } from './abstract-service';
 import { AlertService } from './alert.service';
 
@@ -22,6 +27,21 @@ export class MedicalAppointmentService extends AbstractService<MedicalAppointmen
         protected _alertService: AlertService
     ) {
         super();
+    }
+
+    findByAppointmentId(appointmentId: string) {
+
+        return new Promise<MedicalAppointment>((resolve, reject) => {
+
+            this._http.get<MedicalAppointment>(`${this._baseURL}/appointment/${appointmentId}`).subscribe({
+                next: appointment => resolve(appointment),
+                error: err => {
+                    console.error(err);
+                    this._alertService.handleError(err);
+                    reject(err);
+                }
+            })
+        })
     }
 
     overview(
@@ -51,38 +71,93 @@ export class MedicalAppointmentService extends AbstractService<MedicalAppointmen
         });
     }
 
-    printExtract(
-        healthProfessional: HealthProfessional, 
-        medicalAppointments: Array<MedicalAppointment>,
-        startDate: string,
-        endDate: string,
-        payoutTotal: number
-    ) {
+    printDocumentsCertificates(id: string, payload: MedicalAppointmentDocumentPrintRequest): Promise<Blob> {
+        return new Promise<Blob>((resolve, reject) => {
+            this._http.post(`${this._baseURL}/${id}/documents/print`, payload,
+                {
+                    headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'Accept': 'application/pdf'
+                    }),
+                    responseType: 'blob' as 'blob'
+                }
+            ).subscribe({
+                next: (file: Blob) => resolve(file),
+                error: (err) => reject(err)
+            })
+        })
+    }
+
+    printExtract(requestBody: MedicalAppointmentExtractPrintRequest): Promise<Blob> {
+        return new Promise((resolve, reject) => {
+            this._http.post(
+                `${this._baseURL}/extract/print`,
+                requestBody,
+                {
+                    headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'Accept': 'application/pdf'
+                    }),
+                    responseType: 'blob' as 'blob'
+                }
+            ).subscribe({
+                next: (file: Blob) => resolve(file),
+                error: err => reject(err)
+            });
+        });
+    }
+
+    printPrescribedExams(id: string, payload: PrescribedExamsPrintRequest): Promise<Blob> {
 
         return new Promise<Blob>((resolve, reject) => {
+            this._http.post(`${this._baseURL}/${id}/prescription/exams/print`, payload,
+                {
+                    headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'Accept': 'application/pdf'
+                    }),
+                    responseType: 'blob' as 'blob'
+                }
+            ).subscribe({
+                next: (file: Blob) => resolve(file),
+                error: (err) => reject(err)
+            })
+        });
+    }
+    
+    printPrescribedMedications(id: string, payload: PrescribedMedicationsPrintRequest): Promise<Blob> {
 
-            const requestBody = {
-                healthProfessional,
-                medicalAppointments,
-                startDate,
-                endDate,
-                payoutTotal
-            }
+        return new Promise<Blob>((resolve, reject) => {
+            this._http.post(`${this._baseURL}/${id}/prescription/medications/print`, payload,
+                {
+                    headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'Accept': 'application/pdf'
+                    }),
+                    responseType: 'blob' as 'blob'
+                }
+            ).subscribe({
+                next: (file: Blob) => resolve(file),
+                error: (err) => reject(err)
+            })
+        });
+    }
+    
+    printPrescribedVaccines(id: string, payload: PrescribedVaccinesPrintRequest): Promise<Blob> {
 
-            this._http.post(`${this._baseURL}/extract/print`, requestBody, {
-                responseType: 'blob'
-            }).subscribe({
-
-                next: (response) => {
-                    resolve(response);
-                },
-
-                error: (error) => {
-					console.error(error);
-					this._alertService.showMessage(AlertType.ERROR, 'Erro', 'Não foi possível imprimir o extrado de atendimento!');
-					reject(error);
-				},
-            });
+        return new Promise<Blob>((resolve, reject) => {
+            this._http.post(`${this._baseURL}/${id}/prescription/vaccines/print`, payload,
+                {
+                    headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'Accept': 'application/pdf'
+                    }),
+                    responseType: 'blob' as 'blob'
+                }
+            ).subscribe({
+                next: (file: Blob) => resolve(file),
+                error: (err) => reject(err)
+            })
         });
     }
 
@@ -102,5 +177,41 @@ export class MedicalAppointmentService extends AbstractService<MedicalAppointmen
         }
     ): Promise<Page<MedicalAppointment>> {
         return super.search(page, size, sort, direction, filters, options);
+    }
+
+    updateWithFiles(
+        appointment: MedicalAppointment,
+        files: Array<FileLoaded>,
+        options?: { showSuccessMessage?: boolean; showErrorMessage?: boolean }
+    ): Promise<MedicalAppointment> {
+        return new Promise<MedicalAppointment>(async (resolve, reject) => {
+            try {
+                const updated = await super.update(appointment, {
+                    showSuccessMessage: false,
+                    showErrorMessage: options?.showErrorMessage
+                })
+
+                if (files.length) {
+                    const formData = new FormData();
+                    files.forEach(media => {
+                        if (media.file) {
+                            formData.append('attachments', media.file, media.file.name);
+                        }
+                    })
+
+                    await this._http.put(`${this._baseURL}/${updated.id}/attachments`, formData, {
+                        reportProgress: true,
+                        observe: 'events'
+                    }).toPromise()
+                }
+
+                options?.showSuccessMessage && this._alertService.handleSuccess('Consulta atualizada com sucesso!');
+                resolve(updated)
+            } catch (err) {
+                console.error(err);
+                options?.showErrorMessage && this._alertService.handleError(err);
+                reject(err);
+            }
+        });
     }
 }

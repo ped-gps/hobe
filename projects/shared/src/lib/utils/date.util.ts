@@ -8,4 +8,10 @@ export abstract class DateUtils {
         const date = new Date(dateStr.split('T')[0] + 'T00:00:00');
         return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
     }
+
+    static plusHours(date: any, hours: number) {
+        const newDate = new Date(date);
+        newDate.setHours(newDate.getHours() + hours);
+        return newDate;
+    }
 }

@@ -30,6 +30,7 @@ import { OperatorUtils } from '../../utils/operator.util';
 import { DialogClientSelectionComponent } from '../dialog-client-selection/dialog-client-selection.component';
 import { DialogProcedureSelectionComponent } from '../dialog-procedure-selection/dialog-procedure-selection.component';
 import { HintComponent } from "../hint/hint.component";
+import { User } from '../../models/user';
 
 @Component({
     selector: 'app-dialog-appointment',
@@ -55,9 +56,9 @@ export class DialogAppointmentComponent implements OnInit {
 	appointment!: Appointment;
 	healthProfessional!: HealthProfessional;
 	partner!: Partner;
-
 	medicalInsurancesOptions!: Array<SelectItem>;
 	situationOptions!: Array<SelectItem>;
+	user!: User;
 
 	selectedClient!: Client | undefined;
 	selectedMedicalInsurance!: MedicalInsurance | undefined;
@@ -65,6 +66,8 @@ export class DialogAppointmentComponent implements OnInit {
 
 	isSubmitting: boolean = false;
 	isSearching: boolean = false;
+
+	UserProfile = UserProfile;
 
 	constructor(
 		private readonly _alertService: AlertService,
@@ -273,14 +276,22 @@ export class DialogAppointmentComponent implements OnInit {
 
 	private async _fetchData() {
 		const user = await this._authenticationService.retrieveUser();
+		this.user = user;
 		
 		if (user.profile === UserProfile.PARTNER) {
 			this.partner = user;
 		}
 
-		if (user.profile === UserProfile.RECEPTIONIST) {
+		if (user.profile === UserProfile.HEALTH_PROFESSIONAL ||
+			user.profile === UserProfile.RECEPTIONIST
+		) {
 			this.partner = user.partner;
 		}
+
+		await this._retrieveMedicalInsurances();
+	}
+
+	private async _retrieveMedicalInsurances() {
 
 		const medicalInsurancesPage = await this._medicalInsuranceService.search(-1, -1, 'name', 'asc', {
 			partnerId: this.partner.id

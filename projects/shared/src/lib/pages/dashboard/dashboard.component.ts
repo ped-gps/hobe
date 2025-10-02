@@ -9,19 +9,19 @@ import { DividerModule } from 'primeng/divider';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 
-import {
-    AppointmentService,
-    AppointmentStatistics,
-    AuthenticationService,
-    DateUtils,
-    HealthProfessional,
-    HealthProfessionalService,
-    MedicalAppointment,
-    MedicalAppointmentOverview,
-    MedicalAppointmentService,
-    Partner,
-    Route
-} from '@hobe/shared';
+import { Route } from '../../enums/route';
+import { AppointmentStatistics } from '../../models/appointment-statistics';
+import { HealthProfessional } from '../../models/health-professional';
+import { MedicalAppointment } from '../../models/medical-appointment';
+import { MedicalAppointmentOverview } from '../../models/medical-appointment-overview';
+import { Partner } from '../../models/partner';
+import { User } from '../../models/user';
+import { AppointmentService } from '../../services/appointment.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { HealthProfessionalService } from '../../services/health-professional.service';
+import { MedicalAppointmentService } from '../../services/medical-appointment.service';
+import { DateUtils } from '../../utils/date.util';
+import { UserProfile } from './../../enums/user-profile';
 
 @Component({
     selector: 'app-dashboard',
@@ -43,17 +43,17 @@ export class DashboardComponent implements OnInit {
     partner!: Partner;
     appointmentStatistics!: AppointmentStatistics;
     medicalAppointmentOverview!: MedicalAppointmentOverview;
-    
     medicalAppointments!: Array<MedicalAppointment>;
-
     healthProfessionalOptions: Array<SelectItem> = [];
     selectedPeriod!: Array<Date>;
     selectedHealthProfessional!: HealthProfessional;
+    user!: User;
 
     chartData!: any;
     chartOptions!: any;
 
     Route = Route;
+    UserProfile = UserProfile;
 
     constructor(
         private readonly _authenticationService: AuthenticationService,
@@ -122,7 +122,18 @@ export class DashboardComponent implements OnInit {
     }
 
     private async _fetchData() {
-        this.partner = await this._authenticationService.retrieveUser();
+        const user = await this._authenticationService.retrieveUser();
+        this.user = user;
+        
+        if (user.profile === UserProfile.HEALTH_PROFESSIONAL) {
+            this.selectedHealthProfessional = user;
+            this.partner = user.partner;
+        }
+
+        if (user.profile === UserProfile.PARTNER) {
+            this.partner = user;
+        }
+        
         await this._retrieveHealthProfessionals();
         await this._retrieveAppointmentStatistics();
         await this._retrieveMedicalAppointmentsOverview();
@@ -201,7 +212,11 @@ export class DashboardComponent implements OnInit {
         }));
 
         if (page.totalElements > 0) {
-            this.selectedHealthProfessional = content[0];
+            if (!this.selectedHealthProfessional) {
+                this.selectedHealthProfessional = content[0];
+            } else {
+                this.selectedHealthProfessional = this.healthProfessionalOptions.find(o => o.value.id === this.selectedHealthProfessional.id)?.value;
+            }
         }
 
         this._changeDetector.detectChanges();

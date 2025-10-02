@@ -11,19 +11,17 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 
-import { 
-    AlertService, 
-    AuthenticationService, 
-    DialogHealthProfessionalComponent, 
-    DialogReceptionistComponent, 
-    HealthProfessional, 
-    HealthProfessionalService, 
-    OperatorUtils, 
-    Partner, 
-    PhonePipe, 
-    Receptionist, 
-    ReceptionistService 
-} from '@hobe/shared';
+import { DialogHealthProfessionalComponent } from '../../components/dialog-health-professional/dialog-health-professional.component';
+import { DialogReceptionistComponent } from '../../components/dialog-receptionist/dialog-receptionist.component';
+import { HealthProfessional } from '../../models/health-professional';
+import { Partner } from '../../models/partner';
+import { Receptionist } from '../../models/receptionist';
+import { PhonePipe } from '../../pipes/phone.pipe';
+import { AlertService } from '../../services/alert.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { HealthProfessionalService } from '../../services/health-professional.service';
+import { ReceptionistService } from '../../services/receptionist.service';
+import { OperatorUtils } from '../../utils/operator.util';
 
 @Component({
     selector: 'app-professionals',

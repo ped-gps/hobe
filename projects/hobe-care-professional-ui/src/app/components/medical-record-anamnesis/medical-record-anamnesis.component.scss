@@ -1,0 +1,13 @@
+#medical-record-anamnesis {
+    form {
+        gap: 0px !important;
+
+        .input-field {
+            label {
+                color: var(--color-gray) !important;
+                font-size: 14px !important;
+                font-weight: 600 !important;
+            }
+        }
+    }
+}

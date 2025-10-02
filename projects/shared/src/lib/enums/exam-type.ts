@@ -1,0 +1,6 @@
+export enum ExamType {
+    LABORATORY = "LABORATORY",
+    IMAGING = "IMAGING",
+    CARDIOLOGY = "CARDIOLOGY",
+    OTHER = "OTHER",
+}

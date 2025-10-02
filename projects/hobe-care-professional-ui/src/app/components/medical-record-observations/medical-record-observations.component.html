@@ -1,0 +1,95 @@
+<div id="medical-record-observations">
+    <main>
+        <form [formGroup]="form">
+            <div class="responsive-row">
+                <div class="responsive-col-12">
+                    <div class="input-field">
+                        <label>
+                            Observações Gerais
+                            <i
+                                class="pi pi-info-circle"
+                                pTooltip="Observações Gerais"
+                                tooltipPosition="top"
+                            ></i>
+                        </label>
+                        <textarea
+                            pTextarea
+                            formControlName="general"
+                            name="general"
+                            placeholder="Observações Gerais"
+                            [cols]="30"
+                            [rows]="5"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="responsive-row">
+                <div class="responsive-col-12">
+                    <div class="input-field">
+                        <label>
+                            Hipóteses e Análises Clínicas
+                            <i
+                                class="pi pi-info-circle"
+                                pTooltip="Anote aqui qualquer hipótese clínica ou considerações relevantes."
+                                tooltipPosition="top"
+                            ></i>
+                        </label>
+                        <textarea
+                            pTextarea
+                            formControlName="hypothesesClinicalAnalyses"
+                            name="hypothesesClinicalAnalyses"
+                            placeholder="Hipóteses e Análises Clínicas"
+                            [cols]="30"
+                            [rows]="5"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="responsive-row">
+                <div class="responsive-col-12">
+                    <div class="input-field">
+                        <label>
+                            Estratégias Terapêuticas Utilizadas
+                            <i
+                                class="pi pi-info-circle"
+                                pTooltip="Estratégias Terapêuticas Utilizadas"
+                                tooltipPosition="top"
+                            ></i>
+                        </label>
+                        <textarea
+                            pTextarea
+                            formControlName="therapeuticStrategiesUsed"
+                            name="therapeuticStrategiesUsed"
+                            placeholder="Estratégias Terapêuticas Utilizadas"
+                            [cols]="30"
+                            [rows]="5"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="responsive-row">
+                <div class="responsive-col-12">
+                    <div class="input-field">
+                        <label>
+                            Encaminhamentos e Planos Futuros
+                            <i
+                                class="pi pi-info-circle"
+                                pTooltip="Encaminhamentos e Planos Futuros"
+                                tooltipPosition="top"
+                            ></i>
+                        </label>
+                        <textarea
+                            pTextarea
+                            formControlName="forwardingFuturePlans"
+                            name="forwardingFuturePlans"
+                            placeholder="Encaminhamentos e Planos Futuros"
+                            [cols]="30"
+                            [rows]="5"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>

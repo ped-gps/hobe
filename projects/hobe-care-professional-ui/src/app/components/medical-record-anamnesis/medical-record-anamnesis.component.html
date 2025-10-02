@@ -1,0 +1,105 @@
+<div id="medical-record-anamnesis">
+    <main>
+        <form [formGroup]="form" *ngIf="form">
+            <div class="responsive-row">
+                <div class="responsive-col-6">
+                    <div class="input-field">
+                        <label for="clinicalHistory"
+                            >Antecedentes clínicos</label
+                        >
+                        <textarea
+                            pTextarea
+                            class="textarea"
+                            name="clinicalHistory"
+                            formControlName="clinicalHistory"
+                            placeholder="Antecedentes clínicos"
+                            [cols]="30"
+                            [rows]="5"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <div class="responsive-col-6">
+                    <div class="input-field">
+                        <label for="surgicalHistory"
+                            >Antecedentes cirúrgicos</label
+                        >
+                        <textarea
+                            pTextarea
+                            class="textarea"
+                            formControlName="surgicalHistory"
+                            name="surgicalHistory"
+                            placeholder="Antecedentes cirúrgicos"
+                            [cols]="30"
+                            [rows]="5"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="responsive-row">
+                <div class="responsive-col-6">
+                    <div class="input-field">
+                        <label>Antecedentes familiares</label>
+                        <textarea
+                            pTextarea
+                            class="textarea"
+                            formControlName="familyBackground"
+                            name="familyBackground"
+                            placeholder="Antecedentes familiares"
+                            [cols]="30"
+                            [rows]="5"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <div class="responsive-col-6">
+                    <div class="input-field">
+                        <label>Hábitos</label>
+                        <textarea
+                            pTextarea
+                            class="textarea"
+                            formControlName="habits"
+                            name="habits"
+                            placeholder="Hábitos"
+                            [cols]="30"
+                            [rows]="5"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="responsive-row">
+                <div class="responsive-col-6">
+                    <div class="input-field">
+                        <label>Alergias</label>
+                        <textarea
+                            pTextarea
+                            class="textarea"
+                            formControlName="allergies"
+                            name="allergies"
+                            placeholder="Alergias"
+                            [cols]="30"
+                            [rows]="5"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <div class="responsive-col-6">
+                    <div class="input-field">
+                        <label>Medicamentos em uso</label>
+                        <textarea
+                            pTextarea
+                            class="textarea"
+                            formControlName="medicationsInUse"
+                            name="medicationsInUse"
+                            placeholder="Medicamentos em uso"
+                            [cols]="30"
+                            [rows]="5"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>
