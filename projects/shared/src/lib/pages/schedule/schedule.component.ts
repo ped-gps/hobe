@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, EventContentArg } from '@fullcalendar/core/index.js';
@@ -8,19 +8,23 @@ import { SelectItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogService } from 'primeng/dynamicdialog';
 import { SelectModule } from 'primeng/select';
+import { Subscription } from 'rxjs';
 
+import { DialogAppointmentProfessionalComponent } from '../../components/dialog-appointment-professional/dialog-appointment-professional.component';
 import { DialogAppointmentComponent } from '../../components/dialog-appointment/dialog-appointment.component';
 import { UserProfile } from '../../enums/user-profile';
 import { Appointment } from '../../models/appointments';
 import { HealthProfessional } from '../../models/health-professional';
 import { Partner } from '../../models/partner';
+import { User } from '../../models/user';
 import { AppointmentService } from '../../services/appointment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { HealthProfessionalService } from '../../services/health-professional.service';
 import { AppointmentSituationUtils } from '../../utils/appointment-situation.util';
 import { DateUtils } from '../../utils/date.util';
-import { User } from '../../models/user';
-import { DialogAppointmentProfessionalComponent } from '../../components/dialog-appointment-professional/dialog-appointment-professional.component';
+import { ModelAction } from './../../enums/model-action';
+import { ModelType } from './../../enums/model-type';
+import { WebsocketService } from './../../services/websocket.service';
 
 @Component({
     selector: 'app-schedule',
@@ -34,7 +38,7 @@ import { DialogAppointmentProfessionalComponent } from '../../components/dialog-
         SelectModule,
     ],
 })
-export class ScheduleComponent implements OnInit {
+export class ScheduleComponent implements OnInit, OnDestroy {
 
     partner!: Partner;
     healthProfessionalOptions!: Array<SelectItem>;
@@ -94,29 +98,45 @@ export class ScheduleComponent implements OnInit {
 
     UserProfile = UserProfile;
 
+    private _wsTopics: string[] = [];
+  	private _subscriptions: Subscription[] = [];
+
     constructor(
         private readonly _appointmentService: AppointmentService,
         private readonly _authenticationService: AuthenticationService,
         private readonly _changeDetector: ChangeDetectorRef,
         private readonly _dialogService: DialogService,
-        private readonly _healthProfessionalService: HealthProfessionalService
+        private readonly _healthProfessionalService: HealthProfessionalService,
+        private readonly _webSocketService: WebsocketService
     ) {}
 
     async ngOnInit(): Promise<void> {
         await this._fetchData();
+        this._listenWebSocketConnection();
     }
+
+    ngOnDestroy(): void {
+		// Cancela listeners RxJS
+		this._subscriptions.forEach(sub => sub.unsubscribe());
+
+		// Cancela listeners no WebSocket
+		this._wsTopics.forEach(topic => {
+			this._webSocketService.unsubscribe(topic);
+		});
+	}
 
     onAddAppointment() {
         this._showDialogAppointment();
     }
 
-    onDateChange(startDate: Date, endDate: Date): void {
+    async onDateChange(startDate: Date, endDate: Date): Promise<void> {
         
         if (!this.selectedHealthProfessional || !this.partner) {
             return;
         }
 
-        this._retrieveAppointments(startDate, endDate);
+        await this._retrieveAppointments(startDate, endDate);
+        this._subscribeTopics();
     }
 
     onEventPress(appointment: Appointment): void {
@@ -160,6 +180,38 @@ export class ScheduleComponent implements OnInit {
             await this._retrieveAppointments();
         }
     }
+
+    private _listenMessages() {
+
+        const subscription = this._webSocketService.getMessage().subscribe(event => {
+
+            if (event) {
+                const { type, object, action } = event;
+
+                if (type === ModelType.APPOINTMENT) {
+                    const appointment: Appointment = object;
+
+                    if (action === ModelAction.UPDATE) {
+                        this._updateAppointmentOnCalendar(appointment);
+                    }
+                }
+            }
+        });
+
+        this._subscriptions.push(subscription);
+    }
+
+    private _listenWebSocketConnection() {
+
+		const subscription = this._webSocketService.getConnected().subscribe(async connected => {
+			if (connected) {
+                this._listenMessages();
+				this._subscribeTopics();
+			}
+		});
+
+		this._subscriptions.push(subscription);
+	}
 
     private async _retrieveAppointments(startDate?: Date, endDate?: Date) {
 
@@ -253,5 +305,56 @@ export class ScheduleComponent implements OnInit {
                     }
                 });
         }
+    }
+
+    private _subscribeTopics() {
+
+        if (!this.calendarOptions.events) return;
+
+        this._wsTopics.forEach(topic => {
+			this._webSocketService.unsubscribe(topic);
+		});
+
+        // Converte para array mutável
+        const events = [...(this.calendarOptions.events as any[])];
+
+        events.forEach(async event => {
+            const topic = await this._webSocketService.subscribe(`/appointments/${event.appointment.id}`);
+            if (topic) {
+                this._wsTopics.push(topic);
+            }
+        });
+    }
+
+    private _updateAppointmentOnCalendar(appointment: Appointment) {
+        if (!this.calendarOptions.events) return;
+
+        // Converte para array mutável
+        const events = [...(this.calendarOptions.events as any[])];
+
+        const index = events.findIndex(e => e.id === appointment.id);
+        if (index !== -1) {
+            events[index] = {
+                ...events[index],
+                title: appointment.client.name,
+                start: appointment.date + 'T' + appointment.time,
+                appointment
+            };
+        } else {
+            // Caso não exista, adiciona o evento
+            events.push({
+                id: appointment.id,
+                title: appointment.client.name,
+                start: appointment.date + 'T' + appointment.time,
+                appointment
+            });
+        }
+
+        this.calendarOptions = {
+            ...this.calendarOptions,
+            events
+        };
+
+        this._changeDetector.markForCheck();
     }
 }

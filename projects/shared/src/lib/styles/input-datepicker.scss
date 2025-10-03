@@ -29,9 +29,9 @@ p-datepicker {
         .p-datepicker-next-button {
             color: var(--color-black) !important;
             border-radius: 999px;
-            padding: 16px !important;
-            height: 48px !important;
-            width: 48px !important;
+            padding: 12px !important;
+            height: 36px !important;
+            width: 36px !important;
 
             &:hover {
                 background: var(--color-blue) !important;
@@ -112,8 +112,17 @@ p-datepicker {
 
 
 .p-datepicker-time-picker {
-    .p-datepicker-increment-button {
+    .p-datepicker-increment-button,
+    .p-datepicker-decrement-button {
         color: var(--color-black) !important;
+        padding: 12px !important;
+        height: 36px !important;
+        width: 36px !important;
+
+        &:hover {
+            background-color: var(--color-blue) !important;
+            color: var(--color-white) !important;
+        }
     }
 
     .p-datepicker-hour-picker span,
