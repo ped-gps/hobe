@@ -10,16 +10,16 @@ import { TableModule } from 'primeng/table';
 import { AlertType } from '../../enums/alert-type';
 import { Client } from '../../models/client';
 import { CpfCnpjPipe } from '../../pipes/cpf-cnpj.pipe';
-import { PhonePipe } from "../../pipes/phone.pipe";
+import { PhonePipe } from '../../pipes/phone.pipe';
 import { AlertService } from '../../services/alert.service';
 import { ClientService } from '../../services/client.service';
 import { OperatorUtils } from '../../utils/operator.util';
 
 @Component({
-    selector: 'app-dialog-client-selection',
-    templateUrl: './dialog-client-selection.component.html',
-    styleUrl: './dialog-client-selection.component.scss',
-    imports: [
+	selector: 'app-dialog-client-selection',
+	templateUrl: './dialog-client-selection.component.html',
+	styleUrl: './dialog-client-selection.component.scss',
+	imports: [
 		ButtonModule,
 		CpfCnpjPipe,
 		FormsModule,
@@ -31,7 +31,6 @@ import { OperatorUtils } from '../../utils/operator.util';
 	],
 })
 export class DialogClientSelectionComponent implements OnInit {
-
 	clients!: Array<Client>;
 	isLoading: boolean = false;
 
@@ -39,10 +38,10 @@ export class DialogClientSelectionComponent implements OnInit {
 	selectedClient!: Client;
 
 	page: number = 0;
-    size: number = 10;
-    sort: string = 'name';
-    direction: string = 'asc';
-    totalElements: number = 0;
+	size: number = 10;
+	sort: string = 'name';
+	direction: string = 'asc';
+	totalElements: number = 0;
 
 	private _time!: any;
 
@@ -58,28 +57,31 @@ export class DialogClientSelectionComponent implements OnInit {
 	}
 
 	onInputChange() {
-        clearTimeout(this._time);
+		clearTimeout(this._time);
 
-        this._time = setTimeout(() => {
-            this._retrieveClients();
-        }, 500);
-    }
+		this._time = setTimeout(() => {
+			this._retrieveClients();
+		}, 500);
+	}
 
 	onPageChange(event: any) {
-        this.page = event.first / event.rows;
-        this._retrieveClients();
-    }
+		this.page = event.first / event.rows;
+		this._retrieveClients();
+	}
 
-    onSortChange(event: any) {
-        this.sort = event.field;
-        this.direction = event.order > 0 ? 'asc' : 'desc';
-        this._retrieveClients();
-    }
+	onSortChange(event: any) {
+		this.sort = event.field;
+		this.direction = event.order > 0 ? 'asc' : 'desc';
+		this._retrieveClients();
+	}
 
 	onSubmit() {
-		
 		if (!this.selectedClient) {
-			this._alertService.showMessage(AlertType.ERROR, 'Erro', 'Nenhum paciente selecionado!');
+			this._alertService.showMessage(
+				AlertType.ERROR,
+				'Erro',
+				'Nenhum paciente selecionado!',
+			);
 			return;
 		}
 
@@ -87,20 +89,18 @@ export class DialogClientSelectionComponent implements OnInit {
 	}
 
 	private async _retrieveClients() {
-
 		this.isLoading = true;
 		await OperatorUtils.delay(500);
 
 		try {
-
 			const clientsPage = await this._clientService.search(
 				this.page,
 				this.size,
 				this.sort,
 				this.direction,
 				{
-					name: this.textFilter || ''
-				}
+					name: this.textFilter || '',
+				},
 			);
 
 			this.clients = clientsPage.content;

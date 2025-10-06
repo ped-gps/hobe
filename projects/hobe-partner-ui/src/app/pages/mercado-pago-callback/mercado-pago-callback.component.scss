@@ -1,0 +1,30 @@
+#mercado-pago-callback {
+	background: url("/assets/backgrounds/pattern.png");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	#content {
+		background: var(--color-white);
+		box-shadow:
+			rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
+			rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+			rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+		border-radius: 22px;
+		padding: 24px;
+
+		.card {
+			background: transparent;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			gap: 12px;
+			margin-bottom: 0;
+			padding: 0;
+		}
+	}
+}

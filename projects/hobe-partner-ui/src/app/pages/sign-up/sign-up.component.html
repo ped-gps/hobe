@@ -1,0 +1,1310 @@
+<div id="sign-up">
+	<div class="container-form">
+		<div id="form">
+			<div class="header">
+				<div class="title">
+					<div class="logo">
+						<img src="/assets/svgs/logo.svg" alt="logo image" />
+					</div>
+				</div>
+			</div>
+			<p-stepper [(value)]="active" [linear]="true">
+				<p-step-list>
+					<p-step [value]="1">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+							let-value="value"
+						>
+							<p-button
+								icon="pi pi-user"
+								[ngClass]="
+									active === value ? 'enable' : 'disabled'
+								"
+								(onClick)="activateCallback()"
+							/>
+						</ng-template>
+					</p-step>
+
+					<p-step [value]="2">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+							let-value="value"
+						>
+							<p-button
+								icon="pi pi-map-marker"
+								[ngClass]="
+									active === value ? 'enable' : 'disabled'
+								"
+								(onClick)="activateCallback()"
+							/>
+						</ng-template>
+					</p-step>
+
+					<p-step [value]="3">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+							let-value="value"
+						>
+							<p-button
+								icon="pi pi-file-check"
+								[ngClass]="
+									active === value ? 'enable' : 'disabled'
+								"
+								(onClick)="activateCallback()"
+							/>
+						</ng-template>
+					</p-step>
+
+					<p-step [value]="4">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+							let-value="value"
+						>
+							<p-button
+								icon="pi pi-images"
+								[ngClass]="
+									active === value ? 'enable' : 'disabled'
+								"
+								(onClick)="activateCallback()"
+							/>
+						</ng-template>
+					</p-step>
+
+					<p-step [value]="5">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+							let-value="value"
+						>
+							<p-button
+								icon="pi pi-id-card"
+								[ngClass]="
+									active === value ? 'enable' : 'disabled'
+								"
+								(onClick)="activateCallback()"
+							/>
+						</ng-template>
+					</p-step>
+
+					<p-step [value]="6">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+							let-value="value"
+						>
+							<p-button
+								icon="pi pi-check"
+								[ngClass]="
+									active === value ? 'enable' : 'disabled'
+								"
+								(onClick)="activateCallback()"
+							/>
+						</ng-template>
+					</p-step>
+				</p-step-list>
+				<p-step-panels>
+					<p-step-panel [value]="1" *ngIf="active === 1">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+						>
+							<form
+								[formGroup]="firstStepForm"
+								*ngIf="firstStepForm"
+							>
+								<div class="responsive-row">
+									<div class="responsive-col-12">
+										<div class="input-field">
+											<label for="name">Nome</label>
+											<input
+												pInputText
+												formControlName="name"
+												placeholder="Nome"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														firstStepForm,
+														'name'
+													)
+												"
+												[visible]="
+													hasError(
+														firstStepForm,
+														'name'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="responsive-row">
+									<div class="responsive-col-12">
+										<div class="input-field">
+											<label for="email">E-mail</label>
+											<input
+												pInputText
+												formControlName="email"
+												placeholder="E-mail"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														firstStepForm,
+														'email'
+													)
+												"
+												[visible]="
+													hasError(
+														firstStepForm,
+														'email'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="responsive-row">
+									<div class="responsive-col-12">
+										<div class="input-field">
+											<label for="status">Tipo</label>
+											<p-select
+												name="type"
+												formControlName="type"
+												placeholder="Tipo"
+												[options]="typeOptions"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														firstStepForm,
+														'type'
+													)
+												"
+												[visible]="
+													hasError(
+														firstStepForm,
+														'type'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="responsive-row">
+									<div class="responsive-col-6">
+										<div class="input-field">
+											<label for="cnpj">CPF/CNPJ</label>
+											<input
+												pInputText
+												formControlName="cnpj"
+												placeholder="CPF/CNPJ"
+												mask="CPF_CNPJ"
+												maxlength="18"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														firstStepForm,
+														'cnpj'
+													)
+												"
+												[visible]="
+													hasError(
+														firstStepForm,
+														'cnpj'
+													)
+												"
+											/>
+										</div>
+									</div>
+									<div class="responsive-col-6">
+										<div class="input-field">
+											<label for="phone">Telefone</label>
+											<input
+												pInputText
+												mask="(00) 0000-0000||(00) 0 0000-0000"
+												formControlName="phone"
+												placeholder="Telefone"
+												
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														firstStepForm,
+														'phone'
+													)
+												"
+												[visible]="
+													hasError(
+														firstStepForm,
+														'phone'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="responsive-row">
+									<div class="responsive-col-6">
+										<div class="input-field">
+											<label for="password">Senha</label>
+											<p-password
+												formControlName="password"
+												autocomplete="new-password"
+												placeholder="Senha"
+												[toggleMask]="true"
+												[feedback]="false"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														firstStepForm,
+														'password'
+													)
+												"
+												[visible]="
+													hasError(
+														firstStepForm,
+														'password'
+													)
+												"
+											/>
+										</div>
+									</div>
+									<div class="responsive-col-6">
+										<div class="input-field">
+											<label for="confirmPassword"
+												>Confirmar Senha</label
+											>
+											<p-password
+												formControlName="confirmPassword"
+												[toggleMask]="true"
+												[feedback]="false"
+												autocomplete="new-password"
+												placeholder="Confirme a Senha"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														firstStepForm,
+														'confirmPassword'
+													)
+												"
+												[visible]="
+													hasError(
+														firstStepForm,
+														'confirmPassword'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+							</form>
+							<div
+								style="display: flex; justify-content: flex-end"
+							>
+								<p-button
+									label="Próximo"
+									icon="pi pi-arrow-right"
+									iconPos="right"
+									class="button-blue-white"
+									[disabled]="
+										firstStepForm.invalid &&
+										!verifyPasswords()
+									"
+									(onClick)="activateCallback(2)"
+								/>
+							</div>
+						</ng-template>
+					</p-step-panel>
+
+					<p-step-panel [value]="2" *ngIf="active === 2">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+						>
+							<form
+								[formGroup]="thirdStepForm"
+								*ngIf="thirdStepForm"
+							>
+								<div class="responsive-row">
+									<div class="responsive-col-12">
+										<div class="input-field">
+											<label for="zipCode">CEP</label>
+											<p-inputMask
+												mask="99999-999"
+												formControlName="zipCode"
+												(onComplete)="
+													handleZipCodeComplete()
+												"
+												[unmask]="true"
+												placeholder="CEP"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														thirdStepForm,
+														'zipCode'
+													)
+												"
+												[visible]="
+													hasError(
+														thirdStepForm,
+														'zipCode'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="responsive-row">
+									<div class="responsive-col-12">
+										<div class="input-field">
+											<label for="street">Rua</label>
+											<input
+												pInputText
+												formControlName="street"
+												placeholder="Rua"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														thirdStepForm,
+														'street'
+													)
+												"
+												[visible]="
+													hasError(
+														thirdStepForm,
+														'street'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="responsive-row">
+									<div class="responsive-col-6">
+										<div class="input-field">
+											<label for="neighborhood"
+												>Bairro</label
+											>
+											<input
+												pInputText
+												formControlName="neighborhood"
+												placeholder="Bairro"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														thirdStepForm,
+														'neighborhood'
+													)
+												"
+												[visible]="
+													hasError(
+														thirdStepForm,
+														'neighborhood'
+													)
+												"
+											/>
+										</div>
+									</div>
+									<div class="responsive-col-6">
+										<div class="input-field">
+											<label for="city">Cidade</label>
+											<input
+												pInputText
+												formControlName="city"
+												placeholder="Cidade"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														thirdStepForm,
+														'city'
+													)
+												"
+												[visible]="
+													hasError(
+														thirdStepForm,
+														'city'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="responsive-row">
+									<div class="responsive-col-6">
+										<div class="input-field">
+											<label for="state">Estado</label>
+											<p-select
+												formControlName="state"
+												placeholder="Estado"
+												[options]="stateOptions"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														thirdStepForm,
+														'state'
+													)
+												"
+												[visible]="
+													hasError(
+														thirdStepForm,
+														'state'
+													)
+												"
+											/>
+										</div>
+									</div>
+									<div class="responsive-col-6">
+										<div class="input-field">
+											<label for="country">País</label>
+											<p-select
+												formControlName="country"
+												placeholder="País"
+												[options]="countryOptions"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														thirdStepForm,
+														'country'
+													)
+												"
+												[visible]="
+													hasError(
+														thirdStepForm,
+														'country'
+													)
+												"
+											></app-hint>
+										</div>
+									</div>
+								</div>
+								<div class="responsive-row">
+									<div class="responsive-col-6">
+										<div class="input-field">
+											<label for="number">Número</label>
+											<input
+												pInputText
+												formControlName="number"
+												placeholder="Número"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														thirdStepForm,
+														'number'
+													)
+												"
+												[visible]="
+													hasError(
+														thirdStepForm,
+														'number'
+													)
+												"
+											/>
+										</div>
+									</div>
+									<div class="responsive-col-6">
+										<div class="input-field">
+											<label for="complement"
+												>Referência</label
+											>
+											<input
+												pInputText
+												formControlName="complement"
+												placeholder="Referência"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														thirdStepForm,
+														'complement'
+													)
+												"
+												[visible]="
+													hasError(
+														thirdStepForm,
+														'complement'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+							</form>
+							<div class="button-container">
+								<p-button
+									label="Voltar"
+									icon="pi pi-arrow-left"
+									class="back-button"
+									severity="secondary"
+									(onClick)="activateCallback(1)"
+								/>
+
+								<p-button
+									label="Próximo"
+									icon="pi pi-arrow-right"
+									iconPos="right"
+									class="button-blue-white"
+									[disabled]="thirdStepForm.invalid"
+									(onClick)="activateCallback(3)"
+								/>
+							</div>
+						</ng-template>
+					</p-step-panel>
+
+					<p-step-panel [value]="3" *ngIf="active === 3">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+						>
+							<form
+								[formGroup]="secondStepForm"
+								*ngIf="secondStepForm"
+							>
+								<div class="responsive-row">
+									<div class="responsive-col-12">
+										<div class="input-field">
+											<label for="administratorName"
+												>Nome (Socio
+												administrador)</label
+											>
+											<input
+												pInputText
+												formControlName="administratorName"
+												placeholder="Nome"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														secondStepForm,
+														'administratorName'
+													)
+												"
+												[visible]="
+													hasError(
+														secondStepForm,
+														'administratorName'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="responsive-row">
+									<div class="responsive-col-4">
+										<div class="input-field">
+											<label for="administratorEmail"
+												>E-mail pessoal</label
+											>
+											<input
+												pInputText
+												formControlName="administratorEmail"
+												placeholder="E-mail"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														secondStepForm,
+														'administratorEmail'
+													)
+												"
+												[visible]="
+													hasError(
+														secondStepForm,
+														'administratorEmail'
+													)
+												"
+											/>
+										</div>
+									</div>
+									<div class="responsive-col-4">
+										<div class="input-field">
+											<label for="administratorPhone"
+												>Telefone</label
+											>
+											<p-inputMask
+												mask="(99) 99999-9999"
+												formControlName="administratorPhone"
+												[unmask]="true"
+												placeholder="Telefone"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														secondStepForm,
+														'administratorPhone'
+													)
+												"
+												[visible]="
+													hasError(
+														secondStepForm,
+														'administratorPhone'
+													)
+												"
+											/>
+										</div>
+									</div>
+									<div class="responsive-col-4">
+										<div class="input-field">
+											<label for="administratorCpf"
+												>CPF do sócio
+												administrador</label
+											>
+											<p-inputMask
+												formControlName="administratorCpf"
+												mask="999.999.999-99"
+												placeholder="CPF"
+												[unmask]="true"
+												[maxlength]="14"
+											/>
+											<app-hint
+												[isError]="true"
+												[message]="
+													getErrorMessage(
+														secondStepForm,
+														'administratorCpf'
+													)
+												"
+												[visible]="
+													hasError(
+														secondStepForm,
+														'administratorCpf'
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+
+								<div class="responsive-row">
+									<div class="responsive-col-12">
+										<div class="input-field">
+											<label for="files"
+												>Anexar comprovante de CNPJ e
+												CPF do sócio
+												administrador</label
+											>
+											<div class="upload-container">
+												<app-upload-files
+													(fileSelected)="
+														handleFileSelected(
+															$event
+														)
+													"
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div
+									class="responsive-row"
+									*ngIf="files?.length"
+								>
+									<div class="responsive-col-12">
+										<div class="input-field">
+											<label>Arquivos</label>
+											<div class="files-list">
+												<div
+													class="file-item"
+													*ngFor="let file of files"
+												>
+													<div class="file-info">
+														<img
+															*ngIf="
+																file.path &&
+																!file.file?.name?.endsWith(
+																	'.pdf'
+																)
+															"
+															[src]="file.path"
+															alt="File preview"
+															class="file-preview"
+														/>
+														<img
+															*ngIf="
+																!file.path ||
+																file.file?.name?.endsWith(
+																	'.pdf'
+																)
+															"
+															src="/assets/svgs/file.svg"
+															alt="File"
+															class="file-icon"
+														/>
+														<div
+															class="file-details"
+														>
+															<span
+																class="file-name"
+																>{{
+																	file.file
+																		?.name
+																}}</span
+															>
+															<span
+																class="file-size"
+																>{{
+																	file.file
+																		?.size ||
+																		0
+																		| fileSize
+																}}</span
+															>
+														</div>
+													</div>
+													<p-button
+														icon="pi pi-trash"
+														[rounded]="true"
+														[text]="true"
+														[raised]="true"
+														class="button-icon button-orange-white"
+														(onClick)="
+															handleRemoveFile(
+																file
+															)
+														"
+													/>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+							<div class="button-container">
+								<p-button
+									label="Voltar"
+									icon="pi pi-arrow-left"
+									class="back-button"
+									severity="secondary"
+									(onClick)="activateCallback(2)"
+								/>
+
+								<p-button
+									label="Próximo"
+									icon="pi pi-arrow-right"
+									iconPos="right"
+									class="button-blue-white"
+									[disabled]="
+										secondStepForm.invalid || !verifyFiles()
+									"
+									(onClick)="activateCallback(4)"
+								/>
+							</div>
+						</ng-template>
+					</p-step-panel>
+
+					<p-step-panel [value]="4" *ngIf="active === 4">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+						>
+							<div class="responsive-row">
+								<div class="responsive-col-12">
+									<div class="input-field">
+										<label for="establishmentFiles"
+											>Imagens da sede ou estabelecimento
+											comercial</label
+										>
+										<div class="upload-container">
+											<app-upload-files
+												(fileSelected)="
+													handleEstablishmentFileSelected(
+														$event
+													)
+												"
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div
+								class="responsive-row"
+								*ngIf="establishmentFiles?.length"
+							>
+								<div class="responsive-col-12">
+									<div class="input-field">
+										<label>Imagens</label>
+										<div class="files-list">
+											<div
+												class="file-item"
+												*ngFor="
+													let file of establishmentFiles
+												"
+											>
+												<div class="file-info">
+													<img
+														*ngIf="
+															file.path &&
+															!file.file?.name?.endsWith(
+																'.pdf'
+															)
+														"
+														[src]="file.path"
+														alt="File preview"
+														class="file-preview"
+													/>
+													<img
+														*ngIf="
+															!file.path ||
+															file.file?.name?.endsWith(
+																'.pdf'
+															)
+														"
+														src="/assets/svgs/file.svg"
+														alt="File"
+														class="file-icon"
+													/>
+													<div class="file-details">
+														<span
+															class="file-name"
+															>{{
+																file.file?.name
+															}}</span
+														>
+														<span
+															class="file-size"
+															>{{
+																file.file
+																	?.size || 0
+																	| fileSize
+															}}</span
+														>
+													</div>
+												</div>
+												<p-button
+													icon="pi pi-trash"
+													class="button-icon button-orange-white"
+													[rounded]="true"
+													[text]="true"
+													[raised]="true"
+													(onClick)="
+														handleRemoveEstablishmentFile(
+															file
+														)
+													"
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="button-container">
+								<p-button
+									label="Voltar"
+									icon="pi pi-arrow-left"
+									class="back-button"
+									severity="secondary"
+									(onClick)="activateCallback(3)"
+								/>
+
+								<p-button
+									label="Próximo"
+									icon="pi pi-arrow-right"
+									iconPos="right"
+									class="button-blue-white"
+									[disabled]="!verifyEstablishmentFiles()"
+									(onClick)="activateCallback(5)"
+								/>
+							</div>
+						</ng-template>
+					</p-step-panel>
+
+					<p-step-panel [value]="5" *ngIf="active === 5">
+						<ng-template
+							#content
+							let-activateCallback="activateCallback"
+						>
+							<div class="review-container">
+								<!-- Bloco 1: Informações da empresa -->
+								<div class="info-block">
+									<div class="block-header">
+										<h4>Informações da empresa</h4>
+										<button
+											type="button"
+											class="square-edit"
+											(click)="active = 0"
+										>
+											<span
+												class="material-symbols-rounded"
+												>edit_square</span
+											>
+										</button>
+									</div>
+									<div class="block-content">
+										<div class="field-row">
+											<span class="field-label"
+												>Nome:</span
+											>
+											<span class="field-value">{{
+												firstStepForm.get("name")?.value
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>Telefone:</span
+											>
+											<span class="field-value">{{
+												firstStepForm.get("phone")
+													?.value | phone
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>Email:</span
+											>
+											<span class="field-value">{{
+												firstStepForm.get("email")
+													?.value
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>Tipo:</span
+											>
+											<span class="field-value">{{
+												getTypeFriendlyName(
+													firstStepForm.get("type")
+														?.value
+												)
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>CPF/CNPJ:</span
+											>
+											<span class="field-value">{{
+												firstStepForm.get("cnpj")?.value
+													| cpfCnpj
+											}}</span>
+										</div>
+									</div>
+								</div>
+
+								<!-- Bloco 2: Endereço -->
+								<div class="info-block">
+									<div class="block-header">
+										<h4>Endereço</h4>
+										<button
+											class="square-edit"
+											(click)="active = 2"
+										>
+											<span
+												class="material-symbols-rounded"
+												>edit_square</span
+											>
+										</button>
+									</div>
+									<div class="block-content">
+										<div class="field-row">
+											<span class="field-label"
+												>CEP:</span
+											>
+											<span class="field-value">{{
+												thirdStepForm.get("zipCode")
+													?.value | zipCode
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>Logradouro:</span
+											>
+											<span class="field-value">{{
+												thirdStepForm.get("street")
+													?.value
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>Bairro:</span
+											>
+											<span class="field-value">{{
+												thirdStepForm.get(
+													"neighborhood"
+												)?.value
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>Cidade:</span
+											>
+											<span class="field-value">{{
+												thirdStepForm.get("city")?.value
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>Número:</span
+											>
+											<span class="field-value">{{
+												thirdStepForm.get("number")
+													?.value
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>Estado:</span
+											>
+											<span class="field-value">{{
+												getStateFriendlyName(
+													thirdStepForm.get("state")
+														?.value
+												)
+											}}</span>
+										</div>
+									</div>
+								</div>
+
+								<!-- Bloco 3: Informações do sócio administrador -->
+								<div class="info-block">
+									<div class="block-header">
+										<h4>
+											Informações do sócio administrador
+										</h4>
+										<button
+											class="square-edit"
+											(click)="active = 3"
+										>
+											<span
+												class="material-symbols-rounded"
+												>edit_square</span
+											>
+										</button>
+									</div>
+									<div class="block-content">
+										<div class="field-row">
+											<span class="field-label"
+												>Nome:</span
+											>
+											<span class="field-value">{{
+												secondStepForm.get(
+													"administratorName"
+												)?.value
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>Telefone:</span
+											>
+											<span class="field-value">{{
+												secondStepForm.get(
+													"administratorPhone"
+												)?.value | phone
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>Email:</span
+											>
+											<span class="field-value">{{
+												secondStepForm.get(
+													"administratorEmail"
+												)?.value
+											}}</span>
+										</div>
+										<div class="field-row">
+											<span class="field-label"
+												>CPF:</span
+											>
+											<span class="field-value">{{
+												secondStepForm.get(
+													"administratorCpf"
+												)?.value | cpfCnpj
+											}}</span>
+										</div>
+									</div>
+								</div>
+
+								<!-- Bloco 4: Imagens -->
+								<div class="info-block">
+									<div class="block-header">
+										<h4>Imagens</h4>
+										<button
+											class="square-edit"
+											(click)="active = 4"
+										>
+											<span
+												class="material-symbols-rounded"
+												>edit_square</span
+											>
+										</button>
+									</div>
+									<div class="block-content">
+										<div
+											class="files-preview"
+											*ngIf="
+												files?.length ||
+													establishmentFiles?.length;
+												else noFiles
+											"
+										>
+											<!-- Documentos (CNPJ e CPF) -->
+											<div
+												class="file-preview-item"
+												*ngFor="let file of files"
+											>
+												<img
+													*ngIf="
+														file.path &&
+														!file.file?.name?.endsWith(
+															'.pdf'
+														)
+													"
+													[src]="file.path"
+													alt="Preview"
+													class="preview-image"
+												/>
+												<img
+													*ngIf="
+														!file.path ||
+														file.file?.name?.endsWith(
+															'.pdf'
+														)
+													"
+													src="/assets/svgs/file.svg"
+													alt="File"
+													class="preview-icon"
+												/>
+												<div class="file-info">
+													<span class="file-name">{{
+														file.file?.name
+													}}</span>
+													<span class="file-size"
+														>Tamanho:
+														{{
+															file.file?.size || 0
+																| fileSize
+														}}</span
+													>
+												</div>
+											</div>
+											<!-- Imagens da sede -->
+											<div
+												class="file-preview-item"
+												*ngFor="
+													let file of establishmentFiles
+												"
+											>
+												<img
+													[src]="file.path"
+													alt="Preview"
+													class="preview-image"
+												/>
+												<div class="file-info">
+													<span class="file-name">{{
+														file.file?.name
+													}}</span>
+													<span class="file-size"
+														>Tamanho:
+														{{
+															file.file?.size || 0
+																| fileSize
+														}}</span
+													>
+												</div>
+											</div>
+										</div>
+										<ng-template #noFiles>
+											<span class="no-files"
+												>Nenhum arquivo enviado</span
+											>
+										</ng-template>
+									</div>
+								</div>
+							</div>
+
+							<p-button
+								label="Confirmar Cadastro"
+								icon="pi pi-arrow-right"
+								iconPos="right"
+								class="button-blue-white"
+								(onClick)="onSubmit()"
+								[disabled]="isSubmitting"
+							/>
+						</ng-template>
+					</p-step-panel>
+
+					<p-step-panel [value]="6" *ngIf="active === 6">
+						<ng-template #content>
+							<div class="card">
+								<div class="account-validation">
+									<div class="responsive-row">
+										<div class="responsive-col-12">
+											<div class="input-field">
+												<label for="code"
+													>Código de
+													verificação</label
+												>
+												<p-inputOtp
+													[length]="6"
+													[integerOnly]="true"
+													[(ngModel)]="validationCode"
+													[ngModelOptions]="{
+														standalone: true,
+													}"
+												/>
+											</div>
+										</div>
+									</div>
+
+									<div class="responsive-row">
+										<div class="responsive-col-6">
+											<p-button
+												label="Reenviar código"
+												class="button-gray-white"
+												[disabled]="isSubmitting"
+												(onClick)="onResendCode()"
+											/>
+										</div>
+
+										<div class="responsive-col-6">
+											<p-button
+												label="Enviar"
+												class="button-blue-white"
+												[disabled]="isSubmitting"
+												(onClick)="onValidate()"
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</ng-template>
+					</p-step-panel>
+				</p-step-panels>
+			</p-stepper>
+		</div>
+	</div>
+</div>

@@ -1,12 +1,23 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+	FormArray,
+	FormBuilder,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DatePicker } from "primeng/datepicker";
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DatePicker } from 'primeng/datepicker';
+import {
+	DialogService,
+	DynamicDialogConfig,
+	DynamicDialogRef,
+} from 'primeng/dynamicdialog';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { InputNumber, InputNumberModule } from "primeng/inputnumber";
+import { InputNumber, InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 
@@ -29,14 +40,14 @@ import { FormUtils } from '../../utils/form.util';
 import { OperatorUtils } from '../../utils/operator.util';
 import { DialogClientSelectionComponent } from '../dialog-client-selection/dialog-client-selection.component';
 import { DialogProcedureSelectionComponent } from '../dialog-procedure-selection/dialog-procedure-selection.component';
-import { HintComponent } from "../hint/hint.component";
+import { HintComponent } from '../hint/hint.component';
 import { User } from '../../models/user';
 
 @Component({
-    selector: 'app-dialog-appointment',
-    templateUrl: './dialog-appointment.component.html',
-    styleUrl: './dialog-appointment.component.scss',
-    imports: [
+	selector: 'app-dialog-appointment',
+	templateUrl: './dialog-appointment.component.html',
+	styleUrl: './dialog-appointment.component.scss',
+	imports: [
 		ButtonModule,
 		FormsModule,
 		InputGroupModule,
@@ -47,11 +58,10 @@ import { User } from '../../models/user';
 		ReactiveFormsModule,
 		DatePicker,
 		HintComponent,
-		InputNumber
+		InputNumber,
 	],
 })
 export class DialogAppointmentComponent implements OnInit {
-	
 	form!: FormGroup;
 	appointment!: Appointment;
 	healthProfessional!: HealthProfessional;
@@ -79,28 +89,35 @@ export class DialogAppointmentComponent implements OnInit {
 		private readonly _dialogService: DialogService,
 		private readonly _formBuilder: FormBuilder,
 		private readonly _medicalInsuranceService: MedicalInsuranceService,
-	) { }
+	) {}
 
 	async ngOnInit(): Promise<void> {
 		this.appointment = this._dialogConfig.data['appointment'];
 		this.healthProfessional = this._dialogConfig.data['healthProfessional'];
 
 		if (!this.healthProfessional) {
-			this._alertService.showMessage(AlertType.ERROR, 'Erro', 'Nenhum profissional de saúde selecionado!');
+			this._alertService.showMessage(
+				AlertType.ERROR,
+				'Erro',
+				'Nenhum profissional de saúde selecionado!',
+			);
 			this._dialogRef.close({ change: false });
 		}
 
 		if (this.appointment) {
-			const { client, medicalInsurance, procedure, service } = this.appointment;
+			const { client, medicalInsurance, procedure, service } =
+				this.appointment;
 			this.selectedClient = client;
 			this.selectedMedicalInsurance = medicalInsurance;
-			this.selectedProcedure = procedure || service;				
+			this.selectedProcedure = procedure || service;
 		}
 
-		this.situationOptions = Object.values(AppointmentSituation).map(value => ({
-			label: AppointmentSituationUtils.getFriendlyName(value),
-			value: value
-		}));
+		this.situationOptions = Object.values(AppointmentSituation).map(
+			(value) => ({
+				label: AppointmentSituationUtils.getFriendlyName(value),
+				value: value,
+			}),
+		);
 
 		await this._fetchData();
 		this._buildForm();
@@ -108,20 +125,23 @@ export class DialogAppointmentComponent implements OnInit {
 	}
 
 	getErrorMessage(form: FormGroup | FormArray, controlName: string) {
-        return FormUtils.getErrorMessage(form, controlName);
-    }
-
-    hasError(form: FormGroup | FormArray, controlName: string) {
-        return FormUtils.hasError(form, controlName);
-    }
-
-	isAppointmentConcluded() {
-		return this.appointment && this.appointment.situation === AppointmentSituation.CONCLUDED;
+		return FormUtils.getErrorMessage(form, controlName);
 	}
 
-    onClose() {
-        this._dialogRef.close({ change: false });
-    }
+	hasError(form: FormGroup | FormArray, controlName: string) {
+		return FormUtils.hasError(form, controlName);
+	}
+
+	isAppointmentConcluded() {
+		return (
+			this.appointment &&
+			this.appointment.situation === AppointmentSituation.CONCLUDED
+		);
+	}
+
+	onClose() {
+		this._dialogRef.close({ change: false });
+	}
 
 	onMedicalInsuranceChange(event: any) {
 		this.selectedMedicalInsurance = event.value;
@@ -129,61 +149,60 @@ export class DialogAppointmentComponent implements OnInit {
 	}
 
 	onSelectClientPress() {
-
-		this._dialogService.open(DialogClientSelectionComponent, {
-			draggable: true,
-			modal: true,
-			header: 'Seleção de Paciente',
-			closable: true,
-			closeOnEscape: false,
-			styleClass: 'dialog-client-selection',
-		})
-		.onClose.subscribe((result) => {
-			if (result && result.client) {
-				const { client } = result;
-				this.form.get('client')?.patchValue(client);
-				this.selectedClient = client;
-				this._changeDetector.detectChanges();
-			}
-		});
+		this._dialogService
+			.open(DialogClientSelectionComponent, {
+				draggable: true,
+				modal: true,
+				header: 'Seleção de Paciente',
+				closable: true,
+				closeOnEscape: false,
+				styleClass: 'dialog-client-selection',
+			})
+			.onClose.subscribe((result) => {
+				if (result && result.client) {
+					const { client } = result;
+					this.form.get('client')?.patchValue(client);
+					this.selectedClient = client;
+					this._changeDetector.detectChanges();
+				}
+			});
 	}
 
 	onSelectProcedurePress() {
+		this._dialogService
+			.open(DialogProcedureSelectionComponent, {
+				draggable: true,
+				modal: true,
+				header: 'Seleção de Procedimento',
+				closable: true,
+				closeOnEscape: false,
+				styleClass: 'dialog-procedure-selection',
+				data: {
+					healthProfessional: this.healthProfessional,
+					medicalInsurance: this.selectedMedicalInsurance,
+					partner: this.partner,
+				},
+			})
+			.onClose.subscribe((result) => {
+				if (result && result.procedure) {
+					const { procedure } = result;
 
-		this._dialogService.open(DialogProcedureSelectionComponent, {
-			draggable: true,
-			modal: true,
-			header: 'Seleção de Procedimento',
-			closable: true,
-			closeOnEscape: false,
-			styleClass: 'dialog-procedure-selection',
-			data: {
-				healthProfessional: this.healthProfessional,
-				medicalInsurance: this.selectedMedicalInsurance,
-				partner: this.partner
-			}
-		})
-		.onClose.subscribe((result) => {
-			if (result && result.procedure) {
-				const { procedure } = result;
+					if (procedure.type === 'PROCEDURE') {
+						this.form.get('procedure')?.patchValue(procedure);
+					}
 
-				if (procedure.type === 'PROCEDURE') {
-					this.form.get('procedure')?.patchValue(procedure);
+					if (procedure.type === 'SERVICE') {
+						this.form.get('service')?.patchValue(procedure);
+					}
+
+					this.form.get('value')?.patchValue(procedure.value);
+					this.selectedProcedure = result.procedure;
+					this._changeDetector.detectChanges();
 				}
-
-				if (procedure.type === 'SERVICE') {
-					this.form.get('service')?.patchValue(procedure);
-				}
-				
-				this.form.get('value')?.patchValue(procedure.value);
-				this.selectedProcedure = result.procedure;
-				this._changeDetector.detectChanges();
-			}
-		});
+			});
 	}
 
 	async onSubmit() {
-
 		if (this.form.invalid) {
 			FormUtils.markAsTouched(this.form);
 			FormUtils.goToInvalidFields();
@@ -192,23 +211,24 @@ export class DialogAppointmentComponent implements OnInit {
 
 		this.isSubmitting = true;
 		await OperatorUtils.delay(500);
-	
-		try {
 
-			const time = (this.form.get('time')?.value as Date).toLocaleTimeString();
-			
+		try {
+			const time = (
+				this.form.get('time')?.value as Date
+			).toLocaleTimeString();
+
 			const appointment: Appointment = {
 				...(this.appointment || {}),
 				...this.form.getRawValue(),
 				location: {
 					...this.partner.address,
-					id: undefined
+					id: undefined,
 				},
 				partner: {
-					id: this.partner.id
+					id: this.partner.id,
 				},
-				time: time
-			}
+				time: time,
+			};
 
 			if (appointment.id) {
 				await this._appointmentService.update(appointment);
@@ -223,53 +243,55 @@ export class DialogAppointmentComponent implements OnInit {
 	}
 
 	private _buildForm() {
-
 		this.form = this._formBuilder.group({
-			service: [
-				this.appointment?.service,
-				[Validators.nullValidator]
-			],
+			service: [this.appointment?.service, [Validators.nullValidator]],
 			procedure: [
 				this.appointment?.procedure,
-				[Validators.nullValidator]
+				[Validators.nullValidator],
 			],
 			value: [
 				{
 					disabled: true,
 					value: this.appointment?.value,
 				},
-				[Validators.required, Validators.min(0)]
+				[Validators.required, Validators.min(0)],
 			],
-			client: [
-				this.appointment?.client,
-				[Validators.required]
-			],
+			client: [this.appointment?.client, [Validators.required]],
 			medicalInsurance: [
 				this.appointment?.medicalInsurance,
-				[Validators.nullValidator]
+				[Validators.nullValidator],
 			],
 			date: [
-				this.appointment?.date ? new Date(this.appointment.date + 'T00:00:00') : null,
-				[Validators.required]
+				this.appointment?.date
+					? new Date(this.appointment.date + 'T00:00:00')
+					: null,
+				[Validators.required],
 			],
 			time: [
-				this.appointment?.time ? new Date(this.appointment.date + 'T' + this.appointment.time) : null,
-				[Validators.required]
+				this.appointment?.time
+					? new Date(
+							this.appointment.date + 'T' + this.appointment.time,
+						)
+					: null,
+				[Validators.required],
 			],
 			situation: [
 				this.appointment?.situation || AppointmentSituation.PENDING,
-				[Validators.nullValidator]
+				[Validators.nullValidator],
 			],
 			healthProfessional: [
 				{
 					value: this.healthProfessional,
-					disabled: true
+					disabled: true,
 				},
-				[Validators.required]
-			]
+				[Validators.required],
+			],
 		});
 
-		if (this.appointment && this.appointment.situation === AppointmentSituation.CONCLUDED) {
+		if (
+			this.appointment &&
+			this.appointment.situation === AppointmentSituation.CONCLUDED
+		) {
 			this.form.disable({ emitEvent: false });
 		}
 	}
@@ -277,12 +299,13 @@ export class DialogAppointmentComponent implements OnInit {
 	private async _fetchData() {
 		const user = await this._authenticationService.retrieveUser();
 		this.user = user;
-		
+
 		if (user.profile === UserProfile.PARTNER) {
 			this.partner = user;
 		}
 
-		if (user.profile === UserProfile.HEALTH_PROFESSIONAL ||
+		if (
+			user.profile === UserProfile.HEALTH_PROFESSIONAL ||
 			user.profile === UserProfile.RECEPTIONIST
 		) {
 			this.partner = user.partner;
@@ -292,15 +315,17 @@ export class DialogAppointmentComponent implements OnInit {
 	}
 
 	private async _retrieveMedicalInsurances() {
+		const medicalInsurancesPage =
+			await this._medicalInsuranceService.search(-1, -1, 'name', 'asc', {
+				partnerId: this.partner.id,
+			});
 
-		const medicalInsurancesPage = await this._medicalInsuranceService.search(-1, -1, 'name', 'asc', {
-			partnerId: this.partner.id
-		});
-
-		this.medicalInsurancesOptions = medicalInsurancesPage.content.map(medicalInsurance => ({
-			label: medicalInsurance.name,
-			value: medicalInsurance
-		}));
+		this.medicalInsurancesOptions = medicalInsurancesPage.content.map(
+			(medicalInsurance) => ({
+				label: medicalInsurance.name,
+				value: medicalInsurance,
+			}),
+		);
 
 		this._changeDetector.detectChanges();
 	}

@@ -1,4 +1,4 @@
-import { Translation } from "primeng/api";
+import { Translation } from 'primeng/api';
 
 export const translation: Translation = {
 	apply: 'Aplicar',
@@ -46,4 +46,4 @@ export const translation: Translation = {
 		'Dez',
 	],
 	today: 'Hoje',
-}
+};

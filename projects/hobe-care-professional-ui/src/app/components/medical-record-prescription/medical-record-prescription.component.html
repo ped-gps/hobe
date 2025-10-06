@@ -1,256 +1,279 @@
 <div id="medical-record-prescription">
-    <p-tabs value="0">
-        <p-tablist>
-            <p-tab value="0">Medicamentos</p-tab>
-            <p-tab value="1">Exames</p-tab>
-            <p-tab value="2">Vacinas</p-tab>
-        </p-tablist>
+	<p-tabs value="0">
+		<p-tablist>
+			<p-tab value="0">Medicamentos</p-tab>
+			<p-tab value="1">Exames</p-tab>
+			<p-tab value="2">Vacinas</p-tab>
+		</p-tablist>
 
-        <p-tabpanels>
-            <p-tabpanel value="0">
-                <div class="prescribed-medications">
-                    <div class="input-field">
-                        <label>Itens da receita</label>
-                        <p-select
-                            [options]="medicationOptions"
-                            [(ngModel)]="selectedMedication"
-                            optionLabel="name"
-                            placeholder="Buscar medicamentos"
-                            [filter]="true"
-                            filterBy="name"
-                            emptyMessage="Nenhum medicamento encontrado."
-                            (onChange)="onSelectMedication($event)"
-                            (onFilter)="onMedicationSearch($event)"
-                            name="medicationSearch"
-                        >
-                            <ng-template let-medication #item>
-                                <div class="medication">
-                                    <p>{{medication.name}}</p>
-                                    <div class="group">
-                                        <p-chip [label]="medication.activeIngredient" />
-                                        <p-chip [label]="medication.dosage" />
-                                        <p-chip [label]="medication.pharmaceuticalForm | pharmaceuticalForm" />
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </p-select>
-                    </div>
+		<p-tabpanels>
+			<p-tabpanel value="0">
+				<div class="prescribed-medications">
+					<div class="input-field">
+						<label>Itens da receita</label>
+						<p-select
+							[options]="medicationOptions"
+							[(ngModel)]="selectedMedication"
+							optionLabel="name"
+							placeholder="Buscar medicamentos"
+							[filter]="true"
+							filterBy="name"
+							emptyMessage="Nenhum medicamento encontrado."
+							(onChange)="onSelectMedication($event)"
+							(onFilter)="onMedicationSearch($event)"
+							name="medicationSearch"
+						>
+							<ng-template let-medication #item>
+								<div class="medication">
+									<p>{{ medication.name }}</p>
+									<div class="group">
+										<p-chip
+											[label]="
+												medication.activeIngredient
+											"
+										/>
+										<p-chip [label]="medication.dosage" />
+										<p-chip
+											[label]="
+												medication.pharmaceuticalForm
+													| pharmaceuticalForm
+											"
+										/>
+									</div>
+								</div>
+							</ng-template>
+						</p-select>
+					</div>
 
-                    @if (prescription.medications.length > 0) {
-                        <div class="list">
-                            <div
-                                class="item"
-                                *ngFor="
-                                    let item of prescription.medications;
-                                    let i = index
-                                "
-                            >
-                                <div class="header">
-                                    <div class="title">
-                                        {{ item.medication.name }}
-                                    </div>
-                                    <p-button 
-                                        *ngIf="isMedicalAppointmentInProgress()"
-                                        class="button-remove r-button"
-                                        icon="pi pi-trash"
-                                        aria-label="Remove"
-                                        (onClick)="removeMedication(i)"
-                                    />
-                                </div>
-                                <div class="actions">
-                                    <div class="input-field">
-                                        <label>Posologia</label>
-                                        <textarea
-                                            class="textarea"
-                                            id="dosage"
-                                            name="dosage"
-                                            pInputText
-                                            [(ngModel)]="item.dosage"
-                                            (ngModelChange)="emitPrescription()"
-                                        ></textarea>
-                                    </div>
-                                    <div class="input-field quantity">
-                                        <label>Quantidade</label>
-                                        <input
-                                            pInputText
-                                            placeholder="Quantidade"
-                                            type="number"
-                                            [(ngModel)]="item.quantity"
-                                            (ngModelChange)="emitPrescription()"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
+					@if (prescription.medications.length > 0) {
+						<div class="list">
+							<div
+								class="item"
+								*ngFor="
+									let item of prescription.medications;
+									let i = index
+								"
+							>
+								<div class="header">
+									<div class="title">
+										{{ item.medication.name }}
+									</div>
+									<p-button
+										*ngIf="isMedicalAppointmentInProgress()"
+										class="button-remove r-button"
+										icon="pi pi-trash"
+										aria-label="Remove"
+										(onClick)="removeMedication(i)"
+									/>
+								</div>
+								<div class="actions">
+									<div class="input-field">
+										<label>Posologia</label>
+										<textarea
+											class="textarea"
+											id="dosage"
+											name="dosage"
+											pInputText
+											[(ngModel)]="item.dosage"
+											(ngModelChange)="emitPrescription()"
+										></textarea>
+									</div>
+									<div class="input-field quantity">
+										<label>Quantidade</label>
+										<input
+											pInputText
+											placeholder="Quantidade"
+											type="number"
+											[(ngModel)]="item.quantity"
+											(ngModelChange)="emitPrescription()"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
 
-                    <div class="actions">
-                        <p-button
-                            class="button-outline-gray"
-                            label="Imprimir"
-                            icon="pi pi-print"
-                            (onClick)="onPrintPrescribedMedications()"
-                        />
-                    </div>
-                </div>
-            </p-tabpanel>
+					<div class="actions">
+						<p-button
+							class="button-outline-gray"
+							label="Imprimir"
+							icon="pi pi-print"
+							(onClick)="onPrintPrescribedMedications()"
+						/>
+					</div>
+				</div>
+			</p-tabpanel>
 
-            <p-tabpanel value="1">
-                <div class="prescribed-exams">
-                    <div class="input-field">
-                        <label>Itens do exame</label>
-                        <p-select
-                            [options]="examOptions"
-                            [(ngModel)]="selectedExam"
-                            optionLabel="name"
-                            placeholder="Buscar exames"
-                            [filter]="true"
-                            filterBy="name"
-                            emptyMessage="Nenhum exame encontrado."
-                            (onChange)="onSelectExam($event)"
-                            (onFilter)="onExamSearch($event)"
-                            name="examSearch"
-                        >
-                            <ng-template let-exam #item>
-                                <div class="exam">
-                                    <p>{{exam.name}}</p>
-                                    <div class="group">
-                                        <p-chip [label]="exam.tussCode" />
-                                        <p-chip [label]="exam.type | examType" />
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </p-select>
-                    </div>
+			<p-tabpanel value="1">
+				<div class="prescribed-exams">
+					<div class="input-field">
+						<label>Itens do exame</label>
+						<p-select
+							[options]="examOptions"
+							[(ngModel)]="selectedExam"
+							optionLabel="name"
+							placeholder="Buscar exames"
+							[filter]="true"
+							filterBy="name"
+							emptyMessage="Nenhum exame encontrado."
+							(onChange)="onSelectExam($event)"
+							(onFilter)="onExamSearch($event)"
+							name="examSearch"
+						>
+							<ng-template let-exam #item>
+								<div class="exam">
+									<p>{{ exam.name }}</p>
+									<div class="group">
+										<p-chip [label]="exam.tussCode" />
+										<p-chip
+											[label]="exam.type | examType"
+										/>
+									</div>
+								</div>
+							</ng-template>
+						</p-select>
+					</div>
 
-                    @if (prescription.exams.length > 0) {
-                        <div class="list">
-                            <div class="item" *ngFor="let item of prescription.exams; let i = index">
-                                <div class="details">
-                                    <p> {{item.exam.tussCode || ''}}</p>
-                                    <p> {{item.exam.name}}</p>
-                                    <p>{{item.exam.type | examType}}</p>
-                                </div>
-                                <div class="actions">
-                                    <div class="input-field">
-                                        <label>Quantidade</label>
-                                        <input
-                                            pInputText
-                                            placeholder="Quantidade"
-                                            type="number"
-                                            [(ngModel)]="item.quantity"
-                                            (ngModelChange)="emitPrescription()"
-                                        />
-                                    </div>
-                                    <p-button 
-                                        *ngIf="isMedicalAppointmentInProgress()"
-                                        class="button-remove"
-                                        icon="pi pi-trash"
-                                        aria-label="Remove"
-                                        (onClick)="removeExam(i)"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    }
+					@if (prescription.exams.length > 0) {
+						<div class="list">
+							<div
+								class="item"
+								*ngFor="
+									let item of prescription.exams;
+									let i = index
+								"
+							>
+								<div class="details">
+									<p>{{ item.exam.tussCode || "" }}</p>
+									<p>{{ item.exam.name }}</p>
+									<p>{{ item.exam.type | examType }}</p>
+								</div>
+								<div class="actions">
+									<div class="input-field">
+										<label>Quantidade</label>
+										<input
+											pInputText
+											placeholder="Quantidade"
+											type="number"
+											[(ngModel)]="item.quantity"
+											(ngModelChange)="emitPrescription()"
+										/>
+									</div>
+									<p-button
+										*ngIf="isMedicalAppointmentInProgress()"
+										class="button-remove"
+										icon="pi pi-trash"
+										aria-label="Remove"
+										(onClick)="removeExam(i)"
+									/>
+								</div>
+							</div>
+						</div>
+					}
 
-                    <div class="actions">
-                        <p-button
-                            class="button-outline-gray"
-                            label="Imprimir"
-                            icon="pi pi-print"
-                            (onClick)="onPrintPrescribedExams()"
-                        />
-                    </div>
-                </div>
-            </p-tabpanel>
+					<div class="actions">
+						<p-button
+							class="button-outline-gray"
+							label="Imprimir"
+							icon="pi pi-print"
+							(onClick)="onPrintPrescribedExams()"
+						/>
+					</div>
+				</div>
+			</p-tabpanel>
 
-            <p-tabpanel value="2">
-                <div class="prescribed-vaccines">
-                    <div class="input-field">
-                        <label>Itens da vacina</label>
-                        <p-select
-                            [options]="vaccineOptions"
-                            [(ngModel)]="selectedVaccine"
-                            optionLabel="name"
-                            placeholder="Buscar vacinas"
-                            [filter]="true"
-                            filterBy="name"
-                            emptyMessage="Nenhuma vacina encontrada."
-                            (onChange)="onSelectVaccine($event)"
-                            (onFilter)="onVaccineSearch($event)"
-                            name="vaccineSearch"
-                        >
-                            <ng-template let-vaccine #item>
-                                <div class="vaccine">
-                                    <p>{{vaccine.name}}</p>
-                                    <div class="group">
-                                        <p-chip [label]="vaccine.mandatory ? 'Obrigatória' : 'Não obrigatória'" />
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </p-select>
-                    </div>
+			<p-tabpanel value="2">
+				<div class="prescribed-vaccines">
+					<div class="input-field">
+						<label>Itens da vacina</label>
+						<p-select
+							[options]="vaccineOptions"
+							[(ngModel)]="selectedVaccine"
+							optionLabel="name"
+							placeholder="Buscar vacinas"
+							[filter]="true"
+							filterBy="name"
+							emptyMessage="Nenhuma vacina encontrada."
+							(onChange)="onSelectVaccine($event)"
+							(onFilter)="onVaccineSearch($event)"
+							name="vaccineSearch"
+						>
+							<ng-template let-vaccine #item>
+								<div class="vaccine">
+									<p>{{ vaccine.name }}</p>
+									<div class="group">
+										<p-chip
+											[label]="
+												vaccine.mandatory
+													? 'Obrigatória'
+													: 'Não obrigatória'
+											"
+										/>
+									</div>
+								</div>
+							</ng-template>
+						</p-select>
+					</div>
 
-                    @if(prescription.vaccines.length > 0) {
-                        <div class="list">
-                            <div
-                                class="item"
-                                *ngFor="
-                                    let item of prescription.vaccines;
-                                    let i = index
-                                "
-                            >
-                                <div class="header">
-                                    <span class="name">
-                                        {{ item.vaccine.name }}
-                                    </span>
-                                    <p-button
-                                        *ngIf="isMedicalAppointmentInProgress()"
-                                        class="button-remove"
-                                        icon="pi pi-trash"
-                                        aria-label="Remove"
-                                        (onClick)="removeVaccine(i)"
-                                    />
-                                </div>
-                                <div class="content">
-                                    <div class="input-field">
-                                        <label>Posologia</label>
-                                        <textarea
-                                            class="textarea"
-                                            id="dosage"
-                                            name="dosage"
-                                            pInputText
-                                            placeholder="Ex: Aplicar 1 dose, via intramuscular, em dose única."
-                                            [(ngModel)]="item.dosage"
-                                            (ngModelChange)="emitPrescription()"
-                                        ></textarea>
-                                    </div>
-                                    <div class="input-field quantity">
-                                        <label>Quantidade</label>
-                                        <input
-                                            pInputText
-                                            placeholder="Quantidade"
-                                            type="number"
-                                            [(ngModel)]="item.quantity"
-                                            (ngModelChange)="emitPrescription()"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
+					@if (prescription.vaccines.length > 0) {
+						<div class="list">
+							<div
+								class="item"
+								*ngFor="
+									let item of prescription.vaccines;
+									let i = index
+								"
+							>
+								<div class="header">
+									<span class="name">
+										{{ item.vaccine.name }}
+									</span>
+									<p-button
+										*ngIf="isMedicalAppointmentInProgress()"
+										class="button-remove"
+										icon="pi pi-trash"
+										aria-label="Remove"
+										(onClick)="removeVaccine(i)"
+									/>
+								</div>
+								<div class="content">
+									<div class="input-field">
+										<label>Posologia</label>
+										<textarea
+											class="textarea"
+											id="dosage"
+											name="dosage"
+											pInputText
+											placeholder="Ex: Aplicar 1 dose, via intramuscular, em dose única."
+											[(ngModel)]="item.dosage"
+											(ngModelChange)="emitPrescription()"
+										></textarea>
+									</div>
+									<div class="input-field quantity">
+										<label>Quantidade</label>
+										<input
+											pInputText
+											placeholder="Quantidade"
+											type="number"
+											[(ngModel)]="item.quantity"
+											(ngModelChange)="emitPrescription()"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
 
-                    <div class="actions">
-                        <p-button
-                            class="button-outline-gray"
-                            label="Imprimir"
-                            icon="pi pi-print"
-                            (onClick)="onPrintPrescribedVaccines()"
-                        />
-                    </div>
-                </div>
-            </p-tabpanel>
-        </p-tabpanels>
-    </p-tabs>
+					<div class="actions">
+						<p-button
+							class="button-outline-gray"
+							label="Imprimir"
+							icon="pi pi-print"
+							(onClick)="onPrintPrescribedVaccines()"
+						/>
+					</div>
+				</div>
+			</p-tabpanel>
+		</p-tabpanels>
+	</p-tabs>
 </div>

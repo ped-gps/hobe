@@ -1,55 +1,55 @@
 #schedule {
-    header {
-        margin-bottom: 24px;
+	header {
+		margin-bottom: 24px;
 
-        .title h1 {
-            color: var(--color-black);
-            font-size: 24px;
-            font-weight: 600;
-        }
-    }
+		.title h1 {
+			color: var(--color-black);
+			font-size: 24px;
+			font-weight: 600;
+		}
+	}
 
-    main {
-        .filters-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 24px;
-            margin-bottom: 24px;
+	main {
+		.filters-actions {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 24px;
+			margin-bottom: 24px;
 
-            .filters {
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-                gap: 24px;
+			.filters {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				gap: 24px;
 
-                .filter {
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-                    gap: 8px;
+				.filter {
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
+					gap: 8px;
 
-                    .label {
-                        span {
-                            color: var(--color-gray);
-                            font-size: 14px;
-                            font-weight: 600;
-                        }
-                    }
+					.label {
+						span {
+							color: var(--color-gray);
+							font-size: 14px;
+							font-weight: 600;
+						}
+					}
 
-                    .input {
-                        &.professional {
-                            width: 350px;
-                        }
-                    }
-                }
-            }
-        }
+					.input {
+						&.professional {
+							width: 350px;
+						}
+					}
+				}
+			}
+		}
 
-        .schedule {
-            background-color: var(--color-white);
-            border-radius: 10px;
-            padding: 24px;
-        }
-    }
+		.schedule {
+			background-color: var(--color-white);
+			border-radius: 10px;
+			padding: 24px;
+		}
+	}
 }

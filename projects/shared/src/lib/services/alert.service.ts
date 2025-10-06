@@ -6,53 +6,53 @@ import { AlertType } from '../enums/alert-type';
 import { HttpErrorUtils } from '../utils/http-error.util';
 
 @Injectable({
-    providedIn: 'root',
+	providedIn: 'root',
 })
 export class AlertService {
-    constructor(private readonly _dialogService: DialogService) {}
+	constructor(private readonly _dialogService: DialogService) {}
 
-    handleError(error: any) {
-        this.showMessage(
-            AlertType.ERROR,
-            'Erro',
-            HttpErrorUtils.getErrorMessage(error)
-        );
-    }
+	handleError(error: any) {
+		this.showMessage(
+			AlertType.ERROR,
+			'Erro',
+			HttpErrorUtils.getErrorMessage(error),
+		);
+	}
 
-    handleSuccess(message: string) {
-        this.showMessage(AlertType.SUCCESS, 'Confirmação', message);
-    }
+	handleSuccess(message: string) {
+		this.showMessage(AlertType.SUCCESS, 'Confirmação', message);
+	}
 
-    showMessage(type: AlertType, title: string, message: string) {
-        this._dialogService.open(DialogAlertComponent, {
-            draggable: true,
-            modal: true,
-            closeOnEscape: false,
-            data: {
-                type,
-                title,
-                message,
-            },
-            styleClass: 'dialog-alert',
-        });
-    }
+	showMessage(type: AlertType, title: string, message: string) {
+		this._dialogService.open(DialogAlertComponent, {
+			draggable: true,
+			modal: true,
+			closeOnEscape: false,
+			data: {
+				type,
+				title,
+				message,
+			},
+			styleClass: 'dialog-alert',
+		});
+	}
 
-    confirmMessage(message: string) {
-        return new Promise<boolean>((resolve) => {
-            const dialogRef = this._dialogService.open(DialogAlertComponent, {
-                draggable: true,
-                modal: true,
-                closeOnEscape: false,
-                data: {
-                    type: AlertType.ATTENTION,
-                    title: 'Confirmação',
-                    message,
-                    isConfirmation: true,
-                },
-                styleClass: 'dialog-alert',
-            });
+	confirmMessage(message: string) {
+		return new Promise<boolean>((resolve) => {
+			const dialogRef = this._dialogService.open(DialogAlertComponent, {
+				draggable: true,
+				modal: true,
+				closeOnEscape: false,
+				data: {
+					type: AlertType.ATTENTION,
+					title: 'Confirmação',
+					message,
+					isConfirmation: true,
+				},
+				styleClass: 'dialog-alert',
+			});
 
-            dialogRef.onClose.subscribe((result) => resolve(result));
-        });
-    }
+			dialogRef.onClose.subscribe((result) => resolve(result));
+		});
+	}
 }

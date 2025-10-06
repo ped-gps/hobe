@@ -1,41 +1,32 @@
 <div id="toolbar">
-    <div class="content">
-        <div class="buttons">
-            <p-button
-                class="button-icon button-transparent-gray"
-                [rounded]="true"
-                [text]="true"
-            >
-                <span class="material-symbols-rounded"> notifications </span>
-            </p-button>
-        </div>
+	<div class="content">
+		<div class="buttons">
+			<p-button
+				class="button-icon button-transparent-gray"
+				[rounded]="true"
+				[text]="true"
+			>
+				<span class="material-symbols-rounded"> notifications </span>
+			</p-button>
+		</div>
 
-        <div class="user" *ngIf="user" (click)="userMenu.toggle($event)">
-            <div class="picture">
-                <app-user-picture 
-                    [user]="user"
-                    [height]="32"
-                    [width]="32"
-                />
-            </div>
+		<div class="user" *ngIf="user" (click)="userMenu.toggle($event)">
+			<div class="picture">
+				<app-user-picture [user]="user" [height]="32" [width]="32" />
+			</div>
 
-            <div class="name">
-                <span>{{ user.name }}</span>
-            </div>
+			<div class="name">
+				<span>{{ user.name }}</span>
+			</div>
 
-            <div class="icon">
-                <span class="material-symbols-rounded">
-                    keyboard_arrow_down
-                </span>
-            </div>
-        </div>
-    </div>
+			<div class="icon">
+				<span class="material-symbols-rounded">
+					keyboard_arrow_down
+				</span>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- User Menu -->
-<p-menu 
-    #userMenu 
-    appendTo="body"
-    [model]="userMenuItems" 
-    [popup]="true" 
-/>
+<p-menu #userMenu appendTo="body" [model]="userMenuItems" [popup]="true" />

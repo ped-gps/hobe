@@ -1,5 +1,5 @@
-import { PrescribedExam } from "./prescribed-exam";
+import { PrescribedExam } from './prescribed-exam';
 
 export interface PrescribedExamsPrintRequest {
-    prescribedExams: Array<PrescribedExam>;
+	prescribedExams: Array<PrescribedExam>;
 }

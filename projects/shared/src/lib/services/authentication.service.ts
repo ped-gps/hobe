@@ -14,10 +14,9 @@ import { User } from '../models/user';
 import { AlertService } from './alert.service';
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: 'root',
 })
 export class AuthenticationService {
-
 	private readonly _baseURL: string = `${environment.API}/auth`;
 	private readonly _jwtHelper: JwtHelperService;
 	private readonly _authentication: BehaviorSubject<Authentication | null>;
@@ -27,7 +26,7 @@ export class AuthenticationService {
 		private readonly _alertService: AlertService,
 		private readonly _cookieService: CookieService,
 		private readonly _http: HttpClient,
-		private readonly _router: Router
+		private readonly _router: Router,
 	) {
 		this._jwtHelper = new JwtHelperService();
 		this._authentication = new BehaviorSubject<Authentication | null>(null);
@@ -51,11 +50,8 @@ export class AuthenticationService {
 	}
 
 	retrieveUser() {
-		
 		return new Promise<User>((resolve) => {
-
-			this._user.asObservable().subscribe(user => {
-
+			this._user.asObservable().subscribe((user) => {
 				if (user) {
 					resolve(user);
 				}
@@ -64,7 +60,6 @@ export class AuthenticationService {
 	}
 
 	async init() {
-
 		const idToken = this._cookieService.get('idToken');
 
 		if (idToken) {
@@ -76,48 +71,43 @@ export class AuthenticationService {
 	}
 
 	isAuthenticated(): boolean {
-        const idToken = this._cookieService.get('idToken');
-        return !!idToken && !this._jwtHelper.isTokenExpired(idToken);
-    }
+		const idToken = this._cookieService.get('idToken');
+		return !!idToken && !this._jwtHelper.isTokenExpired(idToken);
+	}
 
 	async logout(): Promise<void> {
-        
-        const promise = new Promise<boolean> ((resolve) => {
-            this._http.post(`${this._baseURL}/logout`, {}).subscribe({
-                complete: () => {
-                    resolve(true);
-                },
-            });
-        });
+		const promise = new Promise<boolean>((resolve) => {
+			this._http.post(`${this._baseURL}/logout`, {}).subscribe({
+				complete: () => {
+					resolve(true);
+				},
+			});
+		});
 
-        const complete = await Promise.resolve(promise);
+		const complete = await Promise.resolve(promise);
 
-        if (complete) {
-            this._router.navigate([Route.SIGN_IN]);
-        }
-    }
+		if (complete) {
+			this._router.navigate([Route.SIGN_IN]);
+		}
+	}
 
 	token(credentials: Credentials) {
+		return new Promise((resolve, reject) => {
+			this._http.post(`${this._baseURL}/token`, credentials).subscribe({
+				next: (response) => {
+					resolve(response);
+				},
 
-        return new Promise((resolve, reject) => {
-
-            this._http.post(`${this._baseURL}/token`, credentials).subscribe({
-
-                next: (response) => {
-                    resolve(response);
-                },
-
-                error: (error) => {
-                    console.error(error);
-                    this._alertService.handleError(error);
-                    reject(error);
-                }
-            });
-        });
-    }
+				error: (error) => {
+					console.error(error);
+					this._alertService.handleError(error);
+					reject(error);
+				},
+			});
+		});
+	}
 
 	private _decodeToken(idToken: string): Authentication {
-
 		const decodedToken = this._jwtHelper.decodeToken(idToken);
 		const authentication: Authentication = {
 			idToken: idToken,
@@ -128,29 +118,26 @@ export class AuthenticationService {
 		};
 
 		return authentication;
-    } 
+	}
 
 	private _getUser() {
-        
-        return new Promise<User>((resolve, reject) => {
-
+		return new Promise<User>((resolve, reject) => {
 			const { profile } = this._authentication.value!;
 
-            this._http.get<User>(`${this._baseURL}/user`).subscribe({
-
-                next: (response) => {
-                    resolve({
+			this._http.get<User>(`${this._baseURL}/user`).subscribe({
+				next: (response) => {
+					resolve({
 						...response,
-						profile: toUserProfile(profile)!
+						profile: toUserProfile(profile)!,
 					});
-                },
+				},
 
-                error: (error) => {
-                    console.error(error);
-                    this._alertService.handleError(error);
-                    reject(error);
-                }
-            });
-        });
-    }
+				error: (error) => {
+					console.error(error);
+					this._alertService.handleError(error);
+					reject(error);
+				},
+			});
+		});
+	}
 }

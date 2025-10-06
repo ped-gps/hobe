@@ -23,11 +23,10 @@ import { UserPictureComponent } from '../user-picture/user-picture.component';
 		MenuModule,
 		SkeletonModule,
 		Menu,
-		UserPictureComponent
+		UserPictureComponent,
 	],
 })
 export class ToolbarComponent implements OnInit {
-
 	public user!: HealthProfessional | Partner | Receptionist;
 	public userMenuItems!: Array<MenuItem>;
 	public isLoading: boolean = false;
@@ -35,34 +34,35 @@ export class ToolbarComponent implements OnInit {
 	constructor(
 		private readonly _authenticationService: AuthenticationService,
 		private readonly _changeDetector: ChangeDetectorRef,
-		private readonly _router: Router
-	) { }
+		private readonly _router: Router,
+	) {}
 
 	ngOnInit(): void {
-
 		this.userMenuItems = [
 			{
 				icon: PrimeIcons.USER,
 				label: 'Perfil',
 				command: () => {
 					this._router.navigate([Route.PROFILE]);
-				}
+				},
 			},
 			{
 				icon: PrimeIcons.SIGN_OUT,
 				label: 'Sair',
 				command: async () => {
 					await this._authenticationService.logout();
-				}
-			}
+				},
+			},
 		];
 
-		this._authenticationService.getAuthentication().subscribe(async authentication => {
-
-			if (authentication) {
-				this.user = await this._authenticationService.retrieveUser();
-				this._changeDetector.detectChanges();
-			}
-		});
+		this._authenticationService
+			.getAuthentication()
+			.subscribe(async (authentication) => {
+				if (authentication) {
+					this.user =
+						await this._authenticationService.retrieveUser();
+					this._changeDetector.detectChanges();
+				}
+			});
 	}
 }

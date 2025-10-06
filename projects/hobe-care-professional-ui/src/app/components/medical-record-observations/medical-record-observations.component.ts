@@ -1,34 +1,39 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+	FormBuilder,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { MedicalObservation } from '@hobe/shared';
 import { TextareaModule } from 'primeng/textarea';
 
 @Component({
-    selector: 'app-medical-record-observations',
-    templateUrl: './medical-record-observations.component.html',
-    styleUrl: './medical-record-observations.component.scss',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
+	selector: 'app-medical-record-observations',
+	templateUrl: './medical-record-observations.component.html',
+	styleUrl: './medical-record-observations.component.scss',
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
 		TextareaModule,
-        TooltipModule,
-    ],
+		TooltipModule,
+	],
 })
 export class MedicalRecordObservationsComponent implements OnInit {
-
-	@Input({ required: true }) medicalObservation: MedicalObservation | undefined;
+	@Input({ required: true }) medicalObservation:
+		| MedicalObservation
+		| undefined;
 	@Input({ required: true }) readOnly: boolean = false;
-    @Output() medicalObservationFormChange = new EventEmitter<FormGroup>();
-	
+	@Output() medicalObservationFormChange = new EventEmitter<FormGroup>();
+
 	public form!: FormGroup;
 
-	constructor(
-		private readonly _formBuilder: FormBuilder
-	) {}
+	constructor(private readonly _formBuilder: FormBuilder) {}
 
 	ngOnInit(): void {
 		this._buildForm();
@@ -39,39 +44,40 @@ export class MedicalRecordObservationsComponent implements OnInit {
 	}
 
 	private _buildForm() {
-
 		this.form = this._formBuilder.group({
 			general: [
 				{
 					value: this.medicalObservation?.general,
-					disabled: this.readOnly
+					disabled: this.readOnly,
 				},
-				[Validators.nullValidator]
+				[Validators.nullValidator],
 			],
 			hypothesesClinicalAnalyses: [
 				{
 					value: this.medicalObservation?.hypothesesClinicalAnalyses,
-					disabled: this.readOnly
+					disabled: this.readOnly,
 				},
-				[Validators.nullValidator]
+				[Validators.nullValidator],
 			],
 			therapeuticStrategiesUsed: [
 				{
 					value: this.medicalObservation?.therapeuticStrategiesUsed,
-					disabled: this.readOnly
+					disabled: this.readOnly,
 				},
-				[Validators.nullValidator]
+				[Validators.nullValidator],
 			],
 			forwardingFuturePlans: [
 				{
 					value: this.medicalObservation?.forwardingFuturePlans,
-					disabled: this.readOnly
+					disabled: this.readOnly,
 				},
-				[Validators.nullValidator]
-			]
+				[Validators.nullValidator],
+			],
 		});
 
 		this.onMedicalObservationFormChange(this.form);
-		this.form.valueChanges.subscribe(() => this.onMedicalObservationFormChange(this.form));
+		this.form.valueChanges.subscribe(() =>
+			this.onMedicalObservationFormChange(this.form),
+		);
 	}
 }

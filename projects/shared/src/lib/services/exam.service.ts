@@ -8,28 +8,28 @@ import { AbstractService } from './abstract-service';
 import { AlertService } from './alert.service';
 
 @Injectable({
-    providedIn: 'root'
+	providedIn: 'root',
 })
 export class ExamService extends AbstractService<Exam> {
-    protected _baseURL = environment.API + '/exams';
+	protected _baseURL = environment.API + '/exams';
 
-    constructor(
-        protected _http: HttpClient,
-        protected _alertService: AlertService
-    ) {
-        super();
-    }
+	constructor(
+		protected _http: HttpClient,
+		protected _alertService: AlertService,
+	) {
+		super();
+	}
 
-    override search(
-        page: number,
-        size: number,
-        sort: string,
-        direction: string,
-        filters: {
-            name?: string,
-            tussCode?: string,
-        }
-    ): Promise<Page<Exam>> {
-        return super.search(page, size, sort, direction, filters);
-    }
+	override search(
+		page: number,
+		size: number,
+		sort: string,
+		direction: string,
+		filters: {
+			name?: string;
+			tussCode?: string;
+		},
+	): Promise<Page<Exam>> {
+		return super.search(page, size, sort, direction, filters);
+	}
 }

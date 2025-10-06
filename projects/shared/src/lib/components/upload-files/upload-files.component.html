@@ -1,19 +1,17 @@
 <div class="attach-file-container">
-    <span class="icon material-symbols-rounded">
-        backup
-    </span>
-    <span>Escolha um arquivo</span>
-    <p>Formatos JPEG e PNG, até 50MB</p>
-    <input
-        type="file"
-        #fileInput
-        multiple
-        style="display: none;"
-        (change)="onFileSelected($event)"
-    >
-    <p-button
-        class="button button-outline-gray"
-        label="Procurar Arquivo"
-        (onClick)="triggerFileInput()"
-    ></p-button>
+	<span class="icon material-symbols-rounded"> backup </span>
+	<span>Escolha um arquivo</span>
+	<p>Formatos JPEG e PNG, até 50MB</p>
+	<input
+		type="file"
+		#fileInput
+		multiple
+		style="display: none"
+		(change)="onFileSelected($event)"
+	/>
+	<p-button
+		class="button button-outline-gray"
+		label="Procurar Arquivo"
+		(onClick)="triggerFileInput()"
+	></p-button>
 </div>

@@ -1,39 +1,39 @@
 <div id="medical-record-documents">
-    <main>
-        <div class="editor">
-            <div>
-                <div>
-                    <p-datepicker
-                        dateFormat="dd/mm/yy"
-                        placeholder="Selecione a data"
-                        (ngModelChange)="onDateChange()"
-                        [(ngModel)]="certificateDate"
-                        inputId="date"
-                        style="width: 200px;"
-                    />
-                </div>
-                <p-select
-                    placeholder="Modelo"
-                    [(ngModel)]="certificateModel"
-                    [options]="certificateModelOptions"
-                    (onChange)="onCertificateModelChange($event.value)"
-                />
-            </div>
+	<main>
+		<div class="editor">
+			<div>
+				<div>
+					<p-datepicker
+						dateFormat="dd/mm/yy"
+						placeholder="Selecione a data"
+						(ngModelChange)="onDateChange()"
+						[(ngModel)]="certificateDate"
+						inputId="date"
+						style="width: 200px"
+					/>
+				</div>
+				<p-select
+					placeholder="Modelo"
+					[(ngModel)]="certificateModel"
+					[options]="certificateModelOptions"
+					(onChange)="onCertificateModelChange($event.value)"
+				/>
+			</div>
 
-            <p-editor
-                name="certificateText"
-                [(ngModel)]="certificateText"
-                [style]="{ height: '180px' }"
-            />
-        </div>
+			<p-editor
+				name="certificateText"
+				[(ngModel)]="certificateText"
+				[style]="{ height: '180px' }"
+			/>
+		</div>
 
-        <div class="actions">
-            <p-button
-                class="button-outline-gray"
-                label="Imprimir"
-                icon="pi pi-print"
-                (onClick)="onPrintDocuments()"
-            />
-        </div>
-    </main>
+		<div class="actions">
+			<p-button
+				class="button-outline-gray"
+				label="Imprimir"
+				icon="pi pi-print"
+				(onClick)="onPrintDocuments()"
+			/>
+		</div>
+	</main>
 </div>

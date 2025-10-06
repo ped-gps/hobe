@@ -1,3 +1,3 @@
 export interface MedicalAppointmentDocumentPrintRequest {
-    content: string
+	content: string;
 }

@@ -1,26 +1,26 @@
 .picture {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-    &.default {
-        background: #d9dbdf;
-        border-radius: 50%;
-    }
+	&.default {
+		background: #d9dbdf;
+		border-radius: 50%;
+	}
 
-    .container {
-        position: relative;
+	.container {
+		position: relative;
 
-        .image {
-            border-radius: 999px;
-            object-fit: cover;
-            object-position: center;
-        }
+		.image {
+			border-radius: 999px;
+			object-fit: cover;
+			object-position: center;
+		}
 
-        .upload-button {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-        }
-    }
+		.upload-button {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+	}
 }

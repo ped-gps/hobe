@@ -1,0 +1,155 @@
+<div id="chats">
+	<header>
+		<app-page-header [title]="'Chats'" />
+	</header>
+
+	<main>
+		<div class="responsive-row">
+			<div class="responsive-col-6">
+				<div class="filters">
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<p-iconField iconPosition="right">
+								<p-inputIcon styleClass="pi pi-search" />
+								<input
+									pInputText
+									type="text"
+									placeholder="Pesquisar"
+									[(ngModel)]="searchText"
+									(input)="onInput()"
+								/>
+							</p-iconField>
+						</div>
+					</div>
+				</div>
+
+				@if (!isLoading) {
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div
+								class="card"
+								style="padding: 0; margin-bottom: 24px"
+							>
+								@if (chatsToShow && chatsToShow.length > 0) {
+									<div class="chats">
+										<p-dataView
+											[value]="chatsToShow"
+											[rows]="10"
+											[emptyMessage]="'Nada encontrado'"
+										>
+											<ng-template
+												pTemplate="list"
+												let-chats
+											>
+												@for (
+													chat of chats;
+													track $index
+												) {
+													<div
+														class="chat"
+														(click)="
+															onChatPress(chat)
+														"
+														[ngClass]="
+															chatSelected &&
+															chat.id ===
+																chatSelected.id
+																? 'active'
+																: ''
+														"
+													>
+														<div class="picture">
+															<img
+																[src]="
+																	chat.chatPicture
+																		? chat
+																				.chatPicture
+																				.path
+																		: '/assets/svgs/profile.svg'
+																"
+																alt="chat picture"
+															/>
+
+															@if (
+																chat.isOnline
+															) {
+																<div
+																	class="status"
+																>
+																	<span
+																		class="badge"
+																	></span>
+																</div>
+															}
+														</div>
+
+														<div class="group">
+															<div class="name">
+																<span>{{
+																	chat.chatName
+																}}</span>
+															</div>
+
+															@if (
+																chat.lastMessage
+															) {
+																<div
+																	class="lastMessage"
+																>
+																	<span>{{
+																		getLastMessageLabel(
+																			chat
+																		)
+																	}}</span>
+																</div>
+															}
+														</div>
+
+														@if (
+															chat.hasNewMessages
+														) {
+															<div
+																class="notification"
+															>
+																<div
+																	class="badge"
+																></div>
+															</div>
+														}
+													</div>
+												}
+											</ng-template>
+										</p-dataView>
+									</div>
+								} @else {
+									<div class="no-content">
+										<app-no-content />
+									</div>
+								}
+							</div>
+
+							<p-paginator
+								[rows]="rows"
+								[first]="first"
+								[totalRecords]="totalElements"
+								(onPageChange)="onPageChange($event)"
+							/>
+						</div>
+					</div>
+				} @else {
+					<div class="card">
+						<app-loading />
+					</div>
+				}
+			</div>
+
+			<div class="responsive-col-6">
+				@if (chatSelected) {
+					<div class="card">
+						<app-chat [chat]="chatSelected" />
+					</div>
+				}
+			</div>
+		</div>
+	</main>
+</div>

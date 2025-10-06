@@ -1,0 +1,122 @@
+<div id="sign-in">
+	<main>
+		<div class="card">
+			<div class="form">
+				<form [formGroup]="form" *ngIf="form">
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="logo">
+								<img
+									src="/svgs/logo.svg"
+									alt="Logo image"
+									width="200px"
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="greetings">
+								<span class="label">Bem Vindo</span>
+								<span class="description"
+									>Painel de gerenciamento para
+									parceiros</span
+								>
+							</div>
+						</div>
+					</div>
+
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="input-field">
+								<label for="username">E-mail</label>
+								<input
+									id="username"
+									pInputText
+									type="email"
+									formControlName="username"
+									placeholder="Digite seu email"
+									(keyUp.enter)="onSubmit()"
+								/>
+								<app-hint
+									[isError]="true"
+									[message]="
+										getErrorMessage(form, 'username')
+									"
+									[visible]="hasError(form, 'username')"
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="input-field">
+								<label for="password">Senha</label>
+								<p-password
+									id="password"
+									formControlName="password"
+									placeholder="Digite sua senha"
+									[feedback]="false"
+									(keyUp.enter)="onSubmit()"
+								/>
+								<app-hint
+									[isError]="true"
+									[message]="
+										getErrorMessage(form, 'password')
+									"
+									[visible]="hasError(form, 'password')"
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="forgot-password">
+								<span class="label">Esqueceu a senha?</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="submit">
+								<p-button
+									label="Login"
+									class="button-orange-white"
+									[loading]="isSubmitting"
+									(onClick)="onSubmit()"
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="register">
+								<span class="label"
+									>Ainda não tem uma conta?</span
+								>
+								<a
+									[routerLink]="'/' + Route.SIGN_UP"
+									class="link"
+									>Cadastre-se</a
+								>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="banner">
+				<img
+					src="/banners/sign-in.svg"
+					alt="Sign In Banner"
+					width="400px"
+				/>
+			</div>
+		</div>
+	</main>
+</div>

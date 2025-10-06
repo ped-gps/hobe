@@ -8,18 +8,17 @@ import { AbstractService } from './abstract-service';
 import { AlertService } from './alert.service';
 
 @Injectable({
-    providedIn: 'root',
+	providedIn: 'root',
 })
 export class ClientService extends AbstractService<Client> {
+	protected _baseURL = `${environment.API}/clients`;
 
-    protected _baseURL = `${environment.API}/clients`;
-
-    constructor(
-        protected _http: HttpClient,
-        protected _alertService: AlertService
-    ) {
-        super();
-    }
+	constructor(
+		protected _http: HttpClient,
+		protected _alertService: AlertService,
+	) {
+		super();
+	}
 
 	override search(
 		page: number,
@@ -32,7 +31,7 @@ export class ClientService extends AbstractService<Client> {
 		},
 		options?: {
 			showErrorMessage?: boolean;
-		}
+		},
 	): Promise<Page<Client>> {
 		return super.search(page, size, sort, direction, filters, options);
 	}

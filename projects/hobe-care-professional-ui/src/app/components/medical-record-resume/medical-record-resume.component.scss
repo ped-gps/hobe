@@ -1,59 +1,59 @@
 #medical-record-resume {
-    .title {
-        color: var(--color-black);
-        font-size: 16px;
-        font-weight: 600;
-    }
+	.title {
+		color: var(--color-black);
+		font-size: 16px;
+		font-weight: 600;
+	}
 
-    .accordion-content-header {
-        padding: 8px;
-        border-radius: 6px;
-        background-color: #4756852f;
-        color: var(--color-blue);
-        font-weight: 600;
-        margin-bottom: 16px;
+	.accordion-content-header {
+		padding: 8px;
+		border-radius: 6px;
+		background-color: #4756852f;
+		color: var(--color-blue);
+		font-weight: 600;
+		margin-bottom: 16px;
 
-        label {
-            color: var(--color-gray);
-            font-weight: 600;
-        }
+		label {
+			color: var(--color-gray);
+			font-weight: 600;
+		}
 
-        p {
-            color: var(--color-gray);
-        }
-    }
+		p {
+			color: var(--color-gray);
+		}
+	}
 
-    .accordion-content {
-        display: flex;
-        flex-direction: column;
-        padding: 0px 24px;
-        font-size: 15px;
+	.accordion-content {
+		display: flex;
+		flex-direction: column;
+		padding: 0px 24px;
+		font-size: 15px;
 
-        label {
-            font-size: 15px;
-            font-weight: 600;
-        }
+		label {
+			font-size: 15px;
+			font-weight: 600;
+		}
 
-        p {
-            font-size: 15px;
-            color: var(--color-gray) !important;
-        }
-    }
+		p {
+			font-size: 15px;
+			color: var(--color-gray) !important;
+		}
+	}
 
-    .history-item {
-        display: flex;
-        flex-direction: column;
-        padding: 12px 0;
-        color: var(--color-gray);
-        text-align: start;
+	.history-item {
+		display: flex;
+		flex-direction: column;
+		padding: 12px 0;
+		color: var(--color-gray);
+		text-align: start;
 
-        p {
-            font-size: 14px !important;
-            font-weight: 400;
-        }
+		p {
+			font-size: 14px !important;
+			font-weight: 400;
+		}
 
-        .name {
-            font-weight: 600;
-        }
-    }
+		.name {
+			font-weight: 600;
+		}
+	}
 }

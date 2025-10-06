@@ -10,49 +10,50 @@ import { StateUtils } from '../utils/state.util';
 import { AlertService } from './alert.service';
 
 @Injectable({
-    providedIn: 'root',
+	providedIn: 'root',
 })
 export class ViaCepService {
-
 	private readonly _baseURL = environment.VIA_CEP_API;
 
 	constructor(
 		private readonly _alertService: AlertService,
-		private readonly _http: HttpClient
+		private readonly _http: HttpClient,
 	) {}
 
 	findByCEP(cep: string) {
-
 		return new Promise<Address>((resolve, reject) => {
+			this._http
+				.get<ViaCepAddress>(`${this._baseURL}/${cep}/json`)
+				.subscribe({
+					next: (response) => {
+						if (!response.erro) {
+							const address: Address = {
+								street: response.logradouro,
+								number: '',
+								neighborhood: response.bairro,
+								complement: response.complemento,
+								city: response.localidade,
+								state: StateUtils.getStateByUf(response.uf)!,
+								zipCode: cep,
+								country: Country.BRAZIL,
+							};
 
-			this._http.get<ViaCepAddress>(`${this._baseURL}/${cep}/json`).subscribe({
-
-				next: (response) => {
-
-					if (!response.erro) {
-						const address: Address = {
-							street: response.logradouro,
-							number: "",
-							neighborhood: response.bairro,
-							complement: response.complemento,
-							city: response.localidade,
-							state: StateUtils.getStateByUf(response.uf)!,
-							zipCode: cep,
-							country: Country.BRAZIL,
+							resolve(address);
+						} else {
+							reject();
 						}
+					},
 
-						resolve(address);
-					} else {
-						reject();
-					}
-				},
-
-				error: (error) => {
-					this._alertService.showMessage(AlertType.ERROR, 'Erro', 'Não foi possível obter os dados do endereço!');
-					console.error(error);
-					reject(error);
-				},
-			});
+					error: (error) => {
+						this._alertService.showMessage(
+							AlertType.ERROR,
+							'Erro',
+							'Não foi possível obter os dados do endereço!',
+						);
+						console.error(error);
+						reject(error);
+					},
+				});
 		});
 	}
 }

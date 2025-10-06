@@ -1,5 +1,5 @@
 export enum ModelAction {
-    DELETE = "DELETE",
-    SAVE = "SAVE",
-    UPDATE = "UPDATE"
+	DELETE = 'DELETE',
+	SAVE = 'SAVE',
+	UPDATE = 'UPDATE',
 }

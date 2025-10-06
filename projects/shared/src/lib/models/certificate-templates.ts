@@ -1,5 +1,5 @@
 export const CERTIFICATE_TEMPLATES: { [key: string]: string } = {
-    'atestado-medico': `
+	'atestado-medico': `
       <h2 align="center">Atestado Médico</h2>
       <br>
       <p>
@@ -23,7 +23,7 @@ export const CERTIFICATE_TEMPLATES: { [key: string]: string } = {
       <p align="center">Assinatura e carimbo</p>
     `.trim(),
 
-    'atestado-comparecimento': `
+	'atestado-comparecimento': `
       <h2 align="center">Atestado de Comparecimento</h2>
       <br>
       <p>
@@ -41,7 +41,7 @@ export const CERTIFICATE_TEMPLATES: { [key: string]: string } = {
       <p align="center">Assinatura e carimbo</p>
     `.trim(),
 
-    'declaracao-saude': `
+	'declaracao-saude': `
       <h2 align="center">Declaração de Saúde</h2>
       <br>
       <p>
@@ -59,7 +59,7 @@ export const CERTIFICATE_TEMPLATES: { [key: string]: string } = {
       <p align="center">Assinatura e carimbo</p>
     `.trim(),
 
-    'laudo-medico': `
+	'laudo-medico': `
       <h2 align="center">Laudo Médico</h2>
       <br>
       <p>Paciente: <strong>{{paciente.nome}}</strong> &nbsp; CPF: <strong>{{paciente.cpf}}</strong></p>
@@ -75,7 +75,7 @@ export const CERTIFICATE_TEMPLATES: { [key: string]: string } = {
       <p align="center">Assinatura e carimbo</p>
     `.trim(),
 
-    'atestado-incapacidade': `
+	'atestado-incapacidade': `
       <h2 align="center">Atestado de Incapacidade Laboral</h2>
       <br>
       <p>
@@ -92,5 +92,5 @@ export const CERTIFICATE_TEMPLATES: { [key: string]: string } = {
       <br>
       <br>
       <p align="center">Assinatura e carimbo</p>
-    `.trim()
+    `.trim(),
 };

@@ -1,63 +1,62 @@
 #medical-appointments-extract {
-    
-    header {
-        margin-bottom: 24px;
+	header {
+		margin-bottom: 24px;
 
-        .title h1 {
-            color: var(--color-black);
-            font-size: 24px;
-            font-weight: 600;
-        }
-    }
+		.title h1 {
+			color: var(--color-black);
+			font-size: 24px;
+			font-weight: 600;
+		}
+	}
 
-    main {
-        .filters {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 24px;
-            margin-bottom: 24px;
+	main {
+		.filters {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 24px;
+			margin-bottom: 24px;
 
-            .filter {
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-                gap: 12px;
+			.filter {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				gap: 12px;
 
-                &.health-professional {
-                    width: 400px;
-                }
+				&.health-professional {
+					width: 400px;
+				}
 
-                &.period {
-                    width: 300px;
-                }
-            }
-        }
+				&.period {
+					width: 300px;
+				}
+			}
+		}
 
-        .table {
-            background-color: var(--color-white);
-            border-radius: 20px;
-            padding: 24px;
+		.table {
+			background-color: var(--color-white);
+			border-radius: 20px;
+			padding: 24px;
 
-            .actions {
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-                gap: 12px;
-            }
+			.actions {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				gap: 12px;
+			}
 
-            .payout-total {
-                margin-top: 24px;
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
+			.payout-total {
+				margin-top: 24px;
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
 
-                .label {
-                    color: var(--color-black);
-                    font-size: 24px;
-                    font-weight: 600;
-                }
-            }
-        }
-    }
+				.label {
+					color: var(--color-black);
+					font-size: 24px;
+					font-weight: 600;
+				}
+			}
+		}
+	}
 }

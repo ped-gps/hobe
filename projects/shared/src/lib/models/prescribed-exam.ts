@@ -1,7 +1,7 @@
-import { AbstractModel } from "./abstract-model";
-import { Exam } from "./exam";
+import { AbstractModel } from './abstract-model';
+import { Exam } from './exam';
 
 export interface PrescribedExam extends AbstractModel {
-    exam: Exam;
-    quantity: number;
+	exam: Exam;
+	quantity: number;
 }

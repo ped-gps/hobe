@@ -46,6 +46,8 @@ export * from './lib/enums/procedure-source';
 export * from './lib/enums/route';
 export * from './lib/enums/state';
 export * from './lib/enums/status';
+export * from './lib/enums/subdomain';
+export * from './lib/enums/user-profile';
 
 /* Guards */
 export * from './lib/guards/authentication.guard';
@@ -62,6 +64,7 @@ export * from './lib/models/appointments';
 export * from './lib/models/authentication';
 export * from './lib/models/certificate-models';
 export * from './lib/models/certificate-templates';
+export * from './lib/models/chat';
 export * from './lib/models/client';
 export * from './lib/models/credentials';
 export * from './lib/models/exam';
@@ -72,7 +75,10 @@ export * from './lib/models/medical-appointment-overview';
 export * from './lib/models/medical-insurance';
 export * from './lib/models/medical-observation';
 export * from './lib/models/medication';
+export * from './lib/models/message';
+export * from './lib/models/notification';
 export * from './lib/models/oauth-token';
+export * from './lib/models/object-reference';
 export * from './lib/models/page';
 export * from './lib/models/partner';
 export * from './lib/models/person';
@@ -87,6 +93,7 @@ export * from './lib/models/procedure';
 export * from './lib/models/receptionist';
 export * from './lib/models/schedule';
 export * from './lib/models/service';
+export * from './lib/models/user';
 export * from './lib/models/vaccine';
 
 /* Pages */
@@ -107,8 +114,10 @@ export * from './lib/pipes/gender.pipe';
 export * from './lib/pipes/imc-category.pipe';
 export * from './lib/pipes/pharmaceutical-form.pipe';
 export * from './lib/pipes/phone.pipe';
+export * from './lib/pipes/zipcode.pipe';
 
 /* Services */
+export * from './lib/services/address.service';
 export * from './lib/services/alert.service';
 export * from './lib/services/appointment.service';
 export * from './lib/services/authentication.service';
@@ -118,9 +127,12 @@ export * from './lib/services/health-professional.service';
 export * from './lib/services/medical-appointment.service';
 export * from './lib/services/medical-insurance.service';
 export * from './lib/services/medication.service';
+export * from './lib/services/oauth.service';
+export * from './lib/services/partner.service';
 export * from './lib/services/procedure.service';
 export * from './lib/services/receptionist.service';
 export * from './lib/services/service.service';
+export * from './lib/services/user.service';
 export * from './lib/services/vaccine.service';
 export * from './lib/services/via-cep.service';
 export * from './lib/services/websocket.service';
@@ -142,6 +154,7 @@ export * from './lib/utils/marital-status.util';
 export * from './lib/utils/medical-appointment-situation.utils';
 export * from './lib/utils/medical-specialty.util';
 export * from './lib/utils/operator.util';
+export * from './lib/utils/partner-type-utils';
 export * from './lib/utils/payout-type.util';
 export * from './lib/utils/pharmaceutical-form.utils';
 export * from './lib/utils/procedure-source.util';

@@ -1,57 +1,59 @@
 <div id="medical-record-resume">
-    <main>
-        <h1 class="title">Histórico</h1>
-        <p-accordion value="0" [multiple]="true">
-            <p-accordion-panel
-                [value]="index"
-                *ngFor="let item of medicalAppointments; let index = index"
-            >
-                <p-accordion-header>
-                    <div class="history-item">
-                        <p class="name">Por: {{healthProfessional.name}}</p>
-                        <p class="date">{{item.createdDate | date : "dd/MM/yyyy"}}</p>
-                    </div>
-                </p-accordion-header>
-                <p-accordion-content>
-                    <div class="accordion-content-header">Atendimento</div>
-                    <div class="accordion-content">
-                        <label>Antecedentes clínicos</label>
-                        <p>
-                            {{ item.mainComplaint || "-" }}
-                        </p>
-                        <label style="margin: 12px 0px 12px 0px">
-                            História da moléstia atual
-                        </label>
-                        <p>
-                            {{ item.currentIllnessHistory || "-" }}
-                        </p>
-                        <label style="margin: 12px 0px 12px 0px">
-                            Histórico e antecedentes
-                        </label>
-                        <p>
-                            {{ item.medicalHistory || "-" }}
-                        </p>
-                        <label style="margin: 12px 0px 12px 0px">
-                            Exames Físicos
-                        </label>
-                        <p>
-                            {{ item.physicalExam || "-" }}
-                        </p>
-                        <label style="margin: 12px 0px 12px 0px">
-                            Diagnóstico
-                        </label>
-                        <p>
-                            {{ item.diagnosis || "-" }}
-                        </p>
-                        <label style="margin: 12px 0px 12px 0px">
-                            Condutas
-                        </label>
-                        <p>
-                            {{ item.medicalConduct || "-" }}
-                        </p>
-                    </div>
-                </p-accordion-content>
-            </p-accordion-panel>
-        </p-accordion>
-    </main>
+	<main>
+		<h1 class="title">Histórico</h1>
+		<p-accordion value="0" [multiple]="true">
+			<p-accordion-panel
+				[value]="index"
+				*ngFor="let item of medicalAppointments; let index = index"
+			>
+				<p-accordion-header>
+					<div class="history-item">
+						<p class="name">Por: {{ healthProfessional.name }}</p>
+						<p class="date">
+							{{ item.createdDate | date: "dd/MM/yyyy" }}
+						</p>
+					</div>
+				</p-accordion-header>
+				<p-accordion-content>
+					<div class="accordion-content-header">Atendimento</div>
+					<div class="accordion-content">
+						<label>Antecedentes clínicos</label>
+						<p>
+							{{ item.mainComplaint || "-" }}
+						</p>
+						<label style="margin: 12px 0px 12px 0px">
+							História da moléstia atual
+						</label>
+						<p>
+							{{ item.currentIllnessHistory || "-" }}
+						</p>
+						<label style="margin: 12px 0px 12px 0px">
+							Histórico e antecedentes
+						</label>
+						<p>
+							{{ item.medicalHistory || "-" }}
+						</p>
+						<label style="margin: 12px 0px 12px 0px">
+							Exames Físicos
+						</label>
+						<p>
+							{{ item.physicalExam || "-" }}
+						</p>
+						<label style="margin: 12px 0px 12px 0px">
+							Diagnóstico
+						</label>
+						<p>
+							{{ item.diagnosis || "-" }}
+						</p>
+						<label style="margin: 12px 0px 12px 0px">
+							Condutas
+						</label>
+						<p>
+							{{ item.medicalConduct || "-" }}
+						</p>
+					</div>
+				</p-accordion-content>
+			</p-accordion-panel>
+		</p-accordion>
+	</main>
 </div>

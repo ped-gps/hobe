@@ -4,7 +4,13 @@ import player from 'lottie-web';
 
 import { CurrencyPipe, registerLocaleData } from '@angular/common';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, DEFAULT_CURRENCY_CODE, LOCALE_ID, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import {
+	ApplicationConfig,
+	DEFAULT_CURRENCY_CODE,
+	LOCALE_ID,
+	provideBrowserGlobalErrorListeners,
+	provideZonelessChangeDetection,
+} from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -19,32 +25,30 @@ registerLocaleData(ptBr);
 
 export const appConfig: ApplicationConfig = {
 	providers: [
-        CookieService,
-        CurrencyPipe,
-        DialogService,
+		CookieService,
+		CurrencyPipe,
+		DialogService,
 		provideBrowserGlobalErrorListeners(),
 		provideZonelessChangeDetection(),
 		provideRouter(routes),
 		provideAnimationsAsync(),
-        providePrimeNG({
-            theme: {
-                preset: Aura
-            },
-            translation: translation,
-        }),
-        provideHttpClient(withInterceptors([
-            authenticationInterceptor
-        ])),
-        provideLottieOptions({
-            player: () => player
-        }),
-        {
+		providePrimeNG({
+			theme: {
+				preset: Aura,
+			},
+			translation: translation,
+		}),
+		provideHttpClient(withInterceptors([authenticationInterceptor])),
+		provideLottieOptions({
+			player: () => player,
+		}),
+		{
 			provide: LOCALE_ID,
-			useValue: 'pt'
+			useValue: 'pt',
 		},
 		{
 			provide: DEFAULT_CURRENCY_CODE,
-			useValue: 'BRL'
+			useValue: 'BRL',
 		},
-	]
+	],
 };

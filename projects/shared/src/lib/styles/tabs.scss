@@ -1,19 +1,19 @@
 .p-tabpanels {
-    background-color: transparent !important;
-    padding: 24px 0px !important;
+	background-color: transparent !important;
+	padding: 24px 0px !important;
 }
 
 .p-tablist-tab-list {
-    background-color: transparent !important;
-    border: none !important;
+	background-color: transparent !important;
+	border: none !important;
 }
 
 .p-tab {
-    color: var(--color-gray) !important;
-    border-bottom: 2px solid var(--color-light-gray) !important;
+	color: var(--color-gray) !important;
+	border-bottom: 2px solid var(--color-light-gray) !important;
 
-    &.p-tab-active {
-        color: var(--color-black) !important;
-        border-bottom: 4px solid var(--color-blue) !important;
-    }
+	&.p-tab-active {
+		color: var(--color-black) !important;
+		border-bottom: 4px solid var(--color-blue) !important;
+	}
 }

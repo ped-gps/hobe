@@ -1,170 +1,172 @@
 <div id="medical-record-attendance">
-    <main>
-        <form [formGroup]="form" *ngIf="form">
-            <div class="responsive-row">
-                <div class="responsive-col-12">
-                    <div class="input-field">
-                        <label>Queixa Principal</label>
-                        <input
-                            pInputText
-                            formControlName="mainComplaint"
-                            name="mainComplaint"
-                            placeholder="Queixa Principal"
-                        />
-                    </div>
-                </div>
-            </div>
+	<main>
+		<form [formGroup]="form" *ngIf="form">
+			<div class="responsive-row">
+				<div class="responsive-col-12">
+					<div class="input-field">
+						<label>Queixa Principal</label>
+						<input
+							pInputText
+							formControlName="mainComplaint"
+							name="mainComplaint"
+							placeholder="Queixa Principal"
+						/>
+					</div>
+				</div>
+			</div>
 
-            <div class="responsive-row">
-                <div class="responsive-col-12">
-                    <div class="input-field">
-                        <label>História da moléstia atual</label>
-                        <textarea
-                            pTextarea
-                            formControlName="currentIllnessHistory"
-                            name="currentIllnessHistory"
-                            placeholder="História da moléstia atual"
-                            [cols]="30"
-                            [rows]="5"
-                        ></textarea>
-                    </div>
-                </div>
-            </div>
+			<div class="responsive-row">
+				<div class="responsive-col-12">
+					<div class="input-field">
+						<label>História da moléstia atual</label>
+						<textarea
+							pTextarea
+							formControlName="currentIllnessHistory"
+							name="currentIllnessHistory"
+							placeholder="História da moléstia atual"
+							[cols]="30"
+							[rows]="5"
+						></textarea>
+					</div>
+				</div>
+			</div>
 
-            <div class="responsive-row">
-                <div class="responsive-col-12">
-                    <div class="input-field">
-                        <label>Histórico e antecedentes</label>
-                        <textarea
-                            pTextarea
-                            formControlName="medicalHistory"
-                            name="medicalHistory"
-                            placeholder="Histórico e antecedentes"
-                            [cols]="30"
-                            [rows]="5"
-                        ></textarea>
-                    </div>
-                </div>
-            </div>
+			<div class="responsive-row">
+				<div class="responsive-col-12">
+					<div class="input-field">
+						<label>Histórico e antecedentes</label>
+						<textarea
+							pTextarea
+							formControlName="medicalHistory"
+							name="medicalHistory"
+							placeholder="Histórico e antecedentes"
+							[cols]="30"
+							[rows]="5"
+						></textarea>
+					</div>
+				</div>
+			</div>
 
-            <div class="responsive-row">
-                <div class="responsive-col-12">
-                    <div class="input-field">
-                        <label>Exames Físicos</label>
-                        <textarea
-                            pTextarea
-                            formControlName="physicalExam"
-                            name="physicalExams"
-                            placeholder="Exames Físicos"
-                            [cols]="30"
-                            [rows]="5"
-                        ></textarea>
-                    </div>
-                </div>
-            </div>
+			<div class="responsive-row">
+				<div class="responsive-col-12">
+					<div class="input-field">
+						<label>Exames Físicos</label>
+						<textarea
+							pTextarea
+							formControlName="physicalExam"
+							name="physicalExams"
+							placeholder="Exames Físicos"
+							[cols]="30"
+							[rows]="5"
+						></textarea>
+					</div>
+				</div>
+			</div>
 
-            <div class="responsive-row">
-                <div class="responsive-col-12">
-                    <div class="input-field">
-                        <label>IMC</label>
-                        <div
-                            style="
-                                display: flex;
-                                gap: 16px;
-                                align-items: center;
-                            "
-                        >
-                            <input
-                                pInputText
-                                type="number"
-                                name="weight"
-                                placeholder="Peso"
-                                style="width: 125px !important"
-                                formControlName="weight"
-                                (ngModelChange)="onHeightOrWeightChange()"
-                            />
-                            <span>kg</span>
-                            <input
-                                pInputText
-                                type="number"
-                                name="height"
-                                placeholder="Altura"
-                                style="width: 125px !important"
-                                formControlName="height"
-                                (ngModelChange)="onHeightOrWeightChange()"
-                            />
-                            <span>cm</span>
-                            <input
-                                pInputText
-                                type="number"
-                                formControlName="imc"
-                                name="imc"
-                                placeholder="IMC"
-                                style="width: 125px !important"
-                            />
-                            <span>IMC</span>
+			<div class="responsive-row">
+				<div class="responsive-col-12">
+					<div class="input-field">
+						<label>IMC</label>
+						<div
+							style="
+								display: flex;
+								gap: 16px;
+								align-items: center;
+							"
+						>
+							<input
+								pInputText
+								type="number"
+								name="weight"
+								placeholder="Peso"
+								style="width: 125px !important"
+								formControlName="weight"
+								(ngModelChange)="onHeightOrWeightChange()"
+							/>
+							<span>kg</span>
+							<input
+								pInputText
+								type="number"
+								name="height"
+								placeholder="Altura"
+								style="width: 125px !important"
+								formControlName="height"
+								(ngModelChange)="onHeightOrWeightChange()"
+							/>
+							<span>cm</span>
+							<input
+								pInputText
+								type="number"
+								formControlName="imc"
+								name="imc"
+								placeholder="IMC"
+								style="width: 125px !important"
+							/>
+							<span>IMC</span>
 
-                            @if (hasIMC()) {
-                                <span
-                                    [class.imc-underweight]="
-                                        getIMCCategory() === IMCCategory.UNDERWEIGHT
-                                    "
-                                    [class.imc-normal]="
-                                        getIMCCategory() === IMCCategory.NORMAL
-                                    "
-                                    [class.imc-overweight]="
-                                        getIMCCategory() === IMCCategory.OVERWEIGHT
-                                    "
-                                    [class.imc-obesity-grade-1]="
-                                        getIMCCategory() ===
-                                        IMCCategory.OBESITY_GRADE_1
-                                    "
-                                    [class.imc-obesity-grade-2]="
-                                        getIMCCategory() ===
-                                        IMCCategory.OBESITY_GRADE_2
-                                    "
-                                    [class.imc-obesity-grade-3]="
-                                        getIMCCategory() ===
-                                        IMCCategory.OBESITY_GRADE_3
-                                    "
-                                >
-                                    {{ getIMCCategory() | imcCategory }}
-                                </span>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
+							@if (hasIMC()) {
+								<span
+									[class.imc-underweight]="
+										getIMCCategory() ===
+										IMCCategory.UNDERWEIGHT
+									"
+									[class.imc-normal]="
+										getIMCCategory() === IMCCategory.NORMAL
+									"
+									[class.imc-overweight]="
+										getIMCCategory() ===
+										IMCCategory.OVERWEIGHT
+									"
+									[class.imc-obesity-grade-1]="
+										getIMCCategory() ===
+										IMCCategory.OBESITY_GRADE_1
+									"
+									[class.imc-obesity-grade-2]="
+										getIMCCategory() ===
+										IMCCategory.OBESITY_GRADE_2
+									"
+									[class.imc-obesity-grade-3]="
+										getIMCCategory() ===
+										IMCCategory.OBESITY_GRADE_3
+									"
+								>
+									{{ getIMCCategory() | imcCategory }}
+								</span>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
 
-            <div class="responsive-row">
-                <div class="responsive-col-12">
-                    <div class="input-field">
-                        <label>Diagnóstico</label>
-                        <input
-                            pInputText
-                            formControlName="diagnosis"
-                            name="diagnosis"
-                            placeholder="Diagnóstico"
-                        />
-                    </div>
-                </div>
-            </div>
+			<div class="responsive-row">
+				<div class="responsive-col-12">
+					<div class="input-field">
+						<label>Diagnóstico</label>
+						<input
+							pInputText
+							formControlName="diagnosis"
+							name="diagnosis"
+							placeholder="Diagnóstico"
+						/>
+					</div>
+				</div>
+			</div>
 
-            <div class="responsive-row">
-                <div class="responsive-col-12">
-                    <div class="input-field">
-                        <label>Condutas</label>
-                        <textarea
-                            pTextarea
-                            formControlName="medicalConduct"
-                            name="conduct"
-                            placeholder="Condutas"
-                            [cols]="30"
-                            [rows]="5"
-                        ></textarea>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </main>
+			<div class="responsive-row">
+				<div class="responsive-col-12">
+					<div class="input-field">
+						<label>Condutas</label>
+						<textarea
+							pTextarea
+							formControlName="medicalConduct"
+							name="conduct"
+							placeholder="Condutas"
+							[cols]="30"
+							[rows]="5"
+						></textarea>
+					</div>
+				</div>
+			</div>
+		</form>
+	</main>
 </div>

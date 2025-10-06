@@ -1,48 +1,57 @@
-.ql-editor{
-    background-color: var(--color-white) !important;
-    color: var(--color-black) !important;
+.ql-editor {
+	background-color: var(--color-white) !important;
+	color: var(--color-black) !important;
 }
 
 .p-editor-toolbar {
-    background-color: var(--color-white) !important;
-    color: var(--color-black) !important;
-    border: 1px solid var(--color-light-gray) !important;
-    border-bottom: none !important;
+	background-color: var(--color-white) !important;
+	color: var(--color-black) !important;
+	border: 1px solid var(--color-light-gray) !important;
+	border-bottom: none !important;
 }
 
 .p-editor-content {
-    border: 1px solid var(--color-light-gray) !important;
+	border: 1px solid var(--color-light-gray) !important;
 }
 
 .p-editor .p-editor-toolbar.ql-snow .ql-stroke {
-    stroke: var(--color-gray) !important;
+	stroke: var(--color-gray) !important;
 }
 
 .ql-picker-label {
-    transition: .2s;
-    color: var(--color-gray) !important;
+	transition: 0.2s;
+	color: var(--color-gray) !important;
 }
 
 .ql-picker-label:hover {
-    transition: .2s;
-    opacity: .7;
+	transition: 0.2s;
+	opacity: 0.7;
 }
 
-.p-editor .ql-snow.ql-toolbar button.ql-active .ql-fill, .p-editor .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill, .p-editor .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill {
-    fill: var(--color-black) !important;
+.p-editor .ql-snow.ql-toolbar button.ql-active .ql-fill,
+.p-editor .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,
+.p-editor .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill {
+	fill: var(--color-black) !important;
 }
 
 .ql-picker-options {
-    background-color: var(--color-white) !important;
-    color: var(--color-black) !important;
-    border: 1px solid var(--border-color) !important;
+	background-color: var(--color-white) !important;
+	color: var(--color-black) !important;
+	border: 1px solid var(--border-color) !important;
 }
 
-.p-editor .p-editor-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options .ql-picker-item {
-    color: var(--color-black) !important;
+.p-editor
+	.p-editor-toolbar.ql-snow
+	.ql-picker.ql-expanded
+	.ql-picker-options
+	.ql-picker-item {
+	color: var(--color-black) !important;
 }
 
-.p-editor .p-editor-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options .ql-picker-item:hover {
-background-color: var(--color-light-gray) !important;
-
+.p-editor
+	.p-editor-toolbar.ql-snow
+	.ql-picker.ql-expanded
+	.ql-picker-options
+	.ql-picker-item:hover {
+	background-color: var(--color-light-gray) !important;
 }

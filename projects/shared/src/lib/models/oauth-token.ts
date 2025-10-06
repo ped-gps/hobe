@@ -1,7 +1,7 @@
-import { AbstractModel } from "./abstract-model";
+import { AbstractModel } from './abstract-model';
 
 export interface OAuthToken extends AbstractModel {
-    accessToken: string;
-    refreshToken: string;
-    expiresIn: number;
+	accessToken: string;
+	refreshToken: string;
+	expiresIn: number;
 }

@@ -1,199 +1,229 @@
 <div id="dialog-medical-insurance">
-    <main>
-        @if (form) {
-            <div class="form">
-                <form [formGroup]="form">
-                    <div class="responsive-row">
-                        <div class="responsive-col-12">
-                            <div class="input-field">
-                                <label for="name">Nome</label>
-                                <input
-                                    pInputText
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                    formControlName="name"
-                                    placeholder="Nome"
-                                />
-                                <app-hint
-                                    [isError]="true"
-                                    [message]="getErrorMessage(form, 'name')"
-                                    [visible]="hasError(form, 'name')"
-                                />
-                            </div>
-                        </div>
-                    </div>
+	<main>
+		@if (form) {
+			<div class="form">
+				<form [formGroup]="form">
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="input-field">
+								<label for="name">Nome</label>
+								<input
+									pInputText
+									id="name"
+									type="text"
+									name="name"
+									formControlName="name"
+									placeholder="Nome"
+								/>
+								<app-hint
+									[isError]="true"
+									[message]="getErrorMessage(form, 'name')"
+									[visible]="hasError(form, 'name')"
+								/>
+							</div>
+						</div>
+					</div>
 
-                    <div class="responsive-row">
-                        <div class="responsive-col-12">
-                            <div class="input-field">
-                                <label for="email">E-mail</label>
-                                <input
-                                    pInputText
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    formControlName="email"
-                                    placeholder="E-mail"
-                                />
-                                <app-hint
-                                    [isError]="true"
-                                    [message]="getErrorMessage(form, 'email')"
-                                    [visible]="hasError(form, 'email')"
-                                />
-                            </div>
-                        </div>
-                    </div>
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="input-field">
+								<label for="email">E-mail</label>
+								<input
+									pInputText
+									id="email"
+									type="email"
+									name="email"
+									formControlName="email"
+									placeholder="E-mail"
+								/>
+								<app-hint
+									[isError]="true"
+									[message]="getErrorMessage(form, 'email')"
+									[visible]="hasError(form, 'email')"
+								/>
+							</div>
+						</div>
+					</div>
 
-                    <div class="responsive-row">
-                        <div class="responsive-col-6">
-                            <div class="input-field">
-                                <label for="phone">Telefone</label>
-                                <p-input-mask 
-                                    inputId="phone"
-                                    name="phone"
-                                    formControlName="phone"
-                                    mask="(99) 99999-9999"
-                                    [unmask]="true"
-                                    placeholder="Telefone"
-                                />
-                                <app-hint
-                                    [isError]="true"
-                                    [message]="getErrorMessage(form, 'phone')"
-                                    [visible]="hasError(form, 'phone')"
-                                />
-                            </div>
-                        </div>
+					<div class="responsive-row">
+						<div class="responsive-col-6">
+							<div class="input-field">
+								<label for="phone">Telefone</label>
+								<p-input-mask
+									inputId="phone"
+									name="phone"
+									formControlName="phone"
+									mask="(99) 99999-9999"
+									[unmask]="true"
+									placeholder="Telefone"
+								/>
+								<app-hint
+									[isError]="true"
+									[message]="getErrorMessage(form, 'phone')"
+									[visible]="hasError(form, 'phone')"
+								/>
+							</div>
+						</div>
 
-                        <div class="responsive-col-6">
-                            <div class="input-field">
-                                <label for="code">Código do convênio</label>
-                                <input
-                                    pInputText
-                                    id="code"
-                                    type="text"
-                                    name="code"
-                                    formControlName="code"
-                                    placeholder="Código do convênio"
-                                    [maxlength]="15"
-                                />
-                                <app-hint
-                                    [isError]="true"
-                                    [message]="getErrorMessage(form, 'code')"
-                                    [visible]="hasError(form, 'code')"
-                                />
-                            </div>
-                        </div>
-                    </div>
+						<div class="responsive-col-6">
+							<div class="input-field">
+								<label for="code">Código do convênio</label>
+								<input
+									pInputText
+									id="code"
+									type="text"
+									name="code"
+									formControlName="code"
+									placeholder="Código do convênio"
+									[maxlength]="15"
+								/>
+								<app-hint
+									[isError]="true"
+									[message]="getErrorMessage(form, 'code')"
+									[visible]="hasError(form, 'code')"
+								/>
+							</div>
+						</div>
+					</div>
 
-                    <div class="responsive-row">
-                        <div class="responsive-col-12">
-                            <div class="table">
-                                <p-table
-                                    [value]="procedures"
-                                    [(selection)]="selectedProcedures"
-                                    [rows]="10"
-                                    [paginator]="true"
-                                    [scrollable]="true"
-                                    [loading]="isLoading"
-                                    [rowTrackBy]="trackById"
-                                >
-                                    <ng-template #caption>
-                                        <div class="table-caption">
-                                            <div class="label">
-                                                <span>Selecionar procedimentos</span>
-                                            </div>
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="table">
+								<p-table
+									[value]="procedures"
+									[(selection)]="selectedProcedures"
+									[rows]="10"
+									[paginator]="true"
+									[scrollable]="true"
+									[loading]="isLoading"
+									[rowTrackBy]="trackById"
+								>
+									<ng-template #caption>
+										<div class="table-caption">
+											<div class="label">
+												<span
+													>Selecionar
+													procedimentos</span
+												>
+											</div>
 
-                                            <div class="filters">
-                                                <div class="filter text">
-                                                    <p-iconfield>
-                                                        <input
-                                                            pInputText
-                                                            type="text"
-                                                            placeholder="Pesquisar"
-                                                            [(ngModel)]="textFilter"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            (input)="onInput()"
-                                                        />
-                                                        <p-inputicon styleClass="pi pi-search" />
-                                                    </p-iconfield>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                    <ng-template #header>
-                                        <tr>
-                                            <th
-                                                pSortableColumn="name"
-                                                style="width: 50%; text-align: center"
-                                            >
-                                                Nome <p-sortIcon field="name" />
-                                            </th>
-                                            <th
-                                                pSortableColumn="code"
-                                                style="width: 20%; text-align: center"
-                                            >
-                                                Código <p-sortIcon field="code" />
-                                            </th>
+											<div class="filters">
+												<div class="filter text">
+													<p-iconfield>
+														<input
+															pInputText
+															type="text"
+															placeholder="Pesquisar"
+															[(ngModel)]="
+																textFilter
+															"
+															[ngModelOptions]="{
+																standalone: true,
+															}"
+															(input)="onInput()"
+														/>
+														<p-inputicon
+															styleClass="pi pi-search"
+														/>
+													</p-iconfield>
+												</div>
+											</div>
+										</div>
+									</ng-template>
+									<ng-template #header>
+										<tr>
+											<th
+												pSortableColumn="name"
+												style="
+													width: 50%;
+													text-align: center;
+												"
+											>
+												Nome <p-sortIcon field="name" />
+											</th>
+											<th
+												pSortableColumn="code"
+												style="
+													width: 20%;
+													text-align: center;
+												"
+											>
+												Código
+												<p-sortIcon field="code" />
+											</th>
 
-                                            <th
-                                                pSortableColumn="value"
-                                                style="width: 20%; text-align: center"
-                                            >
-                                                Valor <p-sortIcon field="value" />
-                                            </th>
-                                            <th style="width: 10%; text-align: center;">
-                                                <p-tableHeaderCheckbox />
-                                            </th>
-                                        </tr>
-                                    </ng-template>
-                                    <ng-template #body let-procedure>
-                                        <tr class="procedure">
-                                            <td style="text-align: left">
-                                                <span class="procedure-name">{{
-                                                    procedure.name
-                                                }}</span>
-                                            </td>
-                                            <td style="text-align: center">
-                                                <span class="procedure-code">{{
-                                                    procedure.code
-                                                }}</span>
-                                            </td>
-                                            <td style="text-align: center">
-                                                <span class="procedure-value">{{
-                                                    procedure.value | currency
-                                                }}</span>
-                                            </td>
-                                            <td style="text-align: center">
-                                                <p-tableCheckbox [value]="procedure" />
-                                            </td>
-                                        </tr>
-                                    </ng-template>
-                                    <ng-template #emptymessage>
-                                        <tr>
-                                            <td colspan="4" style="text-align: center">
-                                                Nenhum registro encontrado
-                                            </td>
-                                        </tr>
-                                    </ng-template>
-                                </p-table>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        } @else {
-            <app-loading />   
-        }
-    </main>
+											<th
+												pSortableColumn="value"
+												style="
+													width: 20%;
+													text-align: center;
+												"
+											>
+												Valor
+												<p-sortIcon field="value" />
+											</th>
+											<th
+												style="
+													width: 10%;
+													text-align: center;
+												"
+											>
+												<p-tableHeaderCheckbox />
+											</th>
+										</tr>
+									</ng-template>
+									<ng-template #body let-procedure>
+										<tr class="procedure">
+											<td style="text-align: left">
+												<span class="procedure-name">{{
+													procedure.name
+												}}</span>
+											</td>
+											<td style="text-align: center">
+												<span class="procedure-code">{{
+													procedure.code
+												}}</span>
+											</td>
+											<td style="text-align: center">
+												<span class="procedure-value">{{
+													procedure.value | currency
+												}}</span>
+											</td>
+											<td style="text-align: center">
+												<p-tableCheckbox
+													[value]="procedure"
+												/>
+											</td>
+										</tr>
+									</ng-template>
+									<ng-template #emptymessage>
+										<tr>
+											<td
+												colspan="4"
+												style="text-align: center"
+											>
+												Nenhum registro encontrado
+											</td>
+										</tr>
+									</ng-template>
+								</p-table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		} @else {
+			<app-loading />
+		}
+	</main>
 
-    <footer>
-        <p-button 
-            label="Salvar"
-            class="button-green-white"
-            [loading]="isSubmitting"
-            [disabled]="!form || form.invalid"
-            (onClick)="onSubmit()"
-        />
-    </footer>
+	<footer>
+		<p-button
+			label="Salvar"
+			class="button-green-white"
+			[loading]="isSubmitting"
+			[disabled]="!form || form.invalid"
+			(onClick)="onSubmit()"
+		/>
+	</footer>
 </div>

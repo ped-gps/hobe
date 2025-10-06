@@ -24,213 +24,237 @@ import { DateUtils } from '../../utils/date.util';
 import { UserProfile } from './../../enums/user-profile';
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrl: './dashboard.component.scss',
-    imports: [
-        ChartModule,
-        CommonModule,
-        DatePickerModule,
-        DividerModule,
-        FormsModule,
-        RouterModule,
-        SelectModule,
-        TableModule,
-    ],
+	selector: 'app-dashboard',
+	templateUrl: './dashboard.component.html',
+	styleUrl: './dashboard.component.scss',
+	imports: [
+		ChartModule,
+		CommonModule,
+		DatePickerModule,
+		DividerModule,
+		FormsModule,
+		RouterModule,
+		SelectModule,
+		TableModule,
+	],
 })
 export class DashboardComponent implements OnInit {
+	partner!: Partner;
+	appointmentStatistics!: AppointmentStatistics;
+	medicalAppointmentOverview!: MedicalAppointmentOverview;
+	medicalAppointments!: Array<MedicalAppointment>;
+	healthProfessionalOptions: Array<SelectItem> = [];
+	selectedPeriod!: Array<Date>;
+	selectedHealthProfessional!: HealthProfessional;
+	user!: User;
 
-    partner!: Partner;
-    appointmentStatistics!: AppointmentStatistics;
-    medicalAppointmentOverview!: MedicalAppointmentOverview;
-    medicalAppointments!: Array<MedicalAppointment>;
-    healthProfessionalOptions: Array<SelectItem> = [];
-    selectedPeriod!: Array<Date>;
-    selectedHealthProfessional!: HealthProfessional;
-    user!: User;
+	chartData!: any;
+	chartOptions!: any;
 
-    chartData!: any;
-    chartOptions!: any;
+	Route = Route;
+	UserProfile = UserProfile;
 
-    Route = Route;
-    UserProfile = UserProfile;
-
-    constructor(
-        private readonly _authenticationService: AuthenticationService,
-        private readonly _appointmentService: AppointmentService,
+	constructor(
+		private readonly _authenticationService: AuthenticationService,
+		private readonly _appointmentService: AppointmentService,
 		private readonly _changeDetector: ChangeDetectorRef,
-        private readonly _healthProfessionalService: HealthProfessionalService,
-        private readonly _medicalAppointmentService: MedicalAppointmentService,
-    ) {}
+		private readonly _healthProfessionalService: HealthProfessionalService,
+		private readonly _medicalAppointmentService: MedicalAppointmentService,
+	) {}
 
-    async ngOnInit(): Promise<void> {
-        const now = new Date();
-        const endDate = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(),
-            23,
-            59,
-            59,
-            999
-        );
-        const startDate = new Date(endDate);
+	async ngOnInit(): Promise<void> {
+		const now = new Date();
+		const endDate = new Date(
+			now.getFullYear(),
+			now.getMonth(),
+			now.getDate(),
+			23,
+			59,
+			59,
+			999,
+		);
+		const startDate = new Date(endDate);
 
-        startDate.setDate(endDate.getDate() - 6);
-        startDate.setHours(0, 0, 0, 0);
+		startDate.setDate(endDate.getDate() - 6);
+		startDate.setHours(0, 0, 0, 0);
 
-        this.selectedPeriod = [startDate, endDate];
+		this.selectedPeriod = [startDate, endDate];
 		this._initChartOptions();
-        await this._fetchData();
+		await this._fetchData();
 		this._changeDetector.markForCheck();
-    }
+	}
 
-    getProcedureName(medicalAppointment: MedicalAppointment) {
-        
-        if (medicalAppointment.appointment) {
-            if (medicalAppointment.appointment.service) {
-                return medicalAppointment.appointment.service.name;
-            }
+	getProcedureName(medicalAppointment: MedicalAppointment) {
+		if (medicalAppointment.appointment) {
+			if (medicalAppointment.appointment.service) {
+				return medicalAppointment.appointment.service.name;
+			}
 
-            if (medicalAppointment.appointment.procedure) {
-                return medicalAppointment.appointment.procedure.name;
-            }
-        }
+			if (medicalAppointment.appointment.procedure) {
+				return medicalAppointment.appointment.procedure.name;
+			}
+		}
 
-        return "-";
-    }
+		return '-';
+	}
 
-    getProcedureValue(medicalAppointment: MedicalAppointment) {
-        return medicalAppointment.appointment.value;
-    }
+	getProcedureValue(medicalAppointment: MedicalAppointment) {
+		return medicalAppointment.appointment.value;
+	}
 
-    async onHealthProfessionalChange() {
-        await this._retrieveAppointmentStatistics();
-        await this._retrieveMedicalAppointmentsOverview();
-        await this._retrieveLastMedicalAppointments();
-    }
+	async onHealthProfessionalChange() {
+		await this._retrieveAppointmentStatistics();
+		await this._retrieveMedicalAppointmentsOverview();
+		await this._retrieveLastMedicalAppointments();
+	}
 
-    async onPeriodChange() {
-        const [start, end] = this.selectedPeriod || [];
+	async onPeriodChange() {
+		const [start, end] = this.selectedPeriod || [];
 
-        if (!start || !end) {
-            return;
-        }
+		if (!start || !end) {
+			return;
+		}
 
-        await this._retrieveAppointmentStatistics();
-        await this._retrieveMedicalAppointmentsOverview();
-    }
+		await this._retrieveAppointmentStatistics();
+		await this._retrieveMedicalAppointmentsOverview();
+	}
 
-    private async _fetchData() {
-        const user = await this._authenticationService.retrieveUser();
-        this.user = user;
-        
-        if (user.profile === UserProfile.HEALTH_PROFESSIONAL) {
-            this.selectedHealthProfessional = user;
-            this.partner = user.partner;
-        }
+	private async _fetchData() {
+		const user = await this._authenticationService.retrieveUser();
+		this.user = user;
 
-        if (user.profile === UserProfile.PARTNER) {
-            this.partner = user;
-        }
-        
-        await this._retrieveHealthProfessionals();
-        await this._retrieveAppointmentStatistics();
-        await this._retrieveMedicalAppointmentsOverview();
-        await this._retrieveLastMedicalAppointments();
-    }
+		if (user.profile === UserProfile.HEALTH_PROFESSIONAL) {
+			this.selectedHealthProfessional = user;
+			this.partner = user.partner;
+		}
 
-    private async _retrieveAppointmentStatistics() {
+		if (user.profile === UserProfile.PARTNER) {
+			this.partner = user;
+		}
 
-        if (!this.partner || !this.selectedHealthProfessional) {
-            return;
-        }
+		await this._retrieveHealthProfessionals();
+		await this._retrieveAppointmentStatistics();
+		await this._retrieveMedicalAppointmentsOverview();
+		await this._retrieveLastMedicalAppointments();
+	}
 
-        const startDate = DateUtils.formatDateWithoutTimezone(this.selectedPeriod[0]).split('T')[0];
-        const endDate = DateUtils.formatDateWithoutTimezone(this.selectedPeriod[1]).split('T')[0];
+	private async _retrieveAppointmentStatistics() {
+		if (!this.partner || !this.selectedHealthProfessional) {
+			return;
+		}
 
-        this.appointmentStatistics = await this._appointmentService.statistics(
-            this.partner.id!,
-            this.selectedHealthProfessional.id!,
-            startDate,
-            endDate
-        );
+		const startDate = DateUtils.formatDateWithoutTimezone(
+			this.selectedPeriod[0],
+		).split('T')[0];
+		const endDate = DateUtils.formatDateWithoutTimezone(
+			this.selectedPeriod[1],
+		).split('T')[0];
 
-        this._changeDetector.detectChanges();
-    }
+		this.appointmentStatistics = await this._appointmentService.statistics(
+			this.partner.id!,
+			this.selectedHealthProfessional.id!,
+			startDate,
+			endDate,
+		);
 
-    private async _retrieveLastMedicalAppointments() {
+		this._changeDetector.detectChanges();
+	}
 
-        const medicalAppointmentsPage = await this._medicalAppointmentService.search(0, 5, 'createdDate', 'desc', {
-            healthProfessionalId: this.selectedHealthProfessional.id
-        });
+	private async _retrieveLastMedicalAppointments() {
+		const medicalAppointmentsPage =
+			await this._medicalAppointmentService.search(
+				0,
+				5,
+				'createdDate',
+				'desc',
+				{
+					healthProfessionalId: this.selectedHealthProfessional.id,
+				},
+			);
 
-        this.medicalAppointments = medicalAppointmentsPage.content;
-    }
+		this.medicalAppointments = medicalAppointmentsPage.content;
+	}
 
-    private async _retrieveMedicalAppointmentsOverview() {
-        
-        if (!this.partner || !this.selectedHealthProfessional) {
-            return;
-        }
+	private async _retrieveMedicalAppointmentsOverview() {
+		if (!this.partner || !this.selectedHealthProfessional) {
+			return;
+		}
 
-        const startDate = DateUtils.formatDateWithoutTimezone(this.selectedPeriod[0]).split('T')[0];
-        const endDate = DateUtils.formatDateWithoutTimezone(this.selectedPeriod[1]).split('T')[0];
+		const startDate = DateUtils.formatDateWithoutTimezone(
+			this.selectedPeriod[0],
+		).split('T')[0];
+		const endDate = DateUtils.formatDateWithoutTimezone(
+			this.selectedPeriod[1],
+		).split('T')[0];
 
-        this.medicalAppointmentOverview = await this._medicalAppointmentService.overview(
-            this.selectedHealthProfessional.id!,
-            startDate,
-            endDate
-        );
-        
-        this.chartData = {
-            labels: this.medicalAppointmentOverview.dailyAttendanceCounts.map(d => DateUtils.toLocaleDateString(d.date)),
-            datasets: [
-                {
-                    label: 'Atendimentos',
-                    data: this.medicalAppointmentOverview.dailyAttendanceCounts.map(d => d.count),
-                    borderColor: '#475585ff',
-                    backgroundColor: 'rgba(71, 85, 133, 0.2)',
-                    fill: true,
-                    tension: 0.3
-                }
-            ],
-        };
+		this.medicalAppointmentOverview =
+			await this._medicalAppointmentService.overview(
+				this.selectedHealthProfessional.id!,
+				startDate,
+				endDate,
+			);
 
-        this._changeDetector.detectChanges();
-    }
+		this.chartData = {
+			labels: this.medicalAppointmentOverview.dailyAttendanceCounts.map(
+				(d) => DateUtils.toLocaleDateString(d.date),
+			),
+			datasets: [
+				{
+					label: 'Atendimentos',
+					data: this.medicalAppointmentOverview.dailyAttendanceCounts.map(
+						(d) => d.count,
+					),
+					borderColor: '#475585ff',
+					backgroundColor: 'rgba(71, 85, 133, 0.2)',
+					fill: true,
+					tension: 0.3,
+				},
+			],
+		};
 
-    private async _retrieveHealthProfessionals() {
+		this._changeDetector.detectChanges();
+	}
 
-        const { content, page } = await this._healthProfessionalService.search(-1, -1, 'name', 'asc', {
-            partnerId: this.partner.id
-        });
+	private async _retrieveHealthProfessionals() {
+		const { content, page } = await this._healthProfessionalService.search(
+			-1,
+			-1,
+			'name',
+			'asc',
+			{
+				partnerId: this.partner.id,
+			},
+		);
 
-        this.healthProfessionalOptions = content.map(healthProfessional => ({
-            label: healthProfessional.name,
-            value: healthProfessional
-        }));
+		this.healthProfessionalOptions = content.map((healthProfessional) => ({
+			label: healthProfessional.name,
+			value: healthProfessional,
+		}));
 
-        if (page.totalElements > 0) {
-            if (!this.selectedHealthProfessional) {
-                this.selectedHealthProfessional = content[0];
-            } else {
-                this.selectedHealthProfessional = this.healthProfessionalOptions.find(o => o.value.id === this.selectedHealthProfessional.id)?.value;
-            }
-        }
+		if (page.totalElements > 0) {
+			if (!this.selectedHealthProfessional) {
+				this.selectedHealthProfessional = content[0];
+			} else {
+				this.selectedHealthProfessional =
+					this.healthProfessionalOptions.find(
+						(o) =>
+							o.value.id === this.selectedHealthProfessional.id,
+					)?.value;
+			}
+		}
 
-        this._changeDetector.detectChanges();
-    }
+		this._changeDetector.detectChanges();
+	}
 
-    private _initChartOptions() {
-        this.chartOptions = {
+	private _initChartOptions() {
+		this.chartOptions = {
 			responsive: false,
-    		maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                },
-            },
-        };
-    }
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					display: false,
+				},
+			},
+		};
+	}
 }

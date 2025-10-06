@@ -2,12 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Gender } from '../enums/gender';
 
 @Pipe({
-    name: 'gender',
+	name: 'gender',
 })
 export class GenderPipe implements PipeTransform {
-    
 	transform(value: Gender | undefined): string | null {
-		
 		if (!value) {
 			return null;
 		}

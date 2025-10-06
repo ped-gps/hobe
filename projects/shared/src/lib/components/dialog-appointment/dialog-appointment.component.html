@@ -1,184 +1,207 @@
 <div id="dialog-appointment">
-    <main>
-        @if (form) {
-            <div class="form">
-                <form [formGroup]="form">
-                    <div class="responsive-row">
-                        <div class="responsive-col-12">
-                            <div class="input-field">
-                                <label for="healthProfessional">Profissional</label>
-                                <input 
-                                    id="healthProfessional"
-                                    pInputText
-                                    placeholder="Profissional de Saúde"
-                                    [disabled]="true"
-                                    [readOnly]="true"
-                                    [ngModel]="healthProfessional ? healthProfessional.name : ''"
-                                    [ngModelOptions]="{standalone: true}"
-                                />
-                            </div>
-                        </div>
-                    </div>
+	<main>
+		@if (form) {
+			<div class="form">
+				<form [formGroup]="form">
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="input-field">
+								<label for="healthProfessional"
+									>Profissional</label
+								>
+								<input
+									id="healthProfessional"
+									pInputText
+									placeholder="Profissional de Saúde"
+									[disabled]="true"
+									[readOnly]="true"
+									[ngModel]="
+										healthProfessional
+											? healthProfessional.name
+											: ''
+									"
+									[ngModelOptions]="{ standalone: true }"
+								/>
+							</div>
+						</div>
+					</div>
 
-                    <div class="responsive-row">
-                        <div class="responsive-col-12">
-                            <div class="input-field">
-                                <label for="client">Paciente</label>
-                                <p-inputgroup>
-                                    <input 
-                                        id="client"
-                                        pInputText 
-                                        placeholder="Selecione o paciente" 
-                                        [disabled]="true"  
-                                        [readOnly]="true"
-                                        [ngModel]="selectedClient ? selectedClient.name : ''"
-                                        [ngModelOptions]="{standalone: true}"
-                                    />
-                                    <p-inputgroup-addon>
-                                        <p-button 
-                                            icon="pi pi-search"
-                                            variant="text"
-                                            (onClick)="onSelectClientPress()"
-                                            [disabled]="isAppointmentConcluded()"
-                                        />
-                                    </p-inputgroup-addon>
-                                </p-inputgroup>
-                            </div>
-                        </div>
-                    </div>
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="input-field">
+								<label for="client">Paciente</label>
+								<p-inputgroup>
+									<input
+										id="client"
+										pInputText
+										placeholder="Selecione o paciente"
+										[disabled]="true"
+										[readOnly]="true"
+										[ngModel]="
+											selectedClient
+												? selectedClient.name
+												: ''
+										"
+										[ngModelOptions]="{ standalone: true }"
+									/>
+									<p-inputgroup-addon>
+										<p-button
+											icon="pi pi-search"
+											variant="text"
+											(onClick)="onSelectClientPress()"
+											[disabled]="
+												isAppointmentConcluded()
+											"
+										/>
+									</p-inputgroup-addon>
+								</p-inputgroup>
+							</div>
+						</div>
+					</div>
 
-                    <div class="responsive-row">
-                        <div class="responsive-col-12">
-                            <div class="input-field">
-                                <label for="medicalInsurance">Convênio</label>
-                                <p-select 
-                                    inputId="medicalInsurance"
-                                    formControlName="medicalInsurance"
-                                    placeholder="Selecione o convênio"
-                                    appendTo="body"
-                                    dataKey="id"
-                                    [options]="medicalInsurancesOptions"
-                                    (onChange)="onMedicalInsuranceChange($event)"
-                                />
-                            </div>
-                        </div>
-                    </div>
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="input-field">
+								<label for="medicalInsurance">Convênio</label>
+								<p-select
+									inputId="medicalInsurance"
+									formControlName="medicalInsurance"
+									placeholder="Selecione o convênio"
+									appendTo="body"
+									dataKey="id"
+									[options]="medicalInsurancesOptions"
+									(onChange)="
+										onMedicalInsuranceChange($event)
+									"
+								/>
+							</div>
+						</div>
+					</div>
 
-                    <div class="responsive-row">
-                        <div class="responsive-col-12">
-                            <div class="input-field">
-                                <label for="procedure">Procedimento</label>
-                                <p-inputgroup>
-                                    <input 
-                                        pInputText
-                                        id="procedure"
-                                        placeholder="Selecione o procedimento"
-                                        [disabled]="true"
-                                        [readOnly]="true"
-                                        [ngModel]="selectedProcedure ? selectedProcedure.name : ''"
-                                        [ngModelOptions]="{standalone: true}"
-                                    />
-                                    <p-inputgroup-addon>
-                                        <p-button 
-                                            icon="pi pi-search" 
-                                            variant="text"
-                                            [disabled]="!selectedMedicalInsurance || isAppointmentConcluded()"
-                                            (onClick)="onSelectProcedurePress()"
-                                        />
-                                    </p-inputgroup-addon>
-                                </p-inputgroup>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="responsive-row">
-                        <div class="responsive-col-12">
-                            <div class="input-field">
-                                <label for="procedure">Valor</label>
-                                <p-inputnumber
-                                    inputId="value"
-                                    mode="currency"
-                                    currency="BRL"
-                                    locale="pt-BR"
-                                    placeholder="Valor"
-                                    formControlName="value"
-                                />
-                            </div>
-                        </div>
-                    </div>
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="input-field">
+								<label for="procedure">Procedimento</label>
+								<p-inputgroup>
+									<input
+										pInputText
+										id="procedure"
+										placeholder="Selecione o procedimento"
+										[disabled]="true"
+										[readOnly]="true"
+										[ngModel]="
+											selectedProcedure
+												? selectedProcedure.name
+												: ''
+										"
+										[ngModelOptions]="{ standalone: true }"
+									/>
+									<p-inputgroup-addon>
+										<p-button
+											icon="pi pi-search"
+											variant="text"
+											[disabled]="
+												!selectedMedicalInsurance ||
+												isAppointmentConcluded()
+											"
+											(onClick)="onSelectProcedurePress()"
+										/>
+									</p-inputgroup-addon>
+								</p-inputgroup>
+							</div>
+						</div>
+					</div>
 
-                    <div class="responsive-row">
-                        <div class="responsive-col-6">
-                            <div class="input-field">
-                                <label for="date">Data</label>
-                                <p-datepicker 
-                                    inputId="date"
-                                    formControlName="date"
-                                    placeholder="Selecione a data"
-                                    appendTo="body"
-                                    dateFormat="dd/mm/yy"
-                                />
-                                <app-hint
-                                    [isError]="true"
-                                    [message]="getErrorMessage(form, 'date')"
-                                    [visible]="hasError(form, 'date')"
-                                />
-                            </div>
-                        </div>
-                        
-                        <div class="responsive-col-6">
-                            <div class="input-field">
-                                <label for="time">Hora</label>
-                                <p-datepicker 
-                                    inputId="time"
-                                    formControlName="time"
-                                    placeholder="Selecione a hora"
-                                    appendTo="body"
-                                    dateFormat="HH:mm"
-                                    [timeOnly]="true"
-                                />
-                                <app-hint
-                                    [isError]="true"
-                                    [message]="getErrorMessage(form, 'time')"
-                                    [visible]="hasError(form, 'time')"
-                                />
-                            </div>
-                        </div>
-                    </div>
+					<div class="responsive-row">
+						<div class="responsive-col-12">
+							<div class="input-field">
+								<label for="procedure">Valor</label>
+								<p-inputnumber
+									inputId="value"
+									mode="currency"
+									currency="BRL"
+									locale="pt-BR"
+									placeholder="Valor"
+									formControlName="value"
+								/>
+							</div>
+						</div>
+					</div>
 
-                    @if (appointment && appointment.id) {
-                        <div class="responsive-row">
-                            <div class="responsive-col-12">
-                                <div class="input-field">
-                                    <label for="situation">Situação</label>
-                                    <p-select 
-                                        inputId="situation"
-                                        formControlName="situation"
-                                        placeholder="Selecione a situação"
-                                        appendTo="body"
-                                        [options]="situationOptions"
-                                    />
-                                    <app-hint
-                                        [isError]="true"
-                                        [message]="getErrorMessage(form, 'situation')"
-                                        [visible]="hasError(form, 'situation')"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </form>
-            </div>
-        }
-    </main>
+					<div class="responsive-row">
+						<div class="responsive-col-6">
+							<div class="input-field">
+								<label for="date">Data</label>
+								<p-datepicker
+									inputId="date"
+									formControlName="date"
+									placeholder="Selecione a data"
+									appendTo="body"
+									dateFormat="dd/mm/yy"
+								/>
+								<app-hint
+									[isError]="true"
+									[message]="getErrorMessage(form, 'date')"
+									[visible]="hasError(form, 'date')"
+								/>
+							</div>
+						</div>
 
-    <footer>
-        <p-button 
-            label="Salvar"
-            class="button-green-white"
-            [loading]="isSubmitting"
-            [disabled]="!form || form.invalid || isAppointmentConcluded()"
-            (onClick)="onSubmit()"
-        />
-    </footer>
+						<div class="responsive-col-6">
+							<div class="input-field">
+								<label for="time">Hora</label>
+								<p-datepicker
+									inputId="time"
+									formControlName="time"
+									placeholder="Selecione a hora"
+									appendTo="body"
+									dateFormat="HH:mm"
+									[timeOnly]="true"
+								/>
+								<app-hint
+									[isError]="true"
+									[message]="getErrorMessage(form, 'time')"
+									[visible]="hasError(form, 'time')"
+								/>
+							</div>
+						</div>
+					</div>
+
+					@if (appointment && appointment.id) {
+						<div class="responsive-row">
+							<div class="responsive-col-12">
+								<div class="input-field">
+									<label for="situation">Situação</label>
+									<p-select
+										inputId="situation"
+										formControlName="situation"
+										placeholder="Selecione a situação"
+										appendTo="body"
+										[options]="situationOptions"
+									/>
+									<app-hint
+										[isError]="true"
+										[message]="
+											getErrorMessage(form, 'situation')
+										"
+										[visible]="hasError(form, 'situation')"
+									/>
+								</div>
+							</div>
+						</div>
+					}
+				</form>
+			</div>
+		}
+	</main>
+
+	<footer>
+		<p-button
+			label="Salvar"
+			class="button-green-white"
+			[loading]="isSubmitting"
+			[disabled]="!form || form.invalid || isAppointmentConcluded()"
+			(onClick)="onSubmit()"
+		/>
+	</footer>
 </div>

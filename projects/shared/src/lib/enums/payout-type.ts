@@ -1,4 +1,4 @@
 export enum PayoutType {
-    FIXED = 'FIXED',
-    PERCENTAGE = 'PERCENTAGE'
+	FIXED = 'FIXED',
+	PERCENTAGE = 'PERCENTAGE',
 }

@@ -28,29 +28,28 @@ import { OperatorUtils } from '../../utils/operator.util';
 		CommonModule,
 		FormsModule,
 		InputTextModule,
-        IconFieldModule,
-        InputIconModule,
+		IconFieldModule,
+		InputIconModule,
 		MenuModule,
 		TableModule,
-		PhonePipe
+		PhonePipe,
 	],
 })
 export class MedicalInsurancesComponent implements OnInit {
-	
 	partner!: Partner;
-    medicalInsurances: Array<MedicalInsurance> = [];
-    isLoading: boolean = false;
-    isSubmitting: boolean = false;
+	medicalInsurances: Array<MedicalInsurance> = [];
+	isLoading: boolean = false;
+	isSubmitting: boolean = false;
 
 	textFilter!: string;
 	selectedMedicalInsurance!: MedicalInsurance;
 	medicalInsuranceMenuOptions: Array<MenuItem> = [];
 
 	page: number = 0;
-    size: number = 10;
-    sort: string = 'name';
-    direction: string = 'asc';
-    totalElements: number = 0;
+	size: number = 10;
+	sort: string = 'name';
+	direction: string = 'asc';
+	totalElements: number = 0;
 
 	private _time!: any;
 
@@ -59,23 +58,22 @@ export class MedicalInsurancesComponent implements OnInit {
 		private readonly _authenticationService: AuthenticationService,
 		private readonly _changeDetector: ChangeDetectorRef,
 		private readonly _dialogService: DialogService,
-		private readonly _medicalInsuranceService: MedicalInsuranceService
+		private readonly _medicalInsuranceService: MedicalInsuranceService,
 	) {}
 
 	ngOnInit(): void {
-	
 		this.medicalInsuranceMenuOptions = [
-            {
-                label: 'Editar',
-                command: () => this._onUpdateMedicalInsurance(),
-            },
-            {
-                label: 'Excluir',
-                command: () => this._onDeleteMedicalInsurance(),
-            },
-        ];
+			{
+				label: 'Editar',
+				command: () => this._onUpdateMedicalInsurance(),
+			},
+			{
+				label: 'Excluir',
+				command: () => this._onDeleteMedicalInsurance(),
+			},
+		];
 
-        this._fetchData();
+		this._fetchData();
 	}
 
 	onAddMedicalInsurance() {
@@ -83,23 +81,23 @@ export class MedicalInsurancesComponent implements OnInit {
 	}
 
 	onInputChange() {
-        clearTimeout(this._time);
+		clearTimeout(this._time);
 
-        this._time = setTimeout(() => {
-            this._retrieveMedicalInsurances();
-        }, 500);
-    }
+		this._time = setTimeout(() => {
+			this._retrieveMedicalInsurances();
+		}, 500);
+	}
 
 	onPageChange(event: any) {
-        this.page = event.first / event.rows;
-        this._retrieveMedicalInsurances();
-    }
+		this.page = event.first / event.rows;
+		this._retrieveMedicalInsurances();
+	}
 
-    onSortChange(event: any) {
-        this.sort = event.field;
-        this.direction = event.order > 0 ? 'asc' : 'desc';
-        this._retrieveMedicalInsurances();
-    }
+	onSortChange(event: any) {
+		this.sort = event.field;
+		this.direction = event.order > 0 ? 'asc' : 'desc';
+		this._retrieveMedicalInsurances();
+	}
 
 	private async _fetchData() {
 		this.partner = await this._authenticationService.retrieveUser();
@@ -114,7 +112,7 @@ export class MedicalInsurancesComponent implements OnInit {
 		const confirmation = await this._alertService.confirmMessage(
 			`Deseja excluir o convênio ${
 				this.selectedMedicalInsurance!.name
-			}? Essa ação é irreversível!`
+			}? Essa ação é irreversível!`,
 		);
 
 		if (confirmation) {
@@ -123,7 +121,7 @@ export class MedicalInsurancesComponent implements OnInit {
 
 			try {
 				await this._medicalInsuranceService.delete(
-					this.selectedMedicalInsurance!.id!
+					this.selectedMedicalInsurance!.id!,
 				);
 				await this._retrieveMedicalInsurances();
 			} finally {
@@ -141,27 +139,25 @@ export class MedicalInsurancesComponent implements OnInit {
 	}
 
 	private async _retrieveMedicalInsurances() {
-
 		this.isLoading = true;
-        await OperatorUtils.delay(500);
+		await OperatorUtils.delay(500);
 
 		try {
-
-			const medicalInsurancesPage = await this._medicalInsuranceService.search(
-				this.page,
-				this.size,
-				this.sort,
-				this.direction,
-				{
-					name: this.textFilter || undefined,
-					code: this.textFilter || undefined,
-					partnerId: this.partner.id
-				}
-			);
+			const medicalInsurancesPage =
+				await this._medicalInsuranceService.search(
+					this.page,
+					this.size,
+					this.sort,
+					this.direction,
+					{
+						name: this.textFilter || undefined,
+						code: this.textFilter || undefined,
+						partnerId: this.partner.id,
+					},
+				);
 
 			this.medicalInsurances = medicalInsurancesPage.content;
 			this.totalElements = medicalInsurancesPage.page.totalElements;
-
 		} finally {
 			this.isLoading = false;
 			this._changeDetector.detectChanges();
@@ -169,7 +165,6 @@ export class MedicalInsurancesComponent implements OnInit {
 	}
 
 	private _showDialogMedicalInsurance(medicalInsurance?: MedicalInsurance) {
-		
 		this._dialogService
 			.open(DialogMedicalInsuranceComponent, {
 				draggable: true,

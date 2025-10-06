@@ -24,10 +24,10 @@ import { OperatorUtils } from '../../utils/operator.util';
 import { ProcedureSourceUtils } from '../../utils/procedure-source.util';
 
 @Component({
-    selector: 'app-dialog-procedure-selection',
-    templateUrl: './dialog-procedure-selection.component.html',
-    styleUrl: './dialog-procedure-selection.component.scss',
-    imports: [
+	selector: 'app-dialog-procedure-selection',
+	templateUrl: './dialog-procedure-selection.component.html',
+	styleUrl: './dialog-procedure-selection.component.scss',
+	imports: [
 		ButtonModule,
 		CommonModule,
 		FormsModule,
@@ -35,17 +35,16 @@ import { ProcedureSourceUtils } from '../../utils/procedure-source.util';
 		InputIconModule,
 		InputTextModule,
 		SelectModule,
-		TableModule
+		TableModule,
 	],
 })
 export class DialogProcedureSelectionComponent implements OnInit {
-	
 	isLoading: boolean = false;
 	healthProfessional!: HealthProfessional;
 	medicalInsurance!: MedicalInsurance;
 	partner!: Partner;
 	procedures!: Array<Procedure | Service>;
-	
+
 	textFilter!: string;
 	selectedProcedure!: Procedure | Service;
 	selectedProcedureSource: ProcedureSource = ProcedureSource.CLINIC;
@@ -79,42 +78,45 @@ export class DialogProcedureSelectionComponent implements OnInit {
 		}
 
 		this.procedureSourceOptions = Object.values(ProcedureSource).map(
-            (value) => ({
-                label: ProcedureSourceUtils.getFriendlyName(value),
-                value: value,
-            })
-        );
+			(value) => ({
+				label: ProcedureSourceUtils.getFriendlyName(value),
+				value: value,
+			}),
+		);
 
 		this._retrieveProcedures();
 	}
 
 	onInputChange() {
-        clearTimeout(this._time);
+		clearTimeout(this._time);
 
-        this._time = setTimeout(() => {
-            this._retrieveProcedures();
-        }, 500);
-    }
+		this._time = setTimeout(() => {
+			this._retrieveProcedures();
+		}, 500);
+	}
 
-    onPageChange(event: any) {
-        this.page = event.first / event.rows;
-        this._retrieveProcedures();
-    }
+	onPageChange(event: any) {
+		this.page = event.first / event.rows;
+		this._retrieveProcedures();
+	}
 
-    onSortChange(event: any) {
-        this.sort = event.field;
-        this.direction = event.order > 0 ? 'asc' : 'desc';
-        this._retrieveProcedures();
-    }
-	
+	onSortChange(event: any) {
+		this.sort = event.field;
+		this.direction = event.order > 0 ? 'asc' : 'desc';
+		this._retrieveProcedures();
+	}
+
 	onSourceChange() {
-        this._retrieveProcedures();
-    }
+		this._retrieveProcedures();
+	}
 
 	onSubmit() {
-		
 		if (!this.selectedProcedure) {
-			this._alertService.showMessage(AlertType.ERROR, 'Erro', 'Nenhum procedimento selecionado!');
+			this._alertService.showMessage(
+				AlertType.ERROR,
+				'Erro',
+				'Nenhum procedimento selecionado!',
+			);
 			return;
 		}
 
@@ -122,19 +124,30 @@ export class DialogProcedureSelectionComponent implements OnInit {
 	}
 
 	private _checkDialogParams() {
-		
 		if (!this.partner) {
-			this._alertService.showMessage(AlertType.ERROR, 'Erro', 'Nenhum parceiro informado!');
+			this._alertService.showMessage(
+				AlertType.ERROR,
+				'Erro',
+				'Nenhum parceiro informado!',
+			);
 			return false;
 		}
 
 		if (!this.medicalInsurance) {
-			this._alertService.showMessage(AlertType.ERROR, 'Erro', 'Nenhum convênio informado!');
+			this._alertService.showMessage(
+				AlertType.ERROR,
+				'Erro',
+				'Nenhum convênio informado!',
+			);
 			return false;
 		}
 
 		if (!this.healthProfessional) {
-			this._alertService.showMessage(AlertType.ERROR, 'Erro', 'Nenhum profissional de saúde informado!');
+			this._alertService.showMessage(
+				AlertType.ERROR,
+				'Erro',
+				'Nenhum profissional de saúde informado!',
+			);
 			return false;
 		}
 
@@ -142,14 +155,11 @@ export class DialogProcedureSelectionComponent implements OnInit {
 	}
 
 	private async _retrieveProcedures() {
-
 		this.isLoading = true;
 		await OperatorUtils.delay(500);
 
 		try {
-
 			if (this.selectedProcedureSource === ProcedureSource.CLINIC) {
-
 				const proceduresPage = await this._procedureService.search(
 					this.page,
 					this.size,
@@ -159,20 +169,18 @@ export class DialogProcedureSelectionComponent implements OnInit {
 						name: this.textFilter || '',
 						partnerId: this.partner.id,
 						medicalInsuranceId: this.medicalInsurance.id,
-						healthProfessionalId: this.healthProfessional.id
-					}
+						healthProfessionalId: this.healthProfessional.id,
+					},
 				);
 
 				this.procedures = proceduresPage.content.map((procedure) => ({
-                    ...procedure,
-                    type: 'PROCEDURE',
-                }));
-                this.totalElements = proceduresPage.page.totalElements;
-
+					...procedure,
+					type: 'PROCEDURE',
+				}));
+				this.totalElements = proceduresPage.page.totalElements;
 			}
 
 			if (this.selectedProcedureSource === ProcedureSource.MARKETPLACE) {
-
 				const servicesPage = await this._serviceService.search(
 					this.page,
 					this.size,
@@ -182,15 +190,15 @@ export class DialogProcedureSelectionComponent implements OnInit {
 						name: this.textFilter || '',
 						partnerId: this.partner.id,
 						medicalInsuranceId: this.medicalInsurance.id,
-						healthProfessionalId: this.healthProfessional.id
-					}
+						healthProfessionalId: this.healthProfessional.id,
+					},
 				);
 
 				this.procedures = servicesPage.content.map((service) => ({
-                    ...service,
-                    type: 'SERVICE',
-                }));
-                this.totalElements = servicesPage.page.totalElements;
+					...service,
+					type: 'SERVICE',
+				}));
+				this.totalElements = servicesPage.page.totalElements;
 			}
 		} finally {
 			this.isLoading = false;

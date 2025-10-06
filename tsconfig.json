@@ -1,43 +1,43 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "bundler",
-    "paths": {
-      "@hobe/shared": ["projects/shared/src/public-api.ts"]
-    },
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022"
-  },
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  },
-  "references": [
-    { "path": "./projects/hobe-partner-ui/tsconfig.app.json" },
-    { "path": "./projects/hobe-partner-ui/tsconfig.spec.json" },
-    { "path": "./projects/hobe-care-partner-ui/tsconfig.app.json" },
-    { "path": "./projects/hobe-care-partner-ui/tsconfig.spec.json" },
-    { "path": "./projects/hobe-care-professional-ui/tsconfig.app.json" },
-    { "path": "./projects/hobe-care-professional-ui/tsconfig.spec.json" },
-    { "path": "./projects/hobe-care-receptionist-ui/tsconfig.app.json" },
-    { "path": "./projects/hobe-care-receptionist-ui/tsconfig.spec.json" },
-    { "path": "./projects/hobe-admin-ui/tsconfig.app.json" },
-    { "path": "./projects/hobe-admin-ui/tsconfig.spec.json" },
-    { "path": "./projects/shared/tsconfig.lib.json" },
-    { "path": "./projects/shared/tsconfig.spec.json" }
-  ]
+	"compileOnSave": false,
+	"compilerOptions": {
+		"baseUrl": "./",
+		"outDir": "./dist/out-tsc",
+		"strict": true,
+		"noImplicitOverride": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"skipLibCheck": true,
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"moduleResolution": "bundler",
+		"paths": {
+			"@hobe/shared": ["projects/shared/src/public-api.ts"]
+		},
+		"importHelpers": true,
+		"target": "ES2022",
+		"module": "ES2022"
+	},
+	"angularCompilerOptions": {
+		"enableI18nLegacyMessageIdFormat": false,
+		"strictInjectionParameters": true,
+		"strictInputAccessModifiers": true,
+		"strictTemplates": true
+	},
+	"references": [
+		{ "path": "./projects/hobe-partner-ui/tsconfig.app.json" },
+		{ "path": "./projects/hobe-partner-ui/tsconfig.spec.json" },
+		{ "path": "./projects/hobe-care-partner-ui/tsconfig.app.json" },
+		{ "path": "./projects/hobe-care-partner-ui/tsconfig.spec.json" },
+		{ "path": "./projects/hobe-care-professional-ui/tsconfig.app.json" },
+		{ "path": "./projects/hobe-care-professional-ui/tsconfig.spec.json" },
+		{ "path": "./projects/hobe-care-receptionist-ui/tsconfig.app.json" },
+		{ "path": "./projects/hobe-care-receptionist-ui/tsconfig.spec.json" },
+		{ "path": "./projects/hobe-admin-ui/tsconfig.app.json" },
+		{ "path": "./projects/hobe-admin-ui/tsconfig.spec.json" },
+		{ "path": "./projects/shared/tsconfig.lib.json" },
+		{ "path": "./projects/shared/tsconfig.spec.json" }
+	]
 }

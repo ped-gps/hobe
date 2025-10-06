@@ -1,37 +1,37 @@
 .p-dialog {
-    background-color: var(--color-white) !important;
-    border: none !important;
+	background-color: var(--color-white) !important;
+	border: none !important;
 
-    .p-dialog-header {
-        padding: 32px 32px 24px 32px;
+	.p-dialog-header {
+		padding: 32px 32px 24px 32px;
 
-        .p-dialog-title {
-            color: var(--color-black) !important;
-            font-size: 24px;
-            font-weight: 600;
-        }
-        .p-dialog-close-button {
-            padding: 12px !important;
-            height: 48px !important;
-            width: 48px !important;
-            background-color: transparent;
-            border: transparent;
-            color: var(--color-gray);
+		.p-dialog-title {
+			color: var(--color-black) !important;
+			font-size: 24px;
+			font-weight: 600;
+		}
+		.p-dialog-close-button {
+			padding: 12px !important;
+			height: 48px !important;
+			width: 48px !important;
+			background-color: transparent;
+			border: transparent;
+			color: var(--color-gray);
 
-            &:hover {
-                background-color: rgba($color: #000000, $alpha: 0.1) !important;
-                color: var(--color-gray) !important;
-            }
-        }
-    }
+			&:hover {
+				background-color: rgba($color: #000000, $alpha: 0.1) !important;
+				color: var(--color-gray) !important;
+			}
+		}
+	}
 
-    .p-dialog-content {
-        padding: 0px 32px 32px 32px;
-    }
+	.p-dialog-content {
+		padding: 0px 32px 32px 32px;
+	}
 
-    .dialog-actions {
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-    }
+	.dialog-actions {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+	}
 }

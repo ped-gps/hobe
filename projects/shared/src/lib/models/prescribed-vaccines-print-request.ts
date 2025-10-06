@@ -1,5 +1,5 @@
-import { PrescribedVaccine } from "./prescribed-vaccine";
+import { PrescribedVaccine } from './prescribed-vaccine';
 
 export interface PrescribedVaccinesPrintRequest {
-    prescribedVaccines: Array<PrescribedVaccine>;
+	prescribedVaccines: Array<PrescribedVaccine>;
 }

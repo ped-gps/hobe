@@ -1,53 +1,53 @@
 #dialog-alert {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    width: 90%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 24px;
+	width: 90%;
 
-    @media (min-width: 1024px) {
-        width: 350px;
-    }
+	@media (min-width: 1024px) {
+		width: 350px;
+	}
 
-    main {
-        width: 100%;
+	main {
+		width: 100%;
 
-        .icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+		.icon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 
-        .title {
-            color: #626a6d;
-            font-size: 32px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            text-align: center;
-        }
+		.title {
+			color: #626a6d;
+			font-size: 32px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			text-align: center;
+		}
 
-        .message {
-            color: #626a6d;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-            text-align: center;
-        }
-    }
+		.message {
+			color: #626a6d;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: normal;
+			text-align: center;
+		}
+	}
 
-    footer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        width: 100%;
+	footer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		width: 100%;
 
-        .button {
-            width: 100%;
-        }
-    }
+		.button {
+			width: 100%;
+		}
+	}
 }

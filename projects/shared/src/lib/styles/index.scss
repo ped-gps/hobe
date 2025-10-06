@@ -1,49 +1,51 @@
 /* Custom Styles */
-@use 'accordion.scss';
-@use 'breadcrumb.scss';
-@use 'button.scss';
-@use 'card.scss';
-@use 'checkbox.scss';
-@use 'dialog.scss';
-@use 'editor.scss';
-@use 'form.scss';
-@use 'fullcalendar.scss';
-@use 'icon.scss';
-@use 'input-datepicker.scss';
-@use 'input-group.scss';
-@use 'input-mask.scss';
-@use 'input-number.scss';
-@use 'input-password.scss';
-@use 'input-text.scss';
-@use 'input-textarea.scss';
-@use 'menu.scss';
-@use 'radio-button.scss';
-@use 'responsiveness.scss';
-@use 'select.scss';
-@use 'styles.scss';
-@use 'table.scss';
-@use 'tabs.scss';
+@use "accordion.scss";
+@use "breadcrumb.scss";
+@use "button.scss";
+@use "card.scss";
+@use "checkbox.scss";
+@use "dialog.scss";
+@use "editor.scss";
+@use "form.scss";
+@use "fullcalendar.scss";
+@use "icon.scss";
+@use "input-datepicker.scss";
+@use "input-group.scss";
+@use "input-mask.scss";
+@use "input-number.scss";
+@use "input-password.scss";
+@use "input-text.scss";
+@use "input-textarea.scss";
+@use "menu.scss";
+@use "radio-button.scss";
+@use "responsiveness.scss";
+@use "select.scss";
+@use "styles.scss";
+@use "table.scss";
+@use "tabs.scss";
 
 /* Icons */
 @import "primeicons/primeicons.css";
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
 
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap");
 
 /* Variables */
 :root {
-	--border-color: #D9D9D9;
+	--border-color: #d9d9d9;
 
-	--color-black: #292D32;
+	--color-black: #292d32;
 	--color-blue: #475585;
-	--color-green: #6A7A56;
+	--color-green: #6a7a56;
 	--color-gray: #626A6D;
-	--color-light-gray: #D9D9D9;
-	--color-orange: #DF5436;
-	--color-red: #AF1717;
-	--color-white: #FFFFFF;
-	--color-yellow: #FFB555;
+	--color-light-gray: #d9d9d9;
+	--color-orange: #df5436;
+	--color-red: #af1717;
+	--color-white: #ffffff;
+	--color-yellow: #ffb555;
+
+	--color-anti-flash-white: #F0F0F0;
 }
 
 /* Styles */
@@ -53,20 +55,21 @@
 	margin: 0;
 }
 
-html, body {
-	background-color: #F8F8FA !important;
+html,
+body {
+	background-color: #f8f8fa !important;
 	color: var(--color-black) !important;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+	width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--color-light-gray);
+	background-color: var(--color-light-gray);
 	border-radius: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: transparent;
+	background-color: transparent;
 }

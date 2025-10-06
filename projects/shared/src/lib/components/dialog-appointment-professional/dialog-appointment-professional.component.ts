@@ -14,97 +14,102 @@ import { MedicalAppointmentService } from '../../services/medical-appointment.se
 import { UserPictureComponent } from '../user-picture/user-picture.component';
 
 type Patient = {
-    name: string;
-    birthDate: Date;
-    email: string;
-    phone: string;
-    gender?: Gender;
-    avatarUrl?: string;
-}
+	name: string;
+	birthDate: Date;
+	email: string;
+	phone: string;
+	gender?: Gender;
+	avatarUrl?: string;
+};
 
 @Component({
-    selector: 'app-dialog-appointment-professional',
-    templateUrl: './dialog-appointment-professional.component.html',
-    styleUrls: ['./dialog-appointment-professional.component.scss'],
-    imports: [
-        ButtonModule, 
-        CardModule, 
-        CommonModule, 
-        GenderPipe, 
-        PhonePipe, 
-        UserPictureComponent
-    ],
+	selector: 'app-dialog-appointment-professional',
+	templateUrl: './dialog-appointment-professional.component.html',
+	styleUrls: ['./dialog-appointment-professional.component.scss'],
+	imports: [
+		ButtonModule,
+		CardModule,
+		CommonModule,
+		GenderPipe,
+		PhonePipe,
+		UserPictureComponent,
+	],
 })
 export class DialogAppointmentProfessionalComponent {
+	patient!: Patient;
 
-    patient!: Patient;
-    
-    @Input() appointment!: Appointment;
-    
-    public readonly AppointmentSituation = AppointmentSituation;
-    
-    constructor(
-        private readonly _config: DynamicDialogConfig,
-        private readonly _router: Router,
-        private readonly _dialogRef: DynamicDialogRef,
-        private readonly _medicalAppointmentService: MedicalAppointmentService
-    ) {
-        if (this._config.data) {
-            
-            if (this._config.data.appointment) {
-                this.appointment = this._config.data.appointment;
-                this.appointment.time = this.appointment.time.substring(0, 5);
-                
-                this.patient = {
-                    email: this.appointment.client.email,
-                    name: this.appointment.client?.name,
-                    birthDate: this.appointment.client?.birthDate,
-                    phone: this.appointment.client?.phone,
-                    gender: this.appointment.client?.gender,
-                    avatarUrl: this.appointment.client?.picture?.path
-                }
-            }
-        }
-    }
+	@Input() appointment!: Appointment;
 
-    getProcedureName() {
-        return this.appointment.procedure?.name || this.appointment.service?.name;
-    }
+	public readonly AppointmentSituation = AppointmentSituation;
 
-    isStartMedicalAppointmentEnabled() {
-        return (
-            this.appointment.situation === AppointmentSituation.PENDING || 
-            this.appointment.situation === AppointmentSituation.WAITING
-        );
-    }
+	constructor(
+		private readonly _config: DynamicDialogConfig,
+		private readonly _router: Router,
+		private readonly _dialogRef: DynamicDialogRef,
+		private readonly _medicalAppointmentService: MedicalAppointmentService,
+	) {
+		if (this._config.data) {
+			if (this._config.data.appointment) {
+				this.appointment = this._config.data.appointment;
+				this.appointment.time = this.appointment.time.substring(0, 5);
 
-    isNavigateToMedicalAppointmentEnabled() {
-        return (
-            this.appointment.situation === AppointmentSituation.IN_PROGRESS ||
-            this.appointment.situation === AppointmentSituation.CONCLUDED
-        );
-    }
+				this.patient = {
+					email: this.appointment.client.email,
+					name: this.appointment.client?.name,
+					birthDate: this.appointment.client?.birthDate,
+					phone: this.appointment.client?.phone,
+					gender: this.appointment.client?.gender,
+					avatarUrl: this.appointment.client?.picture?.path,
+				};
+			}
+		}
+	}
 
-    navigate() {
+	getProcedureName() {
+		return (
+			this.appointment.procedure?.name || this.appointment.service?.name
+		);
+	}
 
-        this._router.navigate(['/medical-record'], {
-            state: { appointment: this.appointment },
-        });
+	isStartMedicalAppointmentEnabled() {
+		return (
+			this.appointment.situation === AppointmentSituation.PENDING ||
+			this.appointment.situation === AppointmentSituation.WAITING
+		);
+	}
 
-        this._dialogRef.close();
-    }
+	isNavigateToMedicalAppointmentEnabled() {
+		return (
+			this.appointment.situation === AppointmentSituation.IN_PROGRESS ||
+			this.appointment.situation === AppointmentSituation.CONCLUDED
+		);
+	}
 
-    async navigateToMedicalAppointment() {
-        const appointmentId = this.appointment.id;
-        
-        if (appointmentId) {
-            const medicalAppointment = await this._medicalAppointmentService.findByAppointmentId(appointmentId);
+	navigate() {
+		this._router.navigate(['/medical-record'], {
+			state: { appointment: this.appointment },
+		});
 
-            this._router.navigate([`/medical-record/${medicalAppointment.id}`], {
-                state: { appointment: this.appointment },
-            });
+		this._dialogRef.close();
+	}
 
-            this._dialogRef.close();
-        }
-    }
+	async navigateToMedicalAppointment() {
+		const appointmentId = this.appointment.id;
+
+		if (appointmentId) {
+			const medicalAppointment =
+				await this._medicalAppointmentService.findByAppointmentId(
+					appointmentId,
+				);
+
+			this._router.navigate(
+				[`/medical-record/${medicalAppointment.id}`],
+				{
+					state: { appointment: this.appointment },
+				},
+			);
+
+			this._dialogRef.close();
+		}
+	}
 }

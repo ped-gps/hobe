@@ -1,140 +1,162 @@
 <div id="dialog-procedure">
-    <main>
-        <div class="form">
-            <form [formGroup]="form" *ngIf="form">
-                <div class="responsive-row">
-                    <div class="responsive-col-12">
-                        <div class="input-field">
-                            <label for="name">Nome</label>
-                            <input
-                                pInputText
-                                id="name"
-                                type="text"
-                                name="name"
-                                placeholder="Nome"
-                                formControlName="name"
-                            />
-                            <app-hint
-                                [isError]="true"
-                                [message]="getErrorMessage(form, 'name')"
-                                [visible]="hasError(form, 'name')"
-                            />
-                        </div>
-                    </div>
-                </div>
+	<main>
+		<div class="form">
+			<form [formGroup]="form" *ngIf="form">
+				<div class="responsive-row">
+					<div class="responsive-col-12">
+						<div class="input-field">
+							<label for="name">Nome</label>
+							<input
+								pInputText
+								id="name"
+								type="text"
+								name="name"
+								placeholder="Nome"
+								formControlName="name"
+							/>
+							<app-hint
+								[isError]="true"
+								[message]="getErrorMessage(form, 'name')"
+								[visible]="hasError(form, 'name')"
+							/>
+						</div>
+					</div>
+				</div>
 
-                <div class="responsive-row">
-                    <div class="responsive-col-12">
-                        <div class="input-field">
-                            <label for="code">Código</label>
-                            <input
-                                pInputText
-                                id="code"
-                                placeholder="Código"
-                                formControlName="code"
-                                [maxlength]="10"
-                            />
-                            <app-hint
-                                [isError]="true"
-                                [message]="getErrorMessage(form, 'code')"
-                                [visible]="hasError(form, 'code')"
-                            />
-                        </div>
-                    </div>
-                </div>
+				<div class="responsive-row">
+					<div class="responsive-col-12">
+						<div class="input-field">
+							<label for="code">Código</label>
+							<input
+								pInputText
+								id="code"
+								placeholder="Código"
+								formControlName="code"
+								[maxlength]="10"
+							/>
+							<app-hint
+								[isError]="true"
+								[message]="getErrorMessage(form, 'code')"
+								[visible]="hasError(form, 'code')"
+							/>
+						</div>
+					</div>
+				</div>
 
-                <div class="responsive-row">
-                    <div class="responsive-col-12">
-                        <div class="input-field">
-                            <label for="health-professional">Profissional de Saúde</label>
-                            <p-select 
-                                inputId="health-professional"
-                                [options]="healthProfessionalOptions"
-                                placeholder="Selecione um profissional de saúde"
-                                formControlName="healthProfessional"
-                            />
-                            <app-hint
-                                [isError]="true"
-                                [message]="getErrorMessage(form, 'healthProfessional')"
-                                [visible]="hasError(form, 'healthProfessional')"
-                            />
-                        </div>
-                    </div>
-                </div>
+				<div class="responsive-row">
+					<div class="responsive-col-12">
+						<div class="input-field">
+							<label for="health-professional"
+								>Profissional de Saúde</label
+							>
+							<p-select
+								inputId="health-professional"
+								[options]="healthProfessionalOptions"
+								placeholder="Selecione um profissional de saúde"
+								formControlName="healthProfessional"
+							/>
+							<app-hint
+								[isError]="true"
+								[message]="
+									getErrorMessage(form, 'healthProfessional')
+								"
+								[visible]="hasError(form, 'healthProfessional')"
+							/>
+						</div>
+					</div>
+				</div>
 
-                <div class="responsive-row">
-                    <div class="responsive-col-12">
-                        <div class="input-field">
-                            <label for="value">Valor</label>
-                            <p-inputnumber
-                                inputId="value"
-                                mode="currency"
-                                currency="BRL"
-                                locale="pt-BR"
-                                placeholder="Valor"
-                                formControlName="value"
-                            />
-                            <app-hint
-                                [isError]="true"
-                                [message]="getErrorMessage(form, 'value')"
-                                [visible]="hasError(form, 'value')"
-                            />
-                        </div>
-                    </div>
-                </div>
+				<div class="responsive-row">
+					<div class="responsive-col-12">
+						<div class="input-field">
+							<label for="value">Valor</label>
+							<p-inputnumber
+								inputId="value"
+								mode="currency"
+								currency="BRL"
+								locale="pt-BR"
+								placeholder="Valor"
+								formControlName="value"
+							/>
+							<app-hint
+								[isError]="true"
+								[message]="getErrorMessage(form, 'value')"
+								[visible]="hasError(form, 'value')"
+							/>
+						</div>
+					</div>
+				</div>
 
-                <div class="responsive-row">
-                    <div class="responsive-col-6">
-                        <div class="input-field">
-                            <label for="payoutType">Tipo de Repasse</label>
-                            <p-select 
-                                inputId="payoutType"
-                                formControlName="payoutType"
-                                placeholder="Selecione o tipo de repasse"
-                                appendTo="body"
-                                [options]="payoutTypeOptions"
-                            />
-                            <app-hint
-                                [isError]="true"
-                                [message]="getErrorMessage(form, 'payoutType')"
-                                [visible]="hasError(form, 'payoutType')"
-                            />
-                        </div>
-                    </div>
-                    
-                    <div class="responsive-col-6">
-                        <div class="input-field">
-                            <label for="payoutValue">Valor do Repasse</label>
-                            <p-inputNumber
-                                inputId="payoutValue"
-                                formControlName="payoutValue"
-                                placeholder="Valor do repasse"
-                                [mode]="form.get('payoutType')?.value === 'FIXED' ? 'currency' : 'decimal'"
-                                [suffix]="form.get('payoutType')?.value === 'PERCENTAGE' ? '%' : ''"
-                                [currency]="form.get('payoutType')?.value === 'FIXED' ? 'BRL' : undefined"
-                                [min]="0"
-                                [max]="form.get('payoutType')?.value === 'PERCENTAGE' ? 100 : getPayoutValue()"
-                                [minFractionDigits]="2"
-                            />
-                            <app-hint
-                                [isError]="true"
-                                [message]="getErrorMessage(form, 'payoutValue')"
-                                [visible]="hasError(form, 'payoutValue')"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </main>
+				<div class="responsive-row">
+					<div class="responsive-col-6">
+						<div class="input-field">
+							<label for="payoutType">Tipo de Repasse</label>
+							<p-select
+								inputId="payoutType"
+								formControlName="payoutType"
+								placeholder="Selecione o tipo de repasse"
+								appendTo="body"
+								[options]="payoutTypeOptions"
+							/>
+							<app-hint
+								[isError]="true"
+								[message]="getErrorMessage(form, 'payoutType')"
+								[visible]="hasError(form, 'payoutType')"
+							/>
+						</div>
+					</div>
 
-    <footer>
-        <p-button 
-            label="Salvar"
-            class="button-green-white"
-            [loading]="isSubmitting"
-            [disabled]="!form || form.invalid"
-            (onClick)="onSubmit()"
-        />
-    </footer>
+					<div class="responsive-col-6">
+						<div class="input-field">
+							<label for="payoutValue">Valor do Repasse</label>
+							<p-inputNumber
+								inputId="payoutValue"
+								formControlName="payoutValue"
+								placeholder="Valor do repasse"
+								[mode]="
+									form.get('payoutType')?.value === 'FIXED'
+										? 'currency'
+										: 'decimal'
+								"
+								[suffix]="
+									form.get('payoutType')?.value ===
+									'PERCENTAGE'
+										? '%'
+										: ''
+								"
+								[currency]="
+									form.get('payoutType')?.value === 'FIXED'
+										? 'BRL'
+										: undefined
+								"
+								[min]="0"
+								[max]="
+									form.get('payoutType')?.value ===
+									'PERCENTAGE'
+										? 100
+										: getPayoutValue()
+								"
+								[minFractionDigits]="2"
+							/>
+							<app-hint
+								[isError]="true"
+								[message]="getErrorMessage(form, 'payoutValue')"
+								[visible]="hasError(form, 'payoutValue')"
+							/>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</main>
+
+	<footer>
+		<p-button
+			label="Salvar"
+			class="button-green-white"
+			[loading]="isSubmitting"
+			[disabled]="!form || form.invalid"
+			(onClick)="onSubmit()"
+		/>
+	</footer>
 </div>

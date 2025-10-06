@@ -1,16 +1,16 @@
 .p-accordion {
-    .p-accordionpanel {
-        border-bottom: 1px solid #cecece !important;
+	.p-accordionpanel {
+		border-bottom: 1px solid #cecece !important;
 
-        .p-accordionheader {
-            background: transparent !important;
-            color: var(--color-black) !important;
-        }
+		.p-accordionheader {
+			background: transparent !important;
+			color: var(--color-black) !important;
+		}
 
-        .p-accordioncontent {
-            .p-accordioncontent-content {
-                background: transparent !important;
-            }
-        }
-    }
+		.p-accordioncontent {
+			.p-accordioncontent-content {
+				background: transparent !important;
+			}
+		}
+	}
 }

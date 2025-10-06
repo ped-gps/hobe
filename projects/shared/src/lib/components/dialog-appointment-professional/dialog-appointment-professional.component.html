@@ -1,65 +1,67 @@
 <div class="dialog-details-container">
-    <p-card class="details-card">
-        <div class="header">
-            <h3>Detalhes do Paciente</h3>
-        </div>
-        <div class="patient-info">
-            <div class="patient-profile">
-                <app-user-picture 
-                    [user]="appointment.client"
-                    [height]="70"
-                    [width]="70"
-                />
-                <div class="patient-name">{{ patient.name }}</div>
-            </div>
-            <div class="patient-details">
-                <div>
-                    <span>Data de nascimento</span>
-                    <span>{{ (patient.birthDate | date: 'dd/MM/yyyy') || '-' }}</span>
-                </div>
-                <div>
-                    <span>Telefone</span>
-                    <span>{{ patient.phone | phone }}</span>
-                </div>
-                <div>
-                    <span>Sexo</span>
-                    <span>{{ patient.gender | gender }}</span>
-                </div>
-            </div>
-        </div>
-    </p-card>
-    <p-card class="details-card">
-        <div class="header">
-            <h3>Detalhes do Agendamento</h3>
-        </div>
-        <div class="appointment-details">
-            <div>
-                <span>Procedimento</span>
-                <span>{{ getProcedureName() }}</span>
-            </div>
-            <div>
-                <span>Data</span>
-                <span>{{ appointment.date | date: 'dd/MM/yyyy' }}</span>
-            </div>
-            <div>
-                <span>Hora</span>
-                <span>{{ appointment.time }}</span>
-            </div>
-        </div>
-    </p-card>
-    <div class="dialog-actions">
-        <p-button
-            (onClick)="navigate()"
-            class="button-blue-white"
-            label="Iniciar atendimento"
-            *ngIf="isStartMedicalAppointmentEnabled()"
-        />
+	<p-card class="details-card">
+		<div class="header">
+			<h3>Detalhes do Paciente</h3>
+		</div>
+		<div class="patient-info">
+			<div class="patient-profile">
+				<app-user-picture
+					[user]="appointment.client"
+					[height]="70"
+					[width]="70"
+				/>
+				<div class="patient-name">{{ patient.name }}</div>
+			</div>
+			<div class="patient-details">
+				<div>
+					<span>Data de nascimento</span>
+					<span>{{
+						(patient.birthDate | date: "dd/MM/yyyy") || "-"
+					}}</span>
+				</div>
+				<div>
+					<span>Telefone</span>
+					<span>{{ patient.phone | phone }}</span>
+				</div>
+				<div>
+					<span>Sexo</span>
+					<span>{{ patient.gender | gender }}</span>
+				</div>
+			</div>
+		</div>
+	</p-card>
+	<p-card class="details-card">
+		<div class="header">
+			<h3>Detalhes do Agendamento</h3>
+		</div>
+		<div class="appointment-details">
+			<div>
+				<span>Procedimento</span>
+				<span>{{ getProcedureName() }}</span>
+			</div>
+			<div>
+				<span>Data</span>
+				<span>{{ appointment.date | date: "dd/MM/yyyy" }}</span>
+			</div>
+			<div>
+				<span>Hora</span>
+				<span>{{ appointment.time }}</span>
+			</div>
+		</div>
+	</p-card>
+	<div class="dialog-actions">
+		<p-button
+			(onClick)="navigate()"
+			class="button-blue-white"
+			label="Iniciar atendimento"
+			*ngIf="isStartMedicalAppointmentEnabled()"
+		/>
 
-        <p-button 
-            (onClick)="navigateToMedicalAppointment()"
-            class="button-blue-white"
-            label="Ir para atendimento"
-            *ngIf="isNavigateToMedicalAppointmentEnabled()"
-        />
-    </div>
+		<p-button
+			(onClick)="navigateToMedicalAppointment()"
+			class="button-blue-white"
+			label="Ir para atendimento"
+			*ngIf="isNavigateToMedicalAppointmentEnabled()"
+		/>
+	</div>
 </div>

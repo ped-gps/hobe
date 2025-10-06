@@ -1,63 +1,70 @@
-<div class="picture" [style]="{ 'height': height, 'width': width }"> 
-    <div class="container">
-        @if (!upload) {
-            <img
-                *ngIf="user && user.picture; else defaultImage"
-                [src]="user.picture.path"
-                [height]="height"
-                [width]="width"
-                alt="user picture"
-                class="image"
-            />
-        }
+<div class="picture" [style]="{ height: height, width: width }">
+	<div class="container">
+		@if (!upload) {
+			<img
+				*ngIf="user && user.picture; else defaultImage"
+				[src]="user.picture.path"
+				[height]="height"
+				[width]="width"
+				alt="user picture"
+				class="image"
+			/>
+		}
 
-        @if (upload) {
-            <ng-container *ngIf="pictureSelected?.path; else showCurrentOrDefault">
-                <img
-                    [src]="pictureSelected.path"
-                    [height]="height"
-                    [width]="width"
-                    alt="user picture"
-                    class="image"
-                />
-            </ng-container>
+		@if (upload) {
+			<ng-container
+				*ngIf="pictureSelected?.path; else showCurrentOrDefault"
+			>
+				<img
+					[src]="pictureSelected.path"
+					[height]="height"
+					[width]="width"
+					alt="user picture"
+					class="image"
+				/>
+			</ng-container>
 
-            <ng-template #showCurrentOrDefault>
-                <img
-                    *ngIf="user && user.picture?.path; else defaultImage"
-                    [src]="user.picture!.path"
-                    [height]="height"
-                    [width]="width"
-                    alt="user picture"
-                    class="image"
-                />
-            </ng-template>
-            
-            <p-button class="button-blue-white button-icon upload-button" (onClick)="onDropAreaClick()">
-                <span class="material-symbols-rounded">add_photo_alternate</span>
-            </p-button>
-        }
-    </div>
+			<ng-template #showCurrentOrDefault>
+				<img
+					*ngIf="user && user.picture?.path; else defaultImage"
+					[src]="user.picture!.path"
+					[height]="height"
+					[width]="width"
+					alt="user picture"
+					class="image"
+				/>
+			</ng-template>
+
+			<p-button
+				class="button-blue-white button-icon upload-button"
+				(onClick)="onDropAreaClick()"
+			>
+				<span class="material-symbols-rounded"
+					>add_photo_alternate</span
+				>
+			</p-button>
+		}
+	</div>
 </div>
 
 <ng-template #defaultImage>
-    <div class="picture" [style]="{ 'height': height, 'width': width }">
-        <img
-            src="/assets/svgs/profile.svg"
-            [height]="height"
-            [width]="width"
-            alt="user picture"
-            class="image"
-        />
-    </div>
+	<div class="picture" [style]="{ height: height, width: width }">
+		<img
+			src="/assets/svgs/profile.svg"
+			[height]="height"
+			[width]="width"
+			alt="user picture"
+			class="image"
+		/>
+	</div>
 </ng-template>
 
 <input
-    #pictureInput
-    id="picture-file"
-    type="file"
-    accept="image/*"
-    [multiple]="false"
-    (change)="onFileSelected($event)"
-    style="display: none"
+	#pictureInput
+	id="picture-file"
+	type="file"
+	accept="image/*"
+	[multiple]="false"
+	(change)="onFileSelected($event)"
+	style="display: none"
 />

@@ -1,56 +1,56 @@
 #toolbar {
-    .content {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 32px;
+	.content {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 32px;
 
-        .user {
-            cursor: pointer;
-            background-color: var(--color-white);
-            border-radius: 10px;
-            border: 1px solid #e3e5e9;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 8px;
-            padding: 8px;
+		.user {
+			cursor: pointer;
+			background-color: var(--color-white);
+			border-radius: 10px;
+			border: 1px solid #e3e5e9;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			gap: 8px;
+			padding: 8px;
 
-            .picture {
-                border: 1px solid #e3e5e9;
-                border-radius: 999px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 36px;
-                width: 36px;
+			.picture {
+				border: 1px solid #e3e5e9;
+				border-radius: 999px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 36px;
+				width: 36px;
 
-                img {
-                    border-radius: 999px;
-                    height: 36px;
-                    width: 36px;
-                }
+				img {
+					border-radius: 999px;
+					height: 36px;
+					width: 36px;
+				}
 
-                .material-symbols-rounded {
-                    color: var(--color-gray);
-                }
-            }
+				.material-symbols-rounded {
+					color: var(--color-gray);
+				}
+			}
 
-            .name {
-                height: 20px;
+			.name {
+				height: 20px;
 
-                span {
-                    display: inline-block;
-                    max-width: 150px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-            }
+				span {
+					display: inline-block;
+					max-width: 150px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+			}
 
-            .icon {
-                height: 20px;
-            }
-        }
-    }
+			.icon {
+				height: 20px;
+			}
+		}
+	}
 }

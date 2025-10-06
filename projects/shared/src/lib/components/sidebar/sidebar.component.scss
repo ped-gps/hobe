@@ -1,61 +1,61 @@
 #sidebar {
-    background-color: var(--color-blue);
-    padding: 32px;
-    height: 100vh;
-    width: 315px;
+	background-color: var(--color-blue);
+	padding: 32px;
+	height: 100vh;
+	width: 315px;
 
-    .header {
-        border-bottom: 1px solid #FFFFFF;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-bottom: 24px;
-        margin-bottom: 24px;
-    }
+	.header {
+		border-bottom: 1px solid #ffffff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-bottom: 24px;
+		margin-bottom: 24px;
+	}
 
-    .content {
-        .links {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 24px;
+	.content {
+		.links {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+			gap: 24px;
 
-            .link {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                gap: 10px;
-                width: 100%;
-                padding: 6px 12px;
+			.link {
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+				gap: 10px;
+				width: 100%;
+				padding: 6px 12px;
 
-                .icon {
-                    height: 32px;
-                    width: 32px;
-                    
-                    .material-symbols-rounded {
-                        color: var(--color-white);
-                        font-size: 32px;
-                    }
-                }
+				.icon {
+					height: 32px;
+					width: 32px;
 
-                .label {
-                    color: var(--color-white);
-                    font-size: 16px;
-                    font-weight: 600;
-                }
+					.material-symbols-rounded {
+						color: var(--color-white);
+						font-size: 32px;
+					}
+				}
 
-                &:hover {
-                    cursor: pointer;
-                    background-color: rgba($color: #FFFFFF, $alpha: 0.1);
-                    border-radius: 10px;
-                }
+				.label {
+					color: var(--color-white);
+					font-size: 16px;
+					font-weight: 600;
+				}
 
-                &.active {
-                    background-color: rgba($color: #FFFFFF, $alpha: 0.1);
-                    border-radius: 10px;
-                }
-            }
-        }
-    }
+				&:hover {
+					cursor: pointer;
+					background-color: rgba($color: #ffffff, $alpha: 0.1);
+					border-radius: 10px;
+				}
+
+				&.active {
+					background-color: rgba($color: #ffffff, $alpha: 0.1);
+					border-radius: 10px;
+				}
+			}
+		}
+	}
 }

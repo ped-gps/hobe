@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
-    FormArray,
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
+	FormArray,
+	FormBuilder,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
 } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -14,7 +14,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { SelectModule } from "primeng/select";
+import { SelectModule } from 'primeng/select';
 import { startWith } from 'rxjs';
 
 import { PayoutType } from '../../enums/payout-type';
@@ -29,176 +29,179 @@ import { PayoutTypeUtils } from '../../utils/payout-type.util';
 import { HintComponent } from '../hint/hint.component';
 
 @Component({
-    selector: 'app-dialog-procedure',
-    templateUrl: './dialog-procedure.component.html',
-    styleUrl: './dialog-procedure.component.scss',
-    imports: [
-        ButtonModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        InputMaskModule,
-        InputNumberModule,
-        InputTextModule,
-        SelectModule,
-        HintComponent,
-    ],
+	selector: 'app-dialog-procedure',
+	templateUrl: './dialog-procedure.component.html',
+	styleUrl: './dialog-procedure.component.scss',
+	imports: [
+		ButtonModule,
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		InputMaskModule,
+		InputNumberModule,
+		InputTextModule,
+		SelectModule,
+		HintComponent,
+	],
 })
 export class DialogProcedureComponent implements OnInit {
-    
-    form!: FormGroup;
-    partner!: Partner;
-    procedure!: Procedure;
-    
-    healthProfessionalOptions!: Array<SelectItem>;
-    payoutTypeOptions!: Array<SelectItem>;
+	form!: FormGroup;
+	partner!: Partner;
+	procedure!: Procedure;
 
-    isSubmitting: boolean = false;
+	healthProfessionalOptions!: Array<SelectItem>;
+	payoutTypeOptions!: Array<SelectItem>;
 
-    constructor(
-        private readonly _authenticationService: AuthenticationService,
-        private readonly _dialogConfig: DynamicDialogConfig,
-        private readonly _dialogRef: DynamicDialogRef,
-        private readonly _formBuilder: FormBuilder,
-        private readonly _healthProfessionalService: HealthProfessionalService,
-        private readonly _procedureService: ProcedureService
-    ) {}
+	isSubmitting: boolean = false;
 
-    ngOnInit(): void {
-        this.procedure = this._dialogConfig.data['procedure'];
+	constructor(
+		private readonly _authenticationService: AuthenticationService,
+		private readonly _dialogConfig: DynamicDialogConfig,
+		private readonly _dialogRef: DynamicDialogRef,
+		private readonly _formBuilder: FormBuilder,
+		private readonly _healthProfessionalService: HealthProfessionalService,
+		private readonly _procedureService: ProcedureService,
+	) {}
 
-        this.payoutTypeOptions = Object.values(PayoutType).map(value => ({
-            label: PayoutTypeUtils.getFriendlyName(value),
-            value: value
-        }));
+	ngOnInit(): void {
+		this.procedure = this._dialogConfig.data['procedure'];
 
-        this._buildForm();
-        this._addFormObservers();
-        this._fetchData();
-    }
+		this.payoutTypeOptions = Object.values(PayoutType).map((value) => ({
+			label: PayoutTypeUtils.getFriendlyName(value),
+			value: value,
+		}));
 
-    getErrorMessage(form: FormGroup | FormArray, controlName: string) {
-        return FormUtils.getErrorMessage(form, controlName);
-    }
+		this._buildForm();
+		this._addFormObservers();
+		this._fetchData();
+	}
 
-    getPayoutValue() {
-        return this.form.get('payoutValue')?.value;
-    }
+	getErrorMessage(form: FormGroup | FormArray, controlName: string) {
+		return FormUtils.getErrorMessage(form, controlName);
+	}
 
-    hasError(form: FormGroup | FormArray, controlName: string) {
-        return FormUtils.hasError(form, controlName);
-    }
+	getPayoutValue() {
+		return this.form.get('payoutValue')?.value;
+	}
 
-    onClose() {
-        this._dialogRef.close({ change: false });
-    }
+	hasError(form: FormGroup | FormArray, controlName: string) {
+		return FormUtils.hasError(form, controlName);
+	}
 
-    async onSubmit() {
-        if (this.form.invalid) {
-            FormUtils.markAsTouched(this.form);
-            FormUtils.goToInvalidFields();
-            return;
-        }
+	onClose() {
+		this._dialogRef.close({ change: false });
+	}
 
-        this.isSubmitting = true;
-        await OperatorUtils.delay(500);
+	async onSubmit() {
+		if (this.form.invalid) {
+			FormUtils.markAsTouched(this.form);
+			FormUtils.goToInvalidFields();
+			return;
+		}
 
-        try {
-            
-            const procedure: Procedure = {
-                ...(this.procedure || {}),
-                ...this.form.getRawValue(),
-                partner: { id: this.partner.id } as Partner,
-            };
+		this.isSubmitting = true;
+		await OperatorUtils.delay(500);
 
-            if (procedure.id) {
-                await this._procedureService.update(procedure);
-            } else {
-                await this._procedureService.save(procedure);
-            }
+		try {
+			const procedure: Procedure = {
+				...(this.procedure || {}),
+				...this.form.getRawValue(),
+				partner: { id: this.partner.id } as Partner,
+			};
 
-            this._dialogRef.close({ change: true });
-        } finally {
-            this.isSubmitting = false;
-        }
-    }
+			if (procedure.id) {
+				await this._procedureService.update(procedure);
+			} else {
+				await this._procedureService.save(procedure);
+			}
 
-    private _addFormObservers() {
-        const payoutTypeCtrl   = this.form.get('payoutType')!;
-        const payoutValueCtrl  = this.form.get('payoutValue')!;
+			this._dialogRef.close({ change: true });
+		} finally {
+			this.isSubmitting = false;
+		}
+	}
 
-        payoutTypeCtrl.valueChanges
-            .pipe(startWith(payoutTypeCtrl.value)) 
-            .subscribe((type: PayoutType | null) => {
-            
-                if (type) {
-                    
-                    const validators = [Validators.required, Validators.min(0)];
+	private _addFormObservers() {
+		const payoutTypeCtrl = this.form.get('payoutType')!;
+		const payoutValueCtrl = this.form.get('payoutValue')!;
 
-                    if (type === PayoutType.PERCENTAGE) {
-                        validators.push(Validators.max(100));
-                    }
+		payoutTypeCtrl.valueChanges
+			.pipe(startWith(payoutTypeCtrl.value))
+			.subscribe((type: PayoutType | null) => {
+				if (type) {
+					const validators = [Validators.required, Validators.min(0)];
 
-                    payoutValueCtrl.enable({ emitEvent: false });
-                    payoutValueCtrl.setValidators(validators);
-                } else {
-                    payoutValueCtrl.disable({ emitEvent: false });
-                    payoutValueCtrl.clearValidators();
-                    payoutValueCtrl.setValue(null, { emitEvent: false });
-                }
+					if (type === PayoutType.PERCENTAGE) {
+						validators.push(Validators.max(100));
+					}
 
-                payoutValueCtrl.updateValueAndValidity({ emitEvent: false });
-            })
-        ;
-    }
+					payoutValueCtrl.enable({ emitEvent: false });
+					payoutValueCtrl.setValidators(validators);
+				} else {
+					payoutValueCtrl.disable({ emitEvent: false });
+					payoutValueCtrl.clearValidators();
+					payoutValueCtrl.setValue(null, { emitEvent: false });
+				}
 
-    private _buildForm() {
-        this.form = this._formBuilder.group({
-            name: [
-                this.procedure?.name,
-                [
-                    Validators.required,
-                    Validators.minLength(3),
-                    Validators.maxLength(100),
-                ],
-            ],
-            value: [
-                this.procedure?.value,
-                [Validators.required, Validators.min(0)],
-            ],
-            code: [
-                this.procedure?.code,
-                [Validators.nullValidator, Validators.maxLength(10)],
-            ],
-            payoutType:[
-                this.procedure?.payoutType,
-                [Validators.nullValidator]
-            ],
-            payoutValue: [
-                { 
-                    value: this.procedure?.payoutValue ?? null, 
-                    disabled: !this.procedure?.payoutType 
-                }, 
-                [Validators.nullValidator]
-            ],
-            healthProfessional: [
-                this.procedure?.healthProfessional,
-                [Validators.required]
-            ]
-        });
-    }
+				payoutValueCtrl.updateValueAndValidity({ emitEvent: false });
+			});
+	}
 
-    private async _fetchData() {
-        
-        this.partner = await this._authenticationService.retrieveUser();
-        
-        const healthProfessionalsPage = await this._healthProfessionalService.search(-1, -1, 'name', 'asc', {
-            partnerId: this.partner.id,
-        });
+	private _buildForm() {
+		this.form = this._formBuilder.group({
+			name: [
+				this.procedure?.name,
+				[
+					Validators.required,
+					Validators.minLength(3),
+					Validators.maxLength(100),
+				],
+			],
+			value: [
+				this.procedure?.value,
+				[Validators.required, Validators.min(0)],
+			],
+			code: [
+				this.procedure?.code,
+				[Validators.nullValidator, Validators.maxLength(10)],
+			],
+			payoutType: [
+				this.procedure?.payoutType,
+				[Validators.nullValidator],
+			],
+			payoutValue: [
+				{
+					value: this.procedure?.payoutValue ?? null,
+					disabled: !this.procedure?.payoutType,
+				},
+				[Validators.nullValidator],
+			],
+			healthProfessional: [
+				this.procedure?.healthProfessional,
+				[Validators.required],
+			],
+		});
+	}
 
-        this.healthProfessionalOptions = healthProfessionalsPage.content.map((healthProfessional) => ({
-            label: `${healthProfessional.name} | ${healthProfessional.councilCode}`,
-            value: healthProfessional,
-        }));
-    }
+	private async _fetchData() {
+		this.partner = await this._authenticationService.retrieveUser();
+
+		const healthProfessionalsPage =
+			await this._healthProfessionalService.search(
+				-1,
+				-1,
+				'name',
+				'asc',
+				{
+					partnerId: this.partner.id,
+				},
+			);
+
+		this.healthProfessionalOptions = healthProfessionalsPage.content.map(
+			(healthProfessional) => ({
+				label: `${healthProfessional.name} | ${healthProfessional.councilCode}`,
+				value: healthProfessional,
+			}),
+		);
+	}
 }

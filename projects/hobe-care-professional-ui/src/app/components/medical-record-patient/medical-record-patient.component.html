@@ -1,48 +1,50 @@
 <div id="medical-record-patient">
-    <main>
-        <label>Detalhes do Paciente</label>
-        <div class="patient-details">
-            <div class="patient-avatar">
-                <app-user-picture 
-                    [user]="client"
-                    [height]="96"
-                    [width]="96"
-                />
-            </div>
+	<main>
+		<label>Detalhes do Paciente</label>
+		<div class="patient-details">
+			<div class="patient-avatar">
+				<app-user-picture [user]="client" [height]="96" [width]="96" />
+			</div>
 
-            <div class="patient-info">
-                <div class="patient-name">{{ client.name }}</div>
-                <div class="patient-meta">
-                    <div class="patient-meta-section">
-                        <div>
-                            <span class="type">Idade</span>
-                            <span>{{client.birthDate ? ((client.birthDate | age) + ' anos') : '-'}}</span>
-                        </div>
-                        <div>
-                            <span class="type">Convênio</span>
-                            <span>{{ appointment.medicalInsurance.name || '-' }}</span>
-                        </div>
-                        <div>
-                            <span class="type">Sexo</span>
-                            <span>{{ (client.gender | gender) || '-' }}</span>
-                        </div>
-                    </div>
-                    <div class="patient-meta-section">
-                        <div>
-                            <span class="type">Empresa onde trabalha</span>
-                            <span>{{ client.company || '-' }}</span>
-                        </div>
-                        <div>
-                            <span class="type">Função</span>
-                            <span>{{ client.jobTitle || '-' }}</span>
-                        </div>
-                        <div>
-                            <span class="type">E-mail</span>
-                            <span>{{ client.email || '-' }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+			<div class="patient-info">
+				<div class="patient-name">{{ client.name }}</div>
+				<div class="patient-meta">
+					<div class="patient-meta-section">
+						<div>
+							<span class="type">Idade</span>
+							<span>{{
+								client.birthDate
+									? (client.birthDate | age) + " anos"
+									: "-"
+							}}</span>
+						</div>
+						<div>
+							<span class="type">Convênio</span>
+							<span>{{
+								appointment.medicalInsurance.name || "-"
+							}}</span>
+						</div>
+						<div>
+							<span class="type">Sexo</span>
+							<span>{{ (client.gender | gender) || "-" }}</span>
+						</div>
+					</div>
+					<div class="patient-meta-section">
+						<div>
+							<span class="type">Empresa onde trabalha</span>
+							<span>{{ client.company || "-" }}</span>
+						</div>
+						<div>
+							<span class="type">Função</span>
+							<span>{{ client.jobTitle || "-" }}</span>
+						</div>
+						<div>
+							<span class="type">E-mail</span>
+							<span>{{ client.email || "-" }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
 </div>

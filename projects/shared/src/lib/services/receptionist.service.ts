@@ -9,97 +9,106 @@ import { AbstractService } from './abstract-service';
 import { AlertService } from './alert.service';
 
 @Injectable({
-    providedIn: 'root',
+	providedIn: 'root',
 })
 export class ReceptionistService extends AbstractService<Receptionist> {
+	protected _baseURL = `${environment.API}/receptionists`;
 
-    protected _baseURL = `${environment.API}/receptionists`;
+	constructor(
+		protected _http: HttpClient,
+		protected _alertService: AlertService,
+	) {
+		super();
+	}
 
-    constructor(
-        protected _http: HttpClient,
-        protected _alertService: AlertService
-    ) {
-        super();
-    }
+	override save(
+		receptionist: Receptionist,
+		options?: {
+			picture?: FileLoaded;
+			showSuccessMessage?: boolean;
+			showErrorMessage?: boolean;
+		},
+	) {
+		return new Promise<Receptionist>(async (resolve) => {
+			const hasUnsavedPicture =
+				options && options.picture && !options.picture.saved;
+			receptionist = await super.save(receptionist, {
+				showSuccessMessage: !hasUnsavedPicture,
+			});
 
-    override save(
-        receptionist: Receptionist,
-        options?: {
-            picture?: FileLoaded,
-            showSuccessMessage?: boolean, 
-            showErrorMessage?: boolean
-        }
-    ) {
+			if (hasUnsavedPicture) {
+				receptionist = await this.savePicture(
+					receptionist,
+					options!.picture!,
+				);
+			}
 
-        return new Promise<Receptionist>(async (resolve) => {
+			resolve(receptionist);
+		});
+	}
 
-            const hasUnsavedPicture = options && options.picture && !options.picture.saved;
-            receptionist = await super.save(receptionist, { showSuccessMessage: !hasUnsavedPicture });
-            
-            if (hasUnsavedPicture) {
-                receptionist = await this.savePicture(receptionist, options!.picture!);
-            }
+	override search(
+		page: number,
+		size: number,
+		sort: string,
+		direction: string,
+		filters: {
+			name?: string;
+			partnerId?: string;
+		},
+		options?: {
+			showErrorMessage?: boolean;
+		},
+	): Promise<Page<Receptionist>> {
+		return super.search(page, size, sort, direction, filters, options);
+	}
 
-            resolve(receptionist);
-        });
-    }
+	override update(
+		receptionist: Receptionist,
+		options?: {
+			picture?: FileLoaded;
+			showSuccessMessage?: boolean;
+			showErrorMessage?: boolean;
+		},
+	) {
+		return new Promise<Receptionist>(async (resolve) => {
+			const hasUnsavedPicture =
+				options && options.picture && !options.picture.saved;
+			receptionist = await super.update(receptionist, {
+				showSuccessMessage: !hasUnsavedPicture,
+			});
 
-    override search(
-        page: number,
-        size: number,
-        sort: string,
-        direction: string,
-        filters: {
-            name?: string;
-            partnerId?: string;
-        },
-        options?: {
-            showErrorMessage?: boolean;
-        }
-    ): Promise<Page<Receptionist>> {
-        return super.search(page, size, sort, direction, filters, options);
-    }
+			if (hasUnsavedPicture) {
+				receptionist = await this.savePicture(
+					receptionist,
+					options!.picture!,
+				);
+			}
 
-    override update(
-        receptionist: Receptionist,
-        options?: {
-            picture?: FileLoaded,
-            showSuccessMessage?: boolean, 
-            showErrorMessage?: boolean
-        }
-    ) {
+			resolve(receptionist);
+		});
+	}
 
-        return new Promise<Receptionist>(async (resolve) => {
-            
-            const hasUnsavedPicture = options && options.picture && !options.picture.saved;
-            receptionist = await super.update(receptionist, { showSuccessMessage: !hasUnsavedPicture });
-            
-            if (hasUnsavedPicture) {
-                receptionist = await this.savePicture(receptionist, options!.picture!);
-            }
+	private savePicture(receptionist: Receptionist, picture: FileLoaded) {
+		return new Promise<Receptionist>((resolve) => {
+			const formData = new FormData();
+			formData.append('picture', picture.file!, picture.file!.name);
 
-            resolve(receptionist);
-        });
-    }
+			this._http
+				.put<Receptionist>(
+					`${this._baseURL}/${receptionist.id}/picture`,
+					formData,
+				)
+				.subscribe({
+					next: (response) => {
+						resolve(response);
+					},
 
-    private savePicture(receptionist: Receptionist, picture: FileLoaded) {
-    
-        return new Promise<Receptionist>((resolve) => {
-
-            const formData = new FormData();
-            formData.append('picture', picture.file!, picture.file!.name);
-            
-            this._http.put<Receptionist>(`${this._baseURL}/${receptionist.id}/picture`, formData).subscribe({
-
-                next: (response) => {
-                    resolve(response);
-                },
-
-                error: (error) => {
-                    console.error(error);
-                    this._alertService.handleError(error);
-                }
-            });
-        });
-    }
+					error: (error) => {
+						console.error(error);
+						this._alertService.handleError(error);
+					},
+				});
+		});
+	}
 }

@@ -1,49 +1,47 @@
 #dialog-medical-insurance {
-    max-height: 90%;
-    width: 90%;
+	max-height: 90%;
+	width: 90%;
 
-    @media (min-width: 1024px) {
-        width: 1024px;
-    }
+	@media (min-width: 1024px) {
+		width: 1024px;
+	}
 
-    .table {
-        border: 1px solid #D9D9D9;
-        border-radius: 10px;
-        padding: 12px;
-    }
+	.table {
+		border: 1px solid #d9d9d9;
+		border-radius: 10px;
+		padding: 12px;
+	}
 
-    footer {
-        display: flex;
-        justify-content: flex-end;
-    }
+	footer {
+		display: flex;
+		justify-content: flex-end;
+	}
 }
 
 ::ng-deep {
+	#dialog-medical-insurance {
+		.p-inputtext,
+		.p-select {
+			background-color: #f1f2f6 !important;
+		}
 
-    #dialog-medical-insurance {
+		.table-caption {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 
-        .p-inputtext, .p-select {
-            background-color: #f1f2f6 !important;
-        }
+			.filters {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				gap: 8px;
 
-        .table-caption {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            .filters {
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-                gap: 8px;
-                
-                .filter {
-
-                    &.text {
-                        width: 300px;
-                    }
-                }
-            }
-        }
-    }
+				.filter {
+					&.text {
+						width: 300px;
+					}
+				}
+			}
+		}
+	}
 }

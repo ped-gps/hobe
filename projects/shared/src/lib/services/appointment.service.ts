@@ -11,18 +11,17 @@ import { AbstractService } from './abstract-service';
 import { AlertService } from './alert.service';
 
 @Injectable({
-    providedIn: 'root',
+	providedIn: 'root',
 })
 export class AppointmentService extends AbstractService<Appointment> {
+	protected _baseURL = `${environment.API}/appointments`;
 
-    protected _baseURL = `${environment.API}/appointments`;
-
-    constructor(
-        protected _http: HttpClient,
-        protected _alertService: AlertService
-    ) {
-        super();
-    }
+	constructor(
+		protected _http: HttpClient,
+		protected _alertService: AlertService,
+	) {
+		super();
+	}
 
 	override search(
 		page: number,
@@ -30,15 +29,15 @@ export class AppointmentService extends AbstractService<Appointment> {
 		sort: string,
 		direction: string,
 		filters: {
-			partnerId?: string,
-			healthProfessionalId?: string,
-			startDate?: string,
-			endDate?: string,
-			situation?: AppointmentSituation
+			partnerId?: string;
+			healthProfessionalId?: string;
+			startDate?: string;
+			endDate?: string;
+			situation?: AppointmentSituation;
 		},
 		options?: {
 			showErrorMessage?: boolean;
-		}
+		},
 	): Promise<Page<Appointment>> {
 		return super.search(page, size, sort, direction, filters, options);
 	}
@@ -47,27 +46,35 @@ export class AppointmentService extends AbstractService<Appointment> {
 		partnerId: string,
 		healthProfessionalId: string,
 		startDate: string,
-		endDate: string
+		endDate: string,
 	) {
-
 		return new Promise<AppointmentStatistics>((resolve, reject) => {
+			const params: any = {
+				partnerId,
+				healthProfessionalId,
+				startDate,
+				endDate,
+			};
 
-			const params: any = { partnerId, healthProfessionalId, startDate, endDate };
+			this._http
+				.get<AppointmentStatistics>(`${this._baseURL}/statistics`, {
+					params: params,
+				})
+				.subscribe({
+					next: (response) => {
+						resolve(response);
+					},
 
-			this._http.get<AppointmentStatistics>(`${this._baseURL}/statistics`, {
-				params: params
-			}).subscribe({
-
-				next: (response) => {
-					resolve(response);
-				},
-
-				error: (error) => {
-					console.error(error);
-					this._alertService.showMessage(AlertType.ERROR, 'Erro', 'Não foi possível obter os dados estatísticos dos agendamentos!');
-					reject(error);
-				},
-			})
+					error: (error) => {
+						console.error(error);
+						this._alertService.showMessage(
+							AlertType.ERROR,
+							'Erro',
+							'Não foi possível obter os dados estatísticos dos agendamentos!',
+						);
+						reject(error);
+					},
+				});
 		});
 	}
 }

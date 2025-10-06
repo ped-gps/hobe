@@ -15,372 +15,392 @@ import { MedicalRecordPatientComponent } from '../../components/medical-record-p
 import { MedicalRecordPrescriptionComponent } from '../../components/medical-record-prescription/medical-record-prescription.component';
 import { MedicalRecordResumeComponent } from '../../components/medical-record-resume/medical-record-resume.component';
 
-import { Appointment, Client, HealthProfessional, MedicalAppointment, Prescription, MedicalAppointmentSituation, AlertService, AuthenticationService, MedicalAppointmentService, Route, MedicalObservation, AlertType, DateUtils, FileLoaded, Anamnesis } from '@hobe/shared';
+import {
+	Appointment,
+	Client,
+	HealthProfessional,
+	MedicalAppointment,
+	Prescription,
+	MedicalAppointmentSituation,
+	AlertService,
+	AuthenticationService,
+	MedicalAppointmentService,
+	Route,
+	MedicalObservation,
+	AlertType,
+	DateUtils,
+	FileLoaded,
+	Anamnesis,
+} from '@hobe/shared';
 
 @Component({
-    selector: 'app-medical-record',
-    templateUrl: './medical-record.component.html',
-    styleUrls: ['./medical-record.component.scss'],
-    imports: [
-        CommonModule,
-        ButtonModule,
-        BreadcrumbModule,
-        RouterModule,
-        MedicalRecordAnamnesisComponent,
-        MedicalRecordAttendanceComponent,
-        MedicalRecordDocumentsComponent,
-        MedicalRecordAttachmentsComponent,
-        MedicalRecordPatientComponent,
-        MedicalRecordPrescriptionComponent,
-        MedicalRecordResumeComponent,
-        MedicalRecordDocumentsComponent,
-        MedicalRecordObservationsComponent,
-    ],
+	selector: 'app-medical-record',
+	templateUrl: './medical-record.component.html',
+	styleUrls: ['./medical-record.component.scss'],
+	imports: [
+		CommonModule,
+		ButtonModule,
+		BreadcrumbModule,
+		RouterModule,
+		MedicalRecordAnamnesisComponent,
+		MedicalRecordAttendanceComponent,
+		MedicalRecordDocumentsComponent,
+		MedicalRecordAttachmentsComponent,
+		MedicalRecordPatientComponent,
+		MedicalRecordPrescriptionComponent,
+		MedicalRecordResumeComponent,
+		MedicalRecordDocumentsComponent,
+		MedicalRecordObservationsComponent,
+	],
 })
 export class MedicalRecordComponent implements OnInit {
-    public anamnesisForm!: FormGroup;
-    public attendanceForm!: FormGroup;
-    public medicalObservationForm!: FormGroup;
+	public anamnesisForm!: FormGroup;
+	public attendanceForm!: FormGroup;
+	public medicalObservationForm!: FormGroup;
 
-    public appointment!: Appointment;
-    public attachments: any[] = [];
-    public client!: Client;
-    public healthProfessional!: HealthProfessional;
-    public medicalAppointment!: MedicalAppointment;
-    public prescription!: Prescription;
+	public appointment!: Appointment;
+	public attachments: any[] = [];
+	public client!: Client;
+	public healthProfessional!: HealthProfessional;
+	public medicalAppointment!: MedicalAppointment;
+	public prescription!: Prescription;
 
-    public isMedicalAppointmentStart = false;
-    public timer = '00:00:00';
-    public finishedTime: string = '';
-    public items: MenuItem[] | undefined;
-    public isLoading!: boolean;
+	public isMedicalAppointmentStart = false;
+	public timer = '00:00:00';
+	public finishedTime: string = '';
+	public items: MenuItem[] | undefined;
+	public isLoading!: boolean;
 
-    public activeSection: string = 'resumo';
-    public sections = [
-        { key: 'resumo', label: 'Resumo' },
-        { key: 'anamnesis', label: 'Anamnese' },
-        { key: 'atendimento', label: 'Atendimento' },
-        { key: 'prescricoes', label: 'Prescrições' },
-        { key: 'documentos', label: 'Documentos e atestados' },
-        { key: 'imagens', label: 'Imagens e anexos' },
-        { key: 'observacoes', label: 'Observações Clínicas' },
-    ];
+	public activeSection: string = 'resumo';
+	public sections = [
+		{ key: 'resumo', label: 'Resumo' },
+		{ key: 'anamnesis', label: 'Anamnese' },
+		{ key: 'atendimento', label: 'Atendimento' },
+		{ key: 'prescricoes', label: 'Prescrições' },
+		{ key: 'documentos', label: 'Documentos e atestados' },
+		{ key: 'imagens', label: 'Imagens e anexos' },
+		{ key: 'observacoes', label: 'Observações Clínicas' },
+	];
 
-    public readonly MedicalAppointmentSituation = MedicalAppointmentSituation;
-    private timerInterval: any;
+	public readonly MedicalAppointmentSituation = MedicalAppointmentSituation;
+	private timerInterval: any;
 
-    constructor(
-        private readonly _alertService: AlertService,
-        private readonly _authService: AuthenticationService,
-        private readonly _changeDetector: ChangeDetectorRef,
-        private readonly _location: Location,
-        private readonly _medicalAppointmentService: MedicalAppointmentService,
-        private readonly _router: Router,
-        private readonly _route: ActivatedRoute
-    ) {}
+	constructor(
+		private readonly _alertService: AlertService,
+		private readonly _authService: AuthenticationService,
+		private readonly _changeDetector: ChangeDetectorRef,
+		private readonly _location: Location,
+		private readonly _medicalAppointmentService: MedicalAppointmentService,
+		private readonly _router: Router,
+		private readonly _route: ActivatedRoute,
+	) {}
 
-    async ngOnInit() {
-        this.items = [
-            { label: 'Agenda', url: Route.MEDICAL_SCHEDULE },
-            { label: 'Prontuário', url: Route.MEDICAL_RECORD },
-        ];
+	async ngOnInit() {
+		this.items = [
+			{ label: 'Agenda', url: Route.MEDICAL_SCHEDULE },
+			{ label: 'Prontuário', url: Route.MEDICAL_RECORD },
+		];
 
-        this._fetchData();
-    }
+		this._fetchData();
+	}
 
-    isSectionDisabled(sectionKey: string): boolean {
-        if (sectionKey === 'resumo') {
-            return false;
-        }
-        return !this.medicalAppointment?.id && !this.isMedicalAppointmentStart;
-    }
+	isSectionDisabled(sectionKey: string): boolean {
+		if (sectionKey === 'resumo') {
+			return false;
+		}
+		return !this.medicalAppointment?.id && !this.isMedicalAppointmentStart;
+	}
 
-    isMedicalAppointmentInProgress() {
-        return (
-            this.isMedicalAppointmentStart ||
-            (this.medicalAppointment &&
-                this.medicalAppointment.situation ===
-                    MedicalAppointmentSituation.IN_PROGRESS)
-        );
-    }
+	isMedicalAppointmentInProgress() {
+		return (
+			this.isMedicalAppointmentStart ||
+			(this.medicalAppointment &&
+				this.medicalAppointment.situation ===
+					MedicalAppointmentSituation.IN_PROGRESS)
+		);
+	}
 
-    isMedicalAppointmentConcluded() {
-        return (
-            this.medicalAppointment &&
-            this.medicalAppointment.situation ===
-                MedicalAppointmentSituation.CONCLUDED
-        );
-    }
+	isMedicalAppointmentConcluded() {
+		return (
+			this.medicalAppointment &&
+			this.medicalAppointment.situation ===
+				MedicalAppointmentSituation.CONCLUDED
+		);
+	}
 
-    onAnamnesisFormChange(form: FormGroup) {
-        this.anamnesisForm = form;
-        this.medicalAppointment.anamnesis = form.getRawValue();
-        this._saveMedicalAppointmentInLocalStorage();
-    }
+	onAnamnesisFormChange(form: FormGroup) {
+		this.anamnesisForm = form;
+		this.medicalAppointment.anamnesis = form.getRawValue();
+		this._saveMedicalAppointmentInLocalStorage();
+	}
 
-    onAttendanceFormChange(form: FormGroup) {
-        this.attendanceForm = form;
-        
-        if (!this.medicalAppointment) {
-            this.medicalAppointment = {} as any;
-        } 
-        
-        Object.assign(this.medicalAppointment, form.getRawValue());
-        this._saveMedicalAppointmentInLocalStorage();
-    }
+	onAttendanceFormChange(form: FormGroup) {
+		this.attendanceForm = form;
 
-    onAttachmentsChange(attachments: any[]) {
-        this.attachments = attachments;
-        this._saveMedicalAppointmentInLocalStorage();
-    }
+		if (!this.medicalAppointment) {
+			this.medicalAppointment = {} as any;
+		}
 
-    async onFinishMedicalAppointment(): Promise<void> {
-        this.isMedicalAppointmentStart = false;
+		Object.assign(this.medicalAppointment, form.getRawValue());
+		this._saveMedicalAppointmentInLocalStorage();
+	}
 
-        if (this.timerInterval) clearInterval(this.timerInterval);
+	onAttachmentsChange(attachments: any[]) {
+		this.attachments = attachments;
+		this._saveMedicalAppointmentInLocalStorage();
+	}
 
-        this.finishedTime = this.timer;
+	async onFinishMedicalAppointment(): Promise<void> {
+		this.isMedicalAppointmentStart = false;
 
-        const existingAttachments = this.attachments.filter(
-            (att): att is FileLoaded & { id: string } =>
-                !(att.file instanceof File) && typeof att.id === 'string'
-        );
-        const newAttachments = this.attachments.filter(
-            (att): att is FileLoaded & { file: File } => att.file instanceof File
-        );
+		if (this.timerInterval) clearInterval(this.timerInterval);
 
-        const anamnesis: Anamnesis = {
-            ...(this.medicalAppointment?.anamnesis || {}),
-            ...(this.anamnesisForm?.getRawValue() || {}),
-        };
+		this.finishedTime = this.timer;
 
-        const medicalObservation: MedicalObservation = {
-            ...(this.medicalAppointment?.medicalObservation || {}),
-            ...(this.medicalObservationForm?.getRawValue() || {}),
-        };
+		const existingAttachments = this.attachments.filter(
+			(att): att is FileLoaded & { id: string } =>
+				!(att.file instanceof File) && typeof att.id === 'string',
+		);
+		const newAttachments = this.attachments.filter(
+			(att): att is FileLoaded & { file: File } =>
+				att.file instanceof File,
+		);
 
-        const medicalAppointment: MedicalAppointment = {
-            ...(this.medicalAppointment || {}),
-            ...(this.attendanceForm?.getRawValue() || {}),
-            client: { id: this.client.id } as any,
-            healthProfessional: { id: this.healthProfessional.id } as any,
-            duration: this._timeStringToSeconds(this.finishedTime),
-            prescription: this.prescription,
-            anamnesis: anamnesis,
-            medicalObservation: medicalObservation,
-            situation: MedicalAppointmentSituation.CONCLUDED,
-            attachments: existingAttachments.map(
-                (att) => ({ id: att.id } as any)
-            ),
-        };
+		const anamnesis: Anamnesis = {
+			...(this.medicalAppointment?.anamnesis || {}),
+			...(this.anamnesisForm?.getRawValue() || {}),
+		};
 
-        this.medicalAppointment =
-            await this._medicalAppointmentService.updateWithFiles(
-                medicalAppointment,
-                newAttachments,
-                { showSuccessMessage: false }
-            );
+		const medicalObservation: MedicalObservation = {
+			...(this.medicalAppointment?.medicalObservation || {}),
+			...(this.medicalObservationForm?.getRawValue() || {}),
+		};
 
-        localStorage.removeItem('medicalAppointment');
+		const medicalAppointment: MedicalAppointment = {
+			...(this.medicalAppointment || {}),
+			...(this.attendanceForm?.getRawValue() || {}),
+			client: { id: this.client.id } as any,
+			healthProfessional: { id: this.healthProfessional.id } as any,
+			duration: this._timeStringToSeconds(this.finishedTime),
+			prescription: this.prescription,
+			anamnesis: anamnesis,
+			medicalObservation: medicalObservation,
+			situation: MedicalAppointmentSituation.CONCLUDED,
+			attachments: existingAttachments.map(
+				(att) => ({ id: att.id }) as any,
+			),
+		};
 
-        this._alertService.showMessage(
-            AlertType.SUCCESS,
-            'Concluído',
-            'Atendimento finalizado!'
-        );
-        
-        this.activeSection = 'resumo';
-    }
+		this.medicalAppointment =
+			await this._medicalAppointmentService.updateWithFiles(
+				medicalAppointment,
+				newAttachments,
+				{ showSuccessMessage: false },
+			);
 
-    onMedicalObservationFormChange(form: FormGroup) {
-        this.medicalObservationForm = form;
-        this.medicalAppointment.medicalObservation = form.value;
-        this._saveMedicalAppointmentInLocalStorage();
-    }
+		localStorage.removeItem('medicalAppointment');
 
-    onPrescriptionChange(prescription: Prescription) {
-        this.prescription = prescription;
-        this._saveMedicalAppointmentInLocalStorage();
-    }
+		this._alertService.showMessage(
+			AlertType.SUCCESS,
+			'Concluído',
+			'Atendimento finalizado!',
+		);
 
-    async onStartMedicalAppointment() {
-        this.isMedicalAppointmentStart = true;
-        this._startTimer();
-        let newMedicalAppointment;
+		this.activeSection = 'resumo';
+	}
 
-        if (this.medicalAppointment) {
-            this.medicalAppointment = {
-                ...this.medicalAppointment,
-                client: { id: this.medicalAppointment.client.id },
-                healthProfessional: {
-                    id: this.medicalAppointment.healthProfessional.id,
-                },
-                appointment: { id: this.medicalAppointment.appointment.id },
-                situation: MedicalAppointmentSituation.IN_PROGRESS,
-            } as any;
+	onMedicalObservationFormChange(form: FormGroup) {
+		this.medicalObservationForm = form;
+		this.medicalAppointment.medicalObservation = form.value;
+		this._saveMedicalAppointmentInLocalStorage();
+	}
 
-            newMedicalAppointment =
-                await this._medicalAppointmentService.update(
-                    this.medicalAppointment,
-                    { showSuccessMessage: false }
-                );
-        } else {
-            this.medicalAppointment = {
-                client: { id: window.history.state.appointment.client.id },
-                healthProfessional: { id: this.healthProfessional.id },
-                appointment: { id: window.history.state.appointment.id },
-                situation: MedicalAppointmentSituation.IN_PROGRESS,
-            } as any;
+	onPrescriptionChange(prescription: Prescription) {
+		this.prescription = prescription;
+		this._saveMedicalAppointmentInLocalStorage();
+	}
 
-            newMedicalAppointment = await this._medicalAppointmentService.save(
-                this.medicalAppointment,
-                { showSuccessMessage: false }
-            );
-        }
+	async onStartMedicalAppointment() {
+		this.isMedicalAppointmentStart = true;
+		this._startTimer();
+		let newMedicalAppointment;
 
-        this._location.go(`/medical-record/${newMedicalAppointment.id}`);
-        this.medicalAppointment = newMedicalAppointment;
-        this._saveMedicalAppointmentInLocalStorage();
-    }
+		if (this.medicalAppointment) {
+			this.medicalAppointment = {
+				...this.medicalAppointment,
+				client: { id: this.medicalAppointment.client.id },
+				healthProfessional: {
+					id: this.medicalAppointment.healthProfessional.id,
+				},
+				appointment: { id: this.medicalAppointment.appointment.id },
+				situation: MedicalAppointmentSituation.IN_PROGRESS,
+			} as any;
 
-    secondsToTimeString(totalSeconds: number): string {
-        const h = Math.floor(totalSeconds / 3600);
-        const m = Math.floor((totalSeconds % 3600) / 60);
-        const s = totalSeconds % 60;
-        return [h, m, s].map((u) => String(u).padStart(2, '0')).join(':');
-    }
+			newMedicalAppointment =
+				await this._medicalAppointmentService.update(
+					this.medicalAppointment,
+					{ showSuccessMessage: false },
+				);
+		} else {
+			this.medicalAppointment = {
+				client: { id: window.history.state.appointment.client.id },
+				healthProfessional: { id: this.healthProfessional.id },
+				appointment: { id: window.history.state.appointment.id },
+				situation: MedicalAppointmentSituation.IN_PROGRESS,
+			} as any;
 
-    private async _fetchData() {
-        this.isLoading = true;
+			newMedicalAppointment = await this._medicalAppointmentService.save(
+				this.medicalAppointment,
+				{ showSuccessMessage: false },
+			);
+		}
 
-        try {
-            const medicalAppointmentId =
-                this._route.snapshot.paramMap.get('id') || undefined;
+		this._location.go(`/medical-record/${newMedicalAppointment.id}`);
+		this.medicalAppointment = newMedicalAppointment;
+		this._saveMedicalAppointmentInLocalStorage();
+	}
 
-            if (!medicalAppointmentId) {
-                if (!window.history.state.appointment) {
-                    this._router.navigate([`/dashboard`]);
-                } else {
-                    this.appointment = window.history.state.appointment;
-                    this.client = this.appointment.client;
-                }
-            }
+	secondsToTimeString(totalSeconds: number): string {
+		const h = Math.floor(totalSeconds / 3600);
+		const m = Math.floor((totalSeconds % 3600) / 60);
+		const s = totalSeconds % 60;
+		return [h, m, s].map((u) => String(u).padStart(2, '0')).join(':');
+	}
 
-            this.healthProfessional = await this._authService.retrieveUser();
+	private async _fetchData() {
+		this.isLoading = true;
 
-            if (medicalAppointmentId) {
-                await this._retrieveMedicalAppointment(medicalAppointmentId);
-            }
-        } finally {
-            this.isLoading = false;
-            this._changeDetector.markForCheck();
-        }
-    }
+		try {
+			const medicalAppointmentId =
+				this._route.snapshot.paramMap.get('id') || undefined;
 
-    private _saveMedicalAppointmentInLocalStorage() {
-        if (
-            this.medicalAppointment.situation ===
-            MedicalAppointmentSituation.IN_PROGRESS
-        ) {
-            const anamnesis: Anamnesis = {
-                ...(this.medicalAppointment?.anamnesis || {}),
-                ...(this.anamnesisForm?.getRawValue() || {}),
-            };
+			if (!medicalAppointmentId) {
+				if (!window.history.state.appointment) {
+					this._router.navigate([`/dashboard`]);
+				} else {
+					this.appointment = window.history.state.appointment;
+					this.client = this.appointment.client;
+				}
+			}
 
-            const medicalObservation: MedicalObservation = {
-                ...(this.medicalAppointment?.medicalObservation || {}),
-                ...(this.medicalObservationForm?.getRawValue() || {}),
-            };
+			this.healthProfessional = await this._authService.retrieveUser();
 
-            const medicalAppointment: MedicalAppointment = {
-                ...(this.medicalAppointment || {}),
-                ...(this.attendanceForm?.getRawValue() || {}),
-                anamnesis: anamnesis,
-                prescription: this.prescription,
-                medicalObservation: medicalObservation,
-                attachments: this.attachments,
-            };
+			if (medicalAppointmentId) {
+				await this._retrieveMedicalAppointment(medicalAppointmentId);
+			}
+		} finally {
+			this.isLoading = false;
+			this._changeDetector.markForCheck();
+		}
+	}
 
-            localStorage.setItem('medicalAppointment', JSON.stringify(medicalAppointment));
-        }
-    }
+	private _saveMedicalAppointmentInLocalStorage() {
+		if (
+			this.medicalAppointment.situation ===
+			MedicalAppointmentSituation.IN_PROGRESS
+		) {
+			const anamnesis: Anamnesis = {
+				...(this.medicalAppointment?.anamnesis || {}),
+				...(this.anamnesisForm?.getRawValue() || {}),
+			};
 
-    private async _retrieveMedicalAppointment(medicalAppointmentId: string) {
-        const medicalAppointment =
-            await this._medicalAppointmentService.findById(
-                medicalAppointmentId
-            );
+			const medicalObservation: MedicalObservation = {
+				...(this.medicalAppointment?.medicalObservation || {}),
+				...(this.medicalObservationForm?.getRawValue() || {}),
+			};
 
-        const medicalAppointmentLocalStorage = JSON.parse(
-            localStorage.getItem('medicalAppointment') || '{}'
-        ) as MedicalAppointment;
+			const medicalAppointment: MedicalAppointment = {
+				...(this.medicalAppointment || {}),
+				...(this.attendanceForm?.getRawValue() || {}),
+				anamnesis: anamnesis,
+				prescription: this.prescription,
+				medicalObservation: medicalObservation,
+				attachments: this.attachments,
+			};
 
-        if (medicalAppointment) {
-            this.medicalAppointment = medicalAppointment;
-            this.appointment = medicalAppointment.appointment;
-            this.client = medicalAppointment.client;
+			localStorage.setItem(
+				'medicalAppointment',
+				JSON.stringify(medicalAppointment),
+			);
+		}
+	}
 
-            if (medicalAppointment.id === medicalAppointmentLocalStorage.id) {
-                this.medicalAppointment = {
-                    ...medicalAppointment,
-                    ...medicalAppointmentLocalStorage,
-                };
-            }
+	private async _retrieveMedicalAppointment(medicalAppointmentId: string) {
+		const medicalAppointment =
+			await this._medicalAppointmentService.findById(
+				medicalAppointmentId,
+			);
 
-            this.timer = this.secondsToTimeString(
-                this.medicalAppointment.duration
-            );
+		const medicalAppointmentLocalStorage = JSON.parse(
+			localStorage.getItem('medicalAppointment') || '{}',
+		) as MedicalAppointment;
 
-            this.attachments = this.medicalAppointment.attachments as any;
+		if (medicalAppointment) {
+			this.medicalAppointment = medicalAppointment;
+			this.appointment = medicalAppointment.appointment;
+			this.client = medicalAppointment.client;
 
-            if (
-                this.medicalAppointment.situation ===
-                MedicalAppointmentSituation.IN_PROGRESS
-            ) {
-                if (this.medicalAppointment.createdDate) {
-                    const createdDate = DateUtils.plusHours(
-                        this.medicalAppointment.createdDate,
-                        -3
-                    );
-                    const duration = Date.now() - createdDate.getTime();
-                    this.timer = this.secondsToTimeString(
-                        Math.floor(duration / 1000)
-                    );
-                }
+			if (medicalAppointment.id === medicalAppointmentLocalStorage.id) {
+				this.medicalAppointment = {
+					...medicalAppointment,
+					...medicalAppointmentLocalStorage,
+				};
+			}
 
-                this.isMedicalAppointmentStart = true;
-                this._startTimer();
-            }
-        }
-    }
+			this.timer = this.secondsToTimeString(
+				this.medicalAppointment.duration,
+			);
 
-    private _startTimer() {
-        let seconds = 0;
-        if (!this.timer) {
-            this.timer = '00:00:00';
-        } else {
-            seconds = this._timeStringToSeconds(this.timer);
-        }
+			this.attachments = this.medicalAppointment.attachments as any;
 
-        if (this.timerInterval) {
-            clearInterval(this.timerInterval);
-        }
-        this.timerInterval = setInterval(() => {
-            seconds++;
-            const h = Math.floor(seconds / 3600)
-                .toString()
-                .padStart(2, '0');
-            const m = Math.floor((seconds % 3600) / 60)
-                .toString()
-                .padStart(2, '0');
-            const s = (seconds % 60).toString().padStart(2, '0');
-            this.timer = `${h}:${m}:${s}`;
-        }, 1000);
-    }
+			if (
+				this.medicalAppointment.situation ===
+				MedicalAppointmentSituation.IN_PROGRESS
+			) {
+				if (this.medicalAppointment.createdDate) {
+					const createdDate = DateUtils.plusHours(
+						this.medicalAppointment.createdDate,
+						-3,
+					);
+					const duration = Date.now() - createdDate.getTime();
+					this.timer = this.secondsToTimeString(
+						Math.floor(duration / 1000),
+					);
+				}
 
-    private _timeStringToSeconds(time: string | number): number {
-        if (typeof time === 'number') return time;
-        const [h, m, s] = time.split(':').map(Number);
-        return h * 3600 + m * 60 + s;
-    }
+				this.isMedicalAppointmentStart = true;
+				this._startTimer();
+			}
+		}
+	}
+
+	private _startTimer() {
+		let seconds = 0;
+		if (!this.timer) {
+			this.timer = '00:00:00';
+		} else {
+			seconds = this._timeStringToSeconds(this.timer);
+		}
+
+		if (this.timerInterval) {
+			clearInterval(this.timerInterval);
+		}
+		this.timerInterval = setInterval(() => {
+			seconds++;
+			const h = Math.floor(seconds / 3600)
+				.toString()
+				.padStart(2, '0');
+			const m = Math.floor((seconds % 3600) / 60)
+				.toString()
+				.padStart(2, '0');
+			const s = (seconds % 60).toString().padStart(2, '0');
+			this.timer = `${h}:${m}:${s}`;
+		}, 1000);
+	}
+
+	private _timeStringToSeconds(time: string | number): number {
+		if (typeof time === 'number') return time;
+		const [h, m, s] = time.split(':').map(Number);
+		return h * 3600 + m * 60 + s;
+	}
 }

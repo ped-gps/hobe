@@ -1,221 +1,221 @@
 #medical-record-prescription {
-    p-tabpanel {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-    }
+	p-tabpanel {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
 
-    .prescribed-medications {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 12px;
+	.prescribed-medications {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		gap: 12px;
 
-        .list {
-            display: flex;
-            flex-direction: column;
-            border: 1px solid var(--border-color);
-            position: relative;
-            padding: 24px;
-            border-radius: 10px;
-            width: 100%;
+		.list {
+			display: flex;
+			flex-direction: column;
+			border: 1px solid var(--border-color);
+			position: relative;
+			padding: 24px;
+			border-radius: 10px;
+			width: 100%;
 
-            .item {
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-                padding: 24px 0px;
-                border-bottom: 1px solid var(--border-color);
+			.item {
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+				padding: 24px 0px;
+				border-bottom: 1px solid var(--border-color);
 
-                &:first-child {
-                    padding-top: 0px;
-                }
+				&:first-child {
+					padding-top: 0px;
+				}
 
-                &:last-child {
-                    border-bottom: none;
-                    padding-bottom: 0px;
-                }
+				&:last-child {
+					border-bottom: none;
+					padding-bottom: 0px;
+				}
 
-                @media (max-width: 1024px) {
-                    flex-direction: column;
-                }
+				@media (max-width: 1024px) {
+					flex-direction: column;
+				}
 
-                .header {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    width: 100%;
+				.header {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					width: 100%;
 
-                    .title {
-                        font-size: 16px;
-                        font-weight: 600;
-                        color: var(--color-blue);
-                    }
-                }
+					.title {
+						font-size: 16px;
+						font-weight: 600;
+						color: var(--color-blue);
+					}
+				}
 
-                .actions {
-                    display: flex;
-                    align-items: flex-start;
-                    gap: 8px;
-                }
-            }
-        }
+				.actions {
+					display: flex;
+					align-items: flex-start;
+					gap: 8px;
+				}
+			}
+		}
 
-        .actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-    }
+		.actions {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+		}
+	}
 
-    .prescribed-exams {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 12px;
+	.prescribed-exams {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		gap: 12px;
 
-        .list {
-            max-height: 300px;
-            overflow: auto;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            position: relative;
-            padding: 24px;
-            width: 100%;
+		.list {
+			max-height: 300px;
+			overflow: auto;
+			border: 1px solid var(--border-color);
+			border-radius: 10px;
+			position: relative;
+			padding: 24px;
+			width: 100%;
 
-            .item {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                font-weight: 600;
-                color: var(--color-blue);
-                padding: 24px 0px;
-                border-bottom: 1px solid var(--border-color);
+			.item {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				font-weight: 600;
+				color: var(--color-blue);
+				padding: 24px 0px;
+				border-bottom: 1px solid var(--border-color);
 
-                &:first-child {
-                    padding-top: 0px;
-                }
+				&:first-child {
+					padding-top: 0px;
+				}
 
-                &:last-child {
-                    border-bottom: none;
-                    padding-bottom: 0px;
-                }
+				&:last-child {
+					border-bottom: none;
+					padding-bottom: 0px;
+				}
 
-                .actions {
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
+				.actions {
+					display: flex;
+					align-items: center;
+					gap: 12px;
 
-                    .exam-inputs {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 8px;
-                    }
-                }
-            }
-        }
-    }
+					.exam-inputs {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						gap: 8px;
+					}
+				}
+			}
+		}
+	}
 
-    .prescribed-vaccines {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 12px;
+	.prescribed-vaccines {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		gap: 12px;
 
-        .list {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 24px;
-            width: 100%;
+		.list {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			border: 1px solid var(--border-color);
+			border-radius: 10px;
+			padding: 24px;
+			width: 100%;
 
-            .item {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                position: relative;
-                gap: 12px;
-                padding: 24px 0px;
-                border-bottom: 1px solid var(--border-color);
+			.item {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				position: relative;
+				gap: 12px;
+				padding: 24px 0px;
+				border-bottom: 1px solid var(--border-color);
 
-                &:first-child {
-                    padding-top: 0px;
-                }
+				&:first-child {
+					padding-top: 0px;
+				}
 
-                &:last-child {
-                    border-bottom: none;
-                    padding-bottom: 0px;
-                }
+				&:last-child {
+					border-bottom: none;
+					padding-bottom: 0px;
+				}
 
-                .header {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
+				.header {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
 
-                    .name {
-                        font-size: 16px;
-                        font-weight: 600;
-                        color: var(--color-blue);
-                    }
-                }
+					.name {
+						font-size: 16px;
+						font-weight: 600;
+						color: var(--color-blue);
+					}
+				}
 
-                .content {
-                    display: flex;
-                    gap: 8px;
-                }
-            }
-        }
-    }
+				.content {
+					display: flex;
+					gap: 8px;
+				}
+			}
+		}
+	}
 
-    .quantity {
-        max-width: 128px;
-    }
+	.quantity {
+		max-width: 128px;
+	}
 
-    label {
-        font-size: 16px;
-        font-weight: 600;
-        color: var(--color-gray);
-    }
+	label {
+		font-size: 16px;
+		font-weight: 600;
+		color: var(--color-gray);
+	}
 }
 
 ::ng-deep {
-    #prescription-tabs {
-        .p-select {
-            .p-select-option {
-                .medication,
-                .exam,
-                .vaccine {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 4px;
+	#prescription-tabs {
+		.p-select {
+			.p-select-option {
+				.medication,
+				.exam,
+				.vaccine {
+					display: flex;
+					flex-direction: column;
+					gap: 4px;
 
-                    .group {
-                        display: flex;
-                        align-items: center;
-                        justify-content: flex-start;
-                        gap: 8px;
-                    }
-                }
+					.group {
+						display: flex;
+						align-items: center;
+						justify-content: flex-start;
+						gap: 8px;
+					}
+				}
 
-                .p-chip {
-                    background: var(--color-blue) !important;
-                    padding: 8px !important;
+				.p-chip {
+					background: var(--color-blue) !important;
+					padding: 8px !important;
 
-                    .p-chip-label {
-                        font-size: 12px;
-                    }
-                }
-            }
-        }
+					.p-chip-label {
+						font-size: 12px;
+					}
+				}
+			}
+		}
 
-        .p-tabpanels {
-            padding-bottom: 0 !important;
-        }
-    }
+		.p-tabpanels {
+			padding-bottom: 0 !important;
+		}
+	}
 }

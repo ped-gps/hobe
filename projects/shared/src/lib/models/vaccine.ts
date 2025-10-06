@@ -1,7 +1,7 @@
-import { AbstractModel } from "./abstract-model";
+import { AbstractModel } from './abstract-model';
 
 export interface Vaccine extends AbstractModel {
-    name: string;
-    description: string;
-    mandatory: boolean;
+	name: string;
+	description: string;
+	mandatory: boolean;
 }

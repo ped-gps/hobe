@@ -31,14 +31,15 @@ This command will compile your project, and the build artifacts will be placed i
 Once the project is built, you can publish your library by following these steps:
 
 1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/shared
-   ```
+
+    ```bash
+    cd dist/shared
+    ```
 
 2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
+    ```bash
+    npm publish
+    ```
 
 ## Running unit tests
 

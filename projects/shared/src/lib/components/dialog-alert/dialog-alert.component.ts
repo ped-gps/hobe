@@ -9,39 +9,36 @@ import { AlertType } from '../../enums/alert-type';
 	selector: 'app-dialog-alert',
 	templateUrl: './dialog-alert.component.html',
 	styleUrl: './dialog-alert.component.scss',
-	imports: [
-		ButtonModule,
-		CommonModule
-	],
+	imports: [ButtonModule, CommonModule],
 })
 export class DialogAlertComponent {
-
 	public type!: AlertType;
-    public title!: string;
-    public message!: string;
-    public isConfirmation: boolean = false;
+	public title!: string;
+	public message!: string;
+	public isConfirmation: boolean = false;
 
-    constructor(
-        private readonly _dialogConfig: DynamicDialogConfig,
-        private readonly _dialogRef: DynamicDialogRef
-    ) { }
+	constructor(
+		private readonly _dialogConfig: DynamicDialogConfig,
+		private readonly _dialogRef: DynamicDialogRef,
+	) {}
 
-    ngOnInit(): void {
-        this.type = this._dialogConfig.data['type'];
-        this.title = this._dialogConfig.data['title'];
-        this.message = this._dialogConfig.data['message'];
-        this.isConfirmation = this._dialogConfig.data['isConfirmation'] || false;
-    }
+	ngOnInit(): void {
+		this.type = this._dialogConfig.data['type'];
+		this.title = this._dialogConfig.data['title'];
+		this.message = this._dialogConfig.data['message'];
+		this.isConfirmation =
+			this._dialogConfig.data['isConfirmation'] || false;
+	}
 
-    confirm() {
-        this._dialogRef.close(true);
-    }
+	confirm() {
+		this._dialogRef.close(true);
+	}
 
-    cancel() {
-        this._dialogRef.close(false);
-    }
+	cancel() {
+		this._dialogRef.close(false);
+	}
 
-    close() {
-        this._dialogRef.close();
-    }
+	close() {
+		this._dialogRef.close();
+	}
 }

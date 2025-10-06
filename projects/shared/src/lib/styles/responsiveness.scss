@@ -1,60 +1,60 @@
 .responsive-row {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 1rem;
-    margin: 0px 0px 24px 0px;
+	display: grid;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+	gap: 1rem;
+	margin: 0px 0px 24px 0px;
 
-    @media (min-width: 1024px) {
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-    }
+	@media (min-width: 1024px) {
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+	}
 }
 
 [class^="responsive-col-"] {
-    grid-column: span 1 / span 1;
+	grid-column: span 1 / span 1;
 }
 
 @media (min-width: 1024px) {
-    .responsive-col-2 {
-        grid-column: span 2 / span 2;
-    }
+	.responsive-col-2 {
+		grid-column: span 2 / span 2;
+	}
 
-    .responsive-col-3 {
-        grid-column: span 3 / span 3;
-    }
+	.responsive-col-3 {
+		grid-column: span 3 / span 3;
+	}
 
-    .responsive-col-4 {
-        grid-column: span 4 / span 4;
-    }
+	.responsive-col-4 {
+		grid-column: span 4 / span 4;
+	}
 
-    .responsive-col-5 {
-        grid-column: span 5 / span 5;
-    }
+	.responsive-col-5 {
+		grid-column: span 5 / span 5;
+	}
 
-    .responsive-col-6 {
-        grid-column: span 6 / span 6;
-    }
+	.responsive-col-6 {
+		grid-column: span 6 / span 6;
+	}
 
-    .responsive-col-7 {
-        grid-column: span 7 / span 7;
-    }
+	.responsive-col-7 {
+		grid-column: span 7 / span 7;
+	}
 
-    .responsive-col-8 {
-        grid-column: span 8 / span 8;
-    }
+	.responsive-col-8 {
+		grid-column: span 8 / span 8;
+	}
 
-    .responsive-col-9 {
-        grid-column: span 9 / span 9;
-    }
+	.responsive-col-9 {
+		grid-column: span 9 / span 9;
+	}
 
-    .responsive-col-10 {
-        grid-column: span 10 / span 10;
-    }
+	.responsive-col-10 {
+		grid-column: span 10 / span 10;
+	}
 
-    .responsive-col-11 {
-        grid-column: span 11 / span 11;
-    }
+	.responsive-col-11 {
+		grid-column: span 11 / span 11;
+	}
 
-    .responsive-col-12 {
-        grid-column: span 12 / span 12;
-    }
+	.responsive-col-12 {
+		grid-column: span 12 / span 12;
+	}
 }
