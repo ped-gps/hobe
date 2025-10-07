@@ -46,6 +46,20 @@ export const routes: Routes = [
 					),
 			},
 			{
+				path: Route.ORDER,
+				loadComponent: () =>
+					import('./pages/order/order.component').then(
+						(m) => m.OrderComponent,
+					),
+			},
+			{
+				path: Route.ORDERS,
+				loadComponent: () =>
+					import('./pages/orders/orders.component').then(
+						(m) => m.OrdersComponent,
+					),
+			},
+			{
 				path: Route.PROFESSIONALS,
 				loadComponent: () =>
 					import('@hobe/shared').then(

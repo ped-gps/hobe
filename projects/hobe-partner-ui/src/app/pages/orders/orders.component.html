@@ -1,0 +1,53 @@
+<div id="orders">
+
+    <header>
+        <app-page-header [title]="'Pedidos'" />
+    </header>
+
+    <main id="content">
+        <p-tabs 
+            [(value)]="tabIndex" 
+            (valueChange)="onTabChange($event)"
+        >
+            <p-tablist>
+                <p-tab [value]="1">Pendentes</p-tab>
+                <p-tab [value]="2">Em Andamento</p-tab>
+                <p-tab [value]="3">Enviados</p-tab>
+                <p-tab [value]="4">Concluídos</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                @if (tabIndex === 1) {
+                    <p-tabpanel [value]="1">
+                        <app-orders-list 
+                            [status]="[OrderStatus.WAITING_PAYMENT]" 
+                        />
+                    </p-tabpanel>
+                }
+                
+                @if (tabIndex === 2) {
+                    <p-tabpanel [value]="2">
+                        <app-orders-list 
+                            [status]="[OrderStatus.PROCESSING]" 
+                        />
+                    </p-tabpanel>
+                }
+                
+                @if (tabIndex === 3) {
+                    <p-tabpanel [value]="3">
+                        <app-orders-list 
+                            [status]="[OrderStatus.SHIPPED]" 
+                        />
+                    </p-tabpanel>
+                }
+                
+                @if (tabIndex === 4) {
+                    <p-tabpanel [value]="4">
+                        <app-orders-list 
+                            [status]="[OrderStatus.CONCLUDED, OrderStatus.CANCELED,  OrderStatus.DELIVERED]" 
+                        />
+                    </p-tabpanel>
+                }
+            </p-tabpanels>
+        </p-tabs>
+    </main>
+</div>

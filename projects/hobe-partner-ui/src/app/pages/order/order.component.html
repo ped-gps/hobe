@@ -1,0 +1,547 @@
+<div id="order">
+    <header>
+        <app-page-header [title]="'Pedidos'" />
+    </header>
+
+    <main>
+        <div class="card">
+            @if (!isLoading && order) {
+                <form [formGroup]="form">
+                    <div class="group">
+                        <div class="items">
+                            @for (item of order.items; track $index) {
+                            <div class="item">
+                                <div class="picture">
+                                    <img
+                                        [src]="getItemPicture(item)"
+                                        alt="item picture"
+                                    />
+                                </div>
+
+                                <div class="item-group">
+                                    <div class="details">
+                                        <span class="item-name">{{
+                                            getItemName(item)
+                                        }}</span>
+
+                                        @if (item.serviceDate && item.serviceTime) {
+                                        <span
+                                            >Agendamento:
+                                            {{
+                                                item.serviceDate
+                                                    | date : "dd/MM/yyyy"
+                                            }}
+                                            {{
+                                                item.serviceTime | time : "HH:mm"
+                                            }}</span
+                                        >
+                                        }
+                                    </div>
+
+                                    <div class="details">
+                                        <span class="item-value"
+                                            >Valor:
+                                            {{ item.total | currency }}</span
+                                        >
+                                        <span class="item-quantity"
+                                            >Quantidade: {{ item.quantity }}</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <div class="responsive-row" style="margin-bottom: 0">
+                            <div class="responsive-col-6">
+                                <div class="details">
+                                    <div class="title">
+                                        <span>Informações</span>
+                                    </div>
+
+                                    <div class="details-group">
+                                        <div class="details">
+                                            <span class="label">Número</span>
+                                            <span class="value">{{
+                                                order.number
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label">Valor</span>
+                                            <span class="value">{{
+                                                order.total | currency
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label"
+                                                >Total de itens</span
+                                            >
+                                            <span class="value">{{
+                                                order.items.length
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label">Situação</span>
+                                            <span class="value">
+                                                <p-select
+                                                    formControlName="status"
+                                                    [options]="statusOptions"
+                                                    (onChange)="
+                                                        handleStatusChange($event)
+                                                    "
+                                                    [readonly]="isPending()"
+                                                />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <div class="responsive-row" style="margin-bottom: 0">
+                            <div class="responsive-col-6">
+                                <div class="details">
+                                    <div class="title">
+                                        <span>Dados do Cliente</span>
+                                    </div>
+
+                                    <div class="details-group">
+                                        <div class="details">
+                                            <span class="label">Nome</span>
+                                            <span class="value">{{
+                                                order.client.name
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label">E-mail</span>
+                                            <span class="value">{{
+                                                order.client.email
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label">Telefone</span>
+                                            <span class="value">{{
+                                                order.client.phone | phone
+                                            }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (order.deliveryAddress) {
+                            <div class="responsive-col-6">
+                                <div class="details">
+                                    <div class="title">
+                                        <span>Endereço de Entrega</span>
+                                    </div>
+
+                                    <div class="details-group">
+                                        <div class="details">
+                                            <span class="label">Logradouro</span>
+                                            <span class="value">{{
+                                                order.deliveryAddress.street
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label"
+                                                >Número do imóvel</span
+                                            >
+                                            <span class="value">{{
+                                                order.deliveryAddress.number
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label">Bairro</span>
+                                            <span class="value">{{
+                                                order.deliveryAddress.neighborhood
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label">Complemento</span>
+                                            <span class="value">{{
+                                                order.deliveryAddress.complement
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label">Cidade</span>
+                                            <span class="value">{{
+                                                order.deliveryAddress.city
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label">Estado</span>
+                                            <span class="value">{{
+                                                getStateFriendlyName(
+                                                    order.deliveryAddress.state!
+                                                )
+                                            }}</span>
+                                        </div>
+
+                                        <div class="details">
+                                            <span class="label">CEP</span>
+                                            <span class="value">
+                                                {{ order.deliveryAddress.zipCode | zipCode }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    @if (hasPaymentDatails()) {
+                        <div class="group">
+                            <div class="responsive-row" style="margin-bottom: 0">
+                                <div class="responsive-col-6">
+                                    <div class="details">
+                                        <div class="title">
+                                            <span>Dados do Pagamento</span>
+                                        </div>
+
+                                        <div class="details-group">
+                                            <div class="details">
+                                                <span class="label">Pagamento ID</span>
+                                                <span class="value">
+                                                    {{ order.payment.mercadoPagoPaymentId }}
+                                                </span>
+                                            </div>
+                                            <div class="details">
+                                                <span class="label">Status</span>
+                                                <span class="value">
+                                                    {{ getPaymentStatusFriendlyName(order.payment.status) }}
+                                                </span>
+                                            </div>
+                                            <div class="details">
+                                                <span class="label">Data de Aprovação</span>
+                                                <span class="value">
+                                                    {{ order.payment.dateApproved | date: 'dd/MM/yyyy HH:mm' }}
+                                                </span>
+                                            </div>
+                                            <div class="details">
+                                                <span class="label">Forma de Pagamento</span>
+                                                <span class="value">
+                                                    {{ getPaymentMethodTypeFriendlyName(order.payment.paymentMethodTypeId) }}
+                                                </span>
+                                            </div>
+                                            <div class="details">
+                                                <span class="label">Total</span>
+                                                <span class="value">
+                                                    {{ order.payment.amount | currency }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (hasCancelationOrTrackingDetails() || isCanceled() ||
+                        isShipped() || isDelivered()) {
+
+                        <div class="group">
+                            <div class="responsive-row" style="margin-bottom: 0">
+                                @if (hasTrackingDetails() || isShipped() ||
+                                isDelivered()) {
+
+                                    <div class="responsive-col-6">
+                                        <div class="details">
+                                            <div class="title">
+                                                <span>Rastreio</span>
+                                            </div>
+
+                                            <div class="responsive-row">
+                                                <div class="responsive-col-12">
+                                                    <div class="input-field">
+                                                        <label class="trackingNumber"
+                                                            >Código de rastreio</label
+                                                        >
+                                                        <input
+                                                            pInputText
+                                                            type="text"
+                                                            formControlName="trackingNumber"
+                                                            placeholder="Código de rastreio"
+                                                        />
+                                                        <app-hint
+                                                            [isError]="true"
+                                                            [message]="
+                                                                getErrorMessage(
+                                                                    form,
+                                                                    'trackingNumber'
+                                                                )
+                                                            "
+                                                            [visible]="
+                                                                hasError(
+                                                                    form,
+                                                                    'trackingNumber'
+                                                                )
+                                                            "
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="responsive-row">
+                                                <div class="responsive-col-6">
+                                                    <div class="input-field">
+                                                        <label for="carrier"
+                                                            >Transportadora</label
+                                                        >
+                                                        <input
+                                                            pInputText
+                                                            type="text"
+                                                            formControlName="carrier"
+                                                            placeholder="Transportadora"
+                                                        />
+                                                        <app-hint
+                                                            [isError]="true"
+                                                            [message]="
+                                                                getErrorMessage(
+                                                                    form,
+                                                                    'carrier'
+                                                                )
+                                                            "
+                                                            [visible]="
+                                                                hasError(form, 'carrier')
+                                                            "
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div class="responsive-col-6">
+                                                    <div class="input-field">
+                                                        <label for="deliveryEstimate"
+                                                            >Estimativa de entrega</label
+                                                        >
+                                                        <p-calendar
+                                                            appendTo="body"
+                                                            dateFormat="dd/mm/yy"
+                                                            formControlName="deliveryEstimate"
+                                                            placeholder="Selecione a data"
+                                                        />
+                                                        <app-hint
+                                                            [isError]="true"
+                                                            [message]="
+                                                                getErrorMessage(
+                                                                    form,
+                                                                    'deliveryEstimate'
+                                                                )
+                                                            "
+                                                            [visible]="
+                                                                hasError(
+                                                                    form,
+                                                                    'deliveryEstimate'
+                                                                )
+                                                            "
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="responsive-row">
+                                                <div class="responsive-col-12">
+                                                    <div class="input-field">
+                                                        <label for="trackingLink"
+                                                            >Link de rastreio</label
+                                                        >
+                                                        <input
+                                                            pInputText
+                                                            type="text"
+                                                            formControlName="trackingLink"
+                                                            placeholder="Link de rastreio"
+                                                        />
+                                                        <app-hint
+                                                            [isError]="true"
+                                                            [message]="
+                                                                getErrorMessage(
+                                                                    form,
+                                                                    'trackingLink'
+                                                                )
+                                                            "
+                                                            [visible]="
+                                                                hasError(
+                                                                    form,
+                                                                    'trackingLink'
+                                                                )
+                                                            "
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                class="responsive-row"
+                                                style="margin-bottom: 0"
+                                            >
+                                                <div class="responsive-col-6">
+                                                    <div class="input-field">
+                                                        <label for="deliveredDate"
+                                                            >Data da entrega</label
+                                                        >
+                                                        <p-calendar
+                                                            appendTo="body"
+                                                            dateFormat="dd/mm/yy"
+                                                            formControlName="deliveredDate"
+                                                            placeholder="Selecione a data"
+                                                        />
+                                                        <app-hint
+                                                            [isError]="true"
+                                                            [message]="
+                                                                getErrorMessage(
+                                                                    form,
+                                                                    'deliveredDate'
+                                                                )
+                                                            "
+                                                            [visible]="
+                                                                hasError(
+                                                                    form,
+                                                                    'deliveredDate'
+                                                                )
+                                                            "
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div class="responsive-col-6">
+                                                    <div class="input-field">
+                                                        <label for="deliveredTime"
+                                                            >Horário da entrega</label
+                                                        >
+                                                        <p-datepicker
+                                                            appendTo="body"
+                                                            formControlName="deliveredTime"
+                                                            placeholder="Selecione a hora"
+                                                            [timeOnly]="true"
+                                                        />
+                                                        <app-hint
+                                                            [isError]="true"
+                                                            [message]="
+                                                                getErrorMessage(
+                                                                    form,
+                                                                    'deliveredTime'
+                                                                )
+                                                            "
+                                                            [visible]="
+                                                                hasError(
+                                                                    form,
+                                                                    'deliveredTime'
+                                                                )
+                                                            "
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                } @if (hasCancelationDetails() || isCanceled()) {
+
+                                    <div class="responsive-col-6">
+                                        <div class="details">
+                                            <div class="title">
+                                                <span>Cancelamento</span>
+                                            </div>
+
+                                            <div class="responsive-row">
+                                                <div class="responsive-col-12">
+                                                    <div class="input-field">
+                                                        <label for="cancellationDate"
+                                                            >Data</label
+                                                        >
+                                                        <p-datepicker
+                                                            appendTo="body"
+                                                            dateFormat="dd/mm/yy"
+                                                            formControlName="cancellationDate"
+                                                            placeholder="Selecione a data"
+                                                        />
+                                                        <app-hint
+                                                            [isError]="true"
+                                                            [message]="
+                                                                getErrorMessage(
+                                                                    form,
+                                                                    'cancellationDate'
+                                                                )
+                                                            "
+                                                            [visible]="
+                                                                hasError(
+                                                                    form,
+                                                                    'cancellationDate'
+                                                                )
+                                                            "
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="responsive-row">
+                                                <div class="responsive-col-12">
+                                                    <div class="input-field">
+                                                        <label for="cancellationReason"
+                                                            >Motivo</label
+                                                        >
+                                                        <textarea
+                                                            pInputTextarea
+                                                            formControlName="cancellationReason"
+                                                            placeholder="Motivo do cancelamento"
+                                                            [rows]="5"
+                                                            [cols]="30"
+                                                            [autoResize]="true"
+                                                        ></textarea>
+                                                        <app-hint
+                                                            [isError]="true"
+                                                            [message]="
+                                                                getErrorMessage(
+                                                                    form,
+                                                                    'cancellationReason'
+                                                                )
+                                                            "
+                                                            [visible]="
+                                                                hasError(
+                                                                    form,
+                                                                    'cancellationReason'
+                                                                )
+                                                            "
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </form>
+            } @else {
+                <app-loading />
+            }
+        </div>
+    </main>
+
+    @if (!isLoading && order) {
+    <footer>
+        <div class="actions">
+            <p-button
+                label="Salvar"
+                class="button-green-white"
+                [disabled]="isSubmitting"
+                (onClick)="onSubmit()"
+            />
+        </div>
+    </footer>
+    }
+</div>

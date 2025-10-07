@@ -1,0 +1,11 @@
+::ng-deep {
+    #orders {
+        .p-tabs {
+            .p-tablist {
+                .p-tablist-tab-list {
+                    justify-content: center !important;
+                }
+            }
+        }
+    }
+}

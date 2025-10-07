@@ -9,6 +9,7 @@ export enum Route {
 	MEDICAL_INSURANCES = 'medical-insurances',
 	MEDICAL_RECORD = 'medical-record/:id',
 	MEDICAL_SCHEDULE = 'medical-schedule',
+	ORDER = 'orders/:id',
 	ORDERS = 'orders',
 	PROCEDURES = 'procedures',
 	PROFESSIONALS = 'professionals',

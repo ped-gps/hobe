@@ -1,0 +1,26 @@
+.p-paginator {
+    background: transparent;
+
+    .p-paginator-element {
+        color: var(--color-dark-gray);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        min-width: 32px !important;
+        height: 32px !important;
+        width: 32px !important;
+    }
+
+    .p-paginator-pages {
+
+        .p-paginator-page {
+
+            &.p-highlight {
+                background: var(--color-blue);
+                border-color: var(--color-blue);
+                color: var(--color-white);
+            }
+        }
+    }
+}
