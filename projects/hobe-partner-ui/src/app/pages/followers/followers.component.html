@@ -1,0 +1,102 @@
+<div id="followers">
+    
+    <header>
+        <app-page-header [title]="'Seguidores'" />
+    </header>
+
+    <main>
+        <div class="filters">
+            <div class="responsive-row">
+                <div class="responsive-col-6">
+                    <p-iconField>
+                        <input 
+                            pInputText 
+                            type="text" 
+                            placeholder="Pesquisar" 
+                            [(ngModel)]="searchText"
+                            (input)="onSearchTextChange()" 
+                        />
+                        <p-inputIcon 
+                            class="pi pi-search" 
+                        />
+                    </p-iconField>
+                </div>
+            </div>
+        </div>
+
+        <div class="table">
+            <p-table
+                [value]="followers"
+                [rows]="size"
+                [totalRecords]="totalElements"
+                [lazy]="true"
+                [paginator]="true"
+                [scrollable]="true"
+                [loading]="isLoading"
+                [first]="(page * size)" 
+                (onPage)="onPageChange($event)"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 55%; text-align: center;">Nome</th>
+                        <th style="width: 20%; text-align: left;">Seguindo desde</th>
+                        <th style="width: 25%; text-align: center;">Ações</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-follower let-rowIndex="rowIndex">
+                    <tr>
+                        <td style="text-align: left;">
+                            <div class="follower">
+                                <div class="picture">
+                                    @if (follower.followerPicture) {
+                                        <img [src]="follower.followerPicture.path" alt="Follower picture" />
+                                    } @else {
+                                        <img src="assets/svgs/profile.svg" alt="Follower picture" />
+                                    }
+                                </div>
+
+                                <div class="details">
+                                    <span>{{follower.followerName}}</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td style="text-align: left;">
+                            {{follower.createdDate | date: 'dd/MM/yyyy'}}
+                        </td>
+                        
+                        <td style="text-align: center;">
+                            <div class="actions">
+                                <p-button
+                                    class="button-icon button-outline-blue"
+                                    [outlined]="true" 
+                                    [rounded]="true"
+                                    [disabled]="isSubmitting"
+                                    (click)="onFollowerChat(follower)" 
+                                >
+                                    <span class="material-symbols-rounded">forum</span>    
+                                </p-button>
+
+                                <p-button 
+                                    icon="pi pi-times"
+                                    class="button-icon button-outline-red"
+                                    [outlined]="true" 
+                                    [rounded]="true"
+                                    [disabled]="isSubmitting"
+                                    (click)="onFollowerRemove(follower)" 
+                                />
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="4" style="text-align: center;">Nenhum seguidor foi encontrado!</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </main>
+</div>

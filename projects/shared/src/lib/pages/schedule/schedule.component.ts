@@ -16,6 +16,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { SelectModule } from 'primeng/select';
 import { Subscription } from 'rxjs';
 
+import { APP_ENV } from '../../../tokens/app-env.token';
 import { DialogAppointmentProfessionalComponent } from '../../components/dialog-appointment-professional/dialog-appointment-professional.component';
 import { DialogAppointmentComponent } from '../../components/dialog-appointment/dialog-appointment.component';
 import { App } from '../../enums/app';
@@ -32,7 +33,6 @@ import { DateUtils } from '../../utils/date.util';
 import { ModelAction } from './../../enums/model-action';
 import { ModelType } from './../../enums/model-type';
 import { WebsocketService } from './../../services/websocket.service';
-import { APP_ENV } from '@hobe/shared';
 
 @Component({
 	selector: 'app-schedule',

@@ -39,6 +39,13 @@ export const routes: Routes = [
 				loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
 			},
 			{
+				path: Route.FOLLOWERS,
+				loadComponent: () =>
+					import('./pages/followers/followers.component').then(
+						(m) => m.FollowersComponent,
+					),
+			},
+			{
 				path: Route.PROFESSIONALS,
 				loadComponent: () =>
 					import('@hobe/shared').then(

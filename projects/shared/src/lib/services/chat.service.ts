@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
-import Chat from '../models/chat';
+import { Chat } from '../models/chat';
 import { Page } from '../models/page';
 import { AbstractService } from './abstract-service';
 import { AlertService } from './alert.service';

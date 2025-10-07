@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { APP_ENV } from '@hobe/shared';
+import { APP_ENV } from '../../../tokens/app-env.token';
 import { Route } from '../../enums/route';
 import { AuthenticationService } from '../../services/authentication.service';
 import { App } from './../../enums/app';

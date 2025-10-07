@@ -1,0 +1,34 @@
+#followers {
+
+    header {
+        margin-bottom: 24px;
+    }
+
+    main {
+
+        .follower {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+
+            .picture {
+
+                img {
+                    border-radius: 999px;
+                    object-fit: contain;
+                    object-position: center;
+                    aspect-ratio: 1;
+                    width: 56px;
+                }
+            }
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+    }
+}

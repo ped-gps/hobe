@@ -3,6 +3,7 @@
  */
 
 /* Components */
+export * from './lib/components/breadcrumb/breadcrumb.component';
 export * from './lib/components/dialog-alert/dialog-alert.component';
 export * from './lib/components/dialog-appointment/dialog-appointment.component';
 export * from './lib/components/dialog-client/dialog-client.component';
@@ -15,6 +16,7 @@ export * from './lib/components/dialog-receptionist/dialog-receptionist.componen
 export * from './lib/components/hint/hint.component';
 export * from './lib/components/layout/layout.component';
 export * from './lib/components/loading/loading.component';
+export * from './lib/components/page-header/page-header.component';
 export * from './lib/components/sidebar/sidebar.component';
 export * from './lib/components/toolbar/toolbar.component';
 export * from './lib/components/upload-files/upload-files.component';
@@ -69,6 +71,7 @@ export * from './lib/models/client';
 export * from './lib/models/credentials';
 export * from './lib/models/exam';
 export * from './lib/models/file';
+export * from './lib/models/follower';
 export * from './lib/models/health-professional';
 export * from './lib/models/medical-appointment';
 export * from './lib/models/medical-appointment-overview';
@@ -121,8 +124,10 @@ export * from './lib/services/address.service';
 export * from './lib/services/alert.service';
 export * from './lib/services/appointment.service';
 export * from './lib/services/authentication.service';
+export * from './lib/services/chat.service';
 export * from './lib/services/client.service';
 export * from './lib/services/exam.service';
+export * from './lib/services/follower.service';
 export * from './lib/services/health-professional.service';
 export * from './lib/services/medical-appointment.service';
 export * from './lib/services/medical-insurance.service';
@@ -141,12 +146,12 @@ export * from './lib/services/websocket.service';
 export * from './tokens/app-env.token';
 
 /* Utils */
-export * from './lib/utils/administration-route.utils';
+export * from './lib/utils/administration-route.util';
 export * from './lib/utils/appointment-situation.util';
 export * from './lib/utils/council-type.util';
 export * from './lib/utils/country.util';
 export * from './lib/utils/date.util';
-export * from './lib/utils/exam-type.utils';
+export * from './lib/utils/exam-type.util';
 export * from './lib/utils/file-type.util';
 export * from './lib/utils/file.util';
 export * from './lib/utils/form.util';
@@ -157,10 +162,11 @@ export * from './lib/utils/marital-status.util';
 export * from './lib/utils/medical-appointment-situation.utils';
 export * from './lib/utils/medical-specialty.util';
 export * from './lib/utils/operator.util';
-export * from './lib/utils/partner-type-utils';
+export * from './lib/utils/partner-type.util';
 export * from './lib/utils/payout-type.util';
-export * from './lib/utils/pharmaceutical-form.utils';
+export * from './lib/utils/pharmaceutical-form.util';
 export * from './lib/utils/procedure-source.util';
 export * from './lib/utils/state.util';
 export * from './lib/utils/status.util';
-export * from './lib/utils/therapeutic-class.utils';
+export * from './lib/utils/therapeutic-class.util';
+export * from './lib/utils/uuid.util';
