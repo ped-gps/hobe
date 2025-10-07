@@ -31,7 +31,9 @@
 								"output": "/assets/"
 							}
 						],
-						"styles": ["projects/hobe-partner-ui/src/styles.scss"]
+						"styles": [
+							"projects/hobe-partner-ui/src/styles.scss"
+						]
 					},
 					"configurations": {
 						"production": {
@@ -57,6 +59,10 @@
 								{
 									"replace": "projects/shared/src/environments/environment.ts",
 									"with": "projects/shared/src/environments/environment.development.ts"
+								},
+								{
+									"replace": "projects/hobe-partner-ui/src/environments/environment.ts",
+									"with": "projects/hobe-partner-ui/src/environments/environment.development.ts"
 								}
 							]
 						}
@@ -89,7 +95,9 @@
 								"input": "projects/hobe-partner-ui/public"
 							}
 						],
-						"styles": ["projects/hobe-partner-ui/src/styles.scss"]
+						"styles": [
+							"projects/hobe-partner-ui/src/styles.scss"
+						]
 					}
 				}
 			}
@@ -150,6 +158,10 @@
 								{
 									"replace": "projects/shared/src/environments/environment.ts",
 									"with": "projects/shared/src/environments/environment.development.ts"
+								},
+								{
+									"replace": "projects/hobe-care-partner-ui/src/environments/environment.ts",
+									"with": "projects/hobe-care-partner-ui/src/environments/environment.development.ts"
 								}
 							]
 						}
@@ -245,6 +257,10 @@
 								{
 									"replace": "projects/shared/src/environments/environment.ts",
 									"with": "projects/shared/src/environments/environment.development.ts"
+								},
+								{
+									"replace": "projects/hobe-care-professional-ui/src/environments/environment.ts",
+									"with": "projects/hobe-care-professional-ui/src/environments/environment.development.ts"
 								}
 							]
 						}
@@ -340,6 +356,10 @@
 								{
 									"replace": "projects/shared/src/environments/environment.ts",
 									"with": "projects/shared/src/environments/environment.development.ts"
+								},
+								{
+									"replace": "projects/hobe-care-receptionist-ui/src/environments/environment.ts",
+									"with": "projects/hobe-care-receptionist-ui/src/environments/environment.development.ts"
 								}
 							]
 						}
@@ -407,7 +427,9 @@
 								"output": "/assets/"
 							}
 						],
-						"styles": ["projects/hobe-admin-ui/src/styles.scss"]
+						"styles": [
+							"projects/hobe-admin-ui/src/styles.scss"
+						]
 					},
 					"configurations": {
 						"production": {
@@ -465,7 +487,9 @@
 								"input": "projects/hobe-admin-ui/public"
 							}
 						],
-						"styles": ["projects/hobe-admin-ui/src/styles.scss"]
+						"styles": [
+							"projects/hobe-admin-ui/src/styles.scss"
+						]
 					}
 				}
 			}
@@ -492,7 +516,10 @@
 					"builder": "@angular/build:karma",
 					"options": {
 						"tsConfig": "projects/shared/tsconfig.spec.json",
-						"polyfills": ["zone.js", "zone.js/testing"]
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						]
 					}
 				}
 			}

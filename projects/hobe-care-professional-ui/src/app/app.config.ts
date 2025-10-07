@@ -19,7 +19,8 @@ import { providePrimeNG } from 'primeng/config';
 import { DialogService } from 'primeng/dynamicdialog';
 import { routes } from './app.routes';
 
-import { authenticationInterceptor, translation } from '@hobe/shared';
+import { APP_ENV, authenticationInterceptor, translation } from '@hobe/shared';
+import { environment } from '../environments/environment';
 
 registerLocaleData(ptBr);
 
@@ -50,5 +51,9 @@ export const appConfig: ApplicationConfig = {
 			provide: DEFAULT_CURRENCY_CODE,
 			useValue: 'BRL',
 		},
+		{
+			provide: APP_ENV,
+			useValue: environment
+		}
 	],
 };

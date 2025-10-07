@@ -87,6 +87,8 @@ export class AuthenticationService {
 		const complete = await Promise.resolve(promise);
 
 		if (complete) {
+			this.setAuthentication(null);
+			this.setUser(null);
 			this._router.navigate([Route.SIGN_IN]);
 		}
 	}

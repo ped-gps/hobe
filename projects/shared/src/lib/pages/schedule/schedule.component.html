@@ -25,18 +25,20 @@
 					</div>
 				</div>
 
-				<div class="actions">
-					<div class="action">
-						<p-button
-							label="Novo Agendamento"
-							class="button-blue-white button-icon-end"
-							(onClick)="onAddAppointment()"
-							[disabled]="!selectedHealthProfessional"
-						>
-							<span class="material-symbols-rounded">add</span>
-						</p-button>
+				@if (hasAddSchedule()) {
+					<div class="actions">
+						<div class="action">
+							<p-button
+								label="Novo Agendamento"
+								class="button-blue-white button-icon-end"
+								(onClick)="onAddAppointment()"
+								[disabled]="!selectedHealthProfessional"
+							>
+								<span class="material-symbols-rounded">add</span>
+							</p-button>
+						</div>
 					</div>
-				</div>
+				}
 			</div>
 		}
 

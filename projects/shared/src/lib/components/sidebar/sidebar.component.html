@@ -54,6 +54,42 @@
 					</div>
 				}
 
+				@if (hasMarketplace()) {
+					<div
+						class="link"
+						[routerLink]="Route.MARKETPLACE"
+						routerLinkActive="active"
+					>
+						<div class="icon">
+							<span class="material-symbols-rounded">
+								local_mall
+							</span>
+						</div>
+
+						<div class="label">
+							<span>Marketplace</span>
+						</div>
+					</div>
+				}
+
+				@if (hasPublications()) {
+					<div
+						class="link"
+						[routerLink]="Route.PUBLICATIONS"
+						routerLinkActive="active"
+					>
+						<div class="icon">
+							<span class="material-symbols-rounded">
+								summarize
+							</span>
+						</div>
+
+						<div class="label">
+							<span>Publicações</span>
+						</div>
+					</div>
+				}
+
 				@if (hasChats()) {
 					<div
 						class="link"
@@ -68,6 +104,24 @@
 
 						<div class="label">
 							<span>Chats</span>
+						</div>
+					</div>
+				}
+
+				@if (hasOrders()) {
+					<div
+						class="link"
+						[routerLink]="Route.ORDERS"
+						routerLinkActive="active"
+					>
+						<div class="icon">
+							<span class="material-symbols-rounded">
+								delivery_truck_speed
+							</span>
+						</div>
+
+						<div class="label">
+							<span>Pedidos</span>
 						</div>
 					</div>
 				}
@@ -90,8 +144,30 @@
 					</div>
 				}
 
+				@if (hasFollowers()) {
+					<div
+						class="link"
+						[routerLink]="Route.FOLLOWERS"
+						routerLinkActive="active"
+					>
+						<div class="icon">
+							<span class="material-symbols-rounded">
+								group
+							</span>
+						</div>
+
+						<div class="label">
+							<span>Seguidores</span>
+						</div>
+					</div>
+				}
+
 				@if (hasPatients()) {
-					<div class="link" [routerLink]="Route.CLIENTS">
+					<div 
+						class="link" 
+						[routerLink]="Route.CLIENTS"
+						routerLinkActive="active"
+					>
 						<div class="icon">
 							<span class="material-symbols-rounded">
 								group
@@ -105,7 +181,11 @@
 				}
 
 				@if (hasProfessionals()) {
-					<div class="link" [routerLink]="Route.PROFESSIONALS">
+					<div 
+						class="link" 
+						[routerLink]="Route.PROFESSIONALS"
+						routerLinkActive="active"
+					>
 						<div class="icon">
 							<span class="material-symbols-rounded">
 								stethoscope
@@ -119,7 +199,11 @@
 				}
 
 				@if (hasProcedures()) {
-					<div class="link" [routerLink]="Route.PROCEDURES">
+					<div 
+						class="link" 
+						[routerLink]="Route.PROCEDURES"
+						routerLinkActive="active"
+					>
 						<div class="icon">
 							<span class="material-symbols-rounded">
 								contract
@@ -133,7 +217,11 @@
 				}
 
 				@if (hasMedicalInsurances()) {
-					<div class="link" [routerLink]="Route.MEDICAL_INSURANCES">
+					<div 
+						class="link" 
+						[routerLink]="Route.MEDICAL_INSURANCES"
+						routerLinkActive="active"	
+					>
 						<div class="icon">
 							<span class="material-symbols-rounded">
 								handshake

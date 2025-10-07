@@ -9,7 +9,7 @@ import {
 	DEFAULT_CURRENCY_CODE,
 	LOCALE_ID,
 	provideBrowserGlobalErrorListeners,
-	provideZonelessChangeDetection,
+	provideZonelessChangeDetection
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
@@ -20,7 +20,8 @@ import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { DialogService } from 'primeng/dynamicdialog';
 
-import { authenticationInterceptor, translation } from '@hobe/shared';
+import { APP_ENV, authenticationInterceptor, translation } from '@hobe/shared';
+import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 
 registerLocaleData(ptBr);
@@ -54,5 +55,9 @@ export const appConfig: ApplicationConfig = {
 			provide: DEFAULT_CURRENCY_CODE,
 			useValue: 'BRL',
 		},
+		{
+			provide: APP_ENV,
+			useValue: environment
+		}
 	],
 };

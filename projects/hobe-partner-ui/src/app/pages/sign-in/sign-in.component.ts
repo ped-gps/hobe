@@ -14,6 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 
 import {
+	AppType,
 	AuthenticationService,
 	Credentials,
 	FormUtils,
@@ -55,7 +56,7 @@ export class SignInComponent {
 			.getAuthentication()
 			.subscribe((authentication) => {
 				if (authentication) {
-					this._router.navigate(['/home']);
+					this._router.navigate([Route.DASHBOARD]);
 				}
 			});
 
@@ -83,10 +84,11 @@ export class SignInComponent {
 			await OperatorUtils.delay(500);
 
 			try {
-				const credentials: Credentials = Object.assign(
-					{},
-					this.form.getRawValue(),
-				);
+				const credentials: Credentials = {
+					...this.form.getRawValue(),
+					appType: AppType.PARTNER
+				};
+
 				await this._authenticationService.token(credentials);
 				await this._authenticationService.init();
 			} catch (error: any) {

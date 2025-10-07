@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	Inject,
+	OnDestroy,
+	OnInit,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, EventContentArg } from '@fullcalendar/core/index.js';
@@ -12,6 +18,7 @@ import { Subscription } from 'rxjs';
 
 import { DialogAppointmentProfessionalComponent } from '../../components/dialog-appointment-professional/dialog-appointment-professional.component';
 import { DialogAppointmentComponent } from '../../components/dialog-appointment/dialog-appointment.component';
+import { App } from '../../enums/app';
 import { UserProfile } from '../../enums/user-profile';
 import { Appointment } from '../../models/appointments';
 import { HealthProfessional } from '../../models/health-professional';
@@ -25,6 +32,7 @@ import { DateUtils } from '../../utils/date.util';
 import { ModelAction } from './../../enums/model-action';
 import { ModelType } from './../../enums/model-type';
 import { WebsocketService } from './../../services/websocket.service';
+import { APP_ENV } from '@hobe/shared';
 
 @Component({
 	selector: 'app-schedule',
@@ -108,6 +116,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 		private readonly _authenticationService: AuthenticationService,
 		private readonly _changeDetector: ChangeDetectorRef,
 		private readonly _dialogService: DialogService,
+		@Inject(APP_ENV) private readonly _env: any,
 		private readonly _healthProfessionalService: HealthProfessionalService,
 		private readonly _webSocketService: WebsocketService,
 	) {}
@@ -125,6 +134,18 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 		this._wsTopics.forEach((topic) => {
 			this._webSocketService.unsubscribe(topic);
 		});
+	}
+
+	get app() {
+		return this._env?.APP ?? undefined;
+	}
+
+	hasAddSchedule() {
+		return (
+			(this.user.profile === UserProfile.PARTNER ||
+				this.user.profile === UserProfile.RECEPTIONIST) &&
+			(this.app === App.PARTNER_CLINIC || this.app === App.RECEPTIONIST)
+		);
 	}
 
 	onAddAppointment() {

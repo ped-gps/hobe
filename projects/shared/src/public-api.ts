@@ -26,6 +26,7 @@ export * from './lib/configurations/primeng';
 /* Enums */
 export * from './lib/enums/alert-type';
 export * from './lib/enums/app-type';
+export * from './lib/enums/app';
 export * from './lib/enums/appointment-situation';
 export * from './lib/enums/council-type';
 export * from './lib/enums/country';
@@ -46,7 +47,6 @@ export * from './lib/enums/procedure-source';
 export * from './lib/enums/route';
 export * from './lib/enums/state';
 export * from './lib/enums/status';
-export * from './lib/enums/subdomain';
 export * from './lib/enums/user-profile';
 
 /* Guards */
@@ -136,6 +136,9 @@ export * from './lib/services/user.service';
 export * from './lib/services/vaccine.service';
 export * from './lib/services/via-cep.service';
 export * from './lib/services/websocket.service';
+
+/* Tokens */
+export * from './tokens/app-env.token';
 
 /* Utils */
 export * from './lib/utils/administration-route.utils';

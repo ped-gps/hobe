@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { APP_ENV } from '@hobe/shared';
 import { Route } from '../../enums/route';
 import { AuthenticationService } from '../../services/authentication.service';
-import { Subdomain } from './../../enums/subdomain';
+import { App } from './../../enums/app';
 import { UserProfile } from './../../enums/user-profile';
 
 @Component({
@@ -22,6 +23,7 @@ export class SidebarComponent implements OnInit {
 	constructor(
 		private readonly _authenticationService: AuthenticationService,
 		private readonly _changeDetector: ChangeDetectorRef,
+		@Inject(APP_ENV) private readonly _env: any,
 	) {}
 
 	async ngOnInit(): Promise<void> {
@@ -37,10 +39,14 @@ export class SidebarComponent implements OnInit {
 			});
 	}
 
+	get app() {
+		return this._env?.APP ?? undefined;
+	}
+
 	hasChats() {
 		return (
 			this.profile === UserProfile.PARTNER &&
-			this.host.includes(Subdomain.PARCEIRO)
+			this.app === App.PARTNER_COMMERCIAL
 		);
 	}
 
@@ -48,8 +54,67 @@ export class SidebarComponent implements OnInit {
 		return (
 			(this.profile === UserProfile.PARTNER ||
 				this.profile === UserProfile.HEALTH_PROFESSIONAL) &&
-			(this.host.includes(Subdomain.CLINICA) ||
-				this.host.includes(Subdomain.PROFISSIONAL))
+			(this.app === App.PARTNER_CLINIC ||
+				this.app === App.PARTNER_COMMERCIAL ||
+				this.app === App.PROFESSIONAL)
+		);
+	}
+
+	hasFollowers() {
+		return (
+			this.profile === UserProfile.PARTNER &&
+			this.app === App.PARTNER_COMMERCIAL
+		);
+	}
+
+	hasMarketplace() {
+		return (
+			this.profile === UserProfile.PARTNER &&
+			this.app === App.PARTNER_COMMERCIAL
+		);
+	}
+
+	hasMedicalInsurances() {
+		return (
+			this.profile === UserProfile.PARTNER &&
+			this.app === App.PARTNER_CLINIC
+		);
+	}
+
+	hasOrders() {
+		return (
+			this.profile === UserProfile.PARTNER &&
+			this.app === App.PARTNER_COMMERCIAL
+		);
+	}
+
+	hasPatients() {
+		return (
+			(this.profile === UserProfile.PARTNER ||
+				this.profile === UserProfile.RECEPTIONIST) &&
+			(this.app === App.PARTNER_CLINIC || this.app === App.RECEPTIONIST)
+		);
+	}
+
+	hasProcedures() {
+		return (
+			this.profile === UserProfile.PARTNER &&
+			this.app === App.PARTNER_CLINIC
+		);
+	}
+
+	hasProfessionals() {
+		return (
+			this.profile === UserProfile.PARTNER &&
+			(this.app === App.PARTNER_CLINIC ||
+				this.app === App.PARTNER_COMMERCIAL)
+		);
+	}
+
+	hasPublications() {
+		return (
+			this.profile === UserProfile.PARTNER &&
+			this.app === App.PARTNER_COMMERCIAL
 		);
 	}
 
@@ -58,40 +123,10 @@ export class SidebarComponent implements OnInit {
 			(this.profile === UserProfile.PARTNER ||
 				this.profile === UserProfile.HEALTH_PROFESSIONAL ||
 				this.profile === UserProfile.RECEPTIONIST) &&
-			(this.host.includes(Subdomain.CLINICA) ||
-				this.host.includes(Subdomain.PROFISSIONAL) ||
-				this.host.includes(Subdomain.RECEPCAO))
-		);
-	}
-
-	hasPatients() {
-		return (
-			(this.profile === UserProfile.PARTNER ||
-				this.profile === UserProfile.RECEPTIONIST) &&
-			(this.host.includes(Subdomain.CLINICA) ||
-				this.host.includes(Subdomain.RECEPCAO))
-		);
-	}
-
-	hasProfessionals() {
-		return (
-			this.profile === UserProfile.PARTNER &&
-			(this.host.includes(Subdomain.CLINICA) ||
-				this.host.includes(Subdomain.PARCEIRO))
-		);
-	}
-
-	hasProcedures() {
-		return (
-			this.profile === UserProfile.PARTNER &&
-			this.host.includes(Subdomain.CLINICA)
-		);
-	}
-
-	hasMedicalInsurances() {
-		return (
-			this.profile === UserProfile.PARTNER &&
-			this.host.includes(Subdomain.CLINICA)
+			(this.app === App.PARTNER_CLINIC ||
+				this.app === App.PARTNER_COMMERCIAL ||
+				this.app === App.PROFESSIONAL ||
+				this.app === App.RECEPTIONIST)
 		);
 	}
 }

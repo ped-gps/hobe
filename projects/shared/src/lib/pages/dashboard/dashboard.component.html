@@ -7,7 +7,7 @@
 
 	<main>
 		<div class="filters">
-			@if (user.profile === UserProfile.PARTNER) {
+			@if (user && user.profile === UserProfile.PARTNER) {
 				<div class="filter">
 					<div class="label">
 						<span>Profissional</span>

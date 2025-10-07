@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { Route } from '@hobe/shared';
+import { authenticationGuard, Route } from '@hobe/shared';
 
 export const routes: Routes = [
 	{
@@ -29,4 +29,27 @@ export const routes: Routes = [
 				'./pages/mercado-pago-callback/mercado-pago-callback.component'
 			).then((m) => m.MercadoPagoCallbackComponent),
 	},
+	{
+		path: '',
+		loadComponent: () => import('@hobe/shared').then(m => m.LayoutComponent),
+		canActivate: [authenticationGuard],
+		children: [
+			{
+				path: Route.DASHBOARD,
+				loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
+			},
+			{
+				path: Route.PROFESSIONALS,
+				loadComponent: () =>
+					import('@hobe/shared').then(
+						(m) => m.ProfessionalsComponent,
+					),
+			},
+			{
+				path: Route.SCHEDULE,
+				loadComponent: () =>
+					import('@hobe/shared').then((m) => m.ScheduleComponent),
+			},
+		]
+	}
 ];
