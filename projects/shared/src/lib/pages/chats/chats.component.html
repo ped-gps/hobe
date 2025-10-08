@@ -10,7 +10,6 @@
 					<div class="responsive-row">
 						<div class="responsive-col-12">
 							<p-iconField iconPosition="right">
-								<p-inputIcon styleClass="pi pi-search" />
 								<input
 									pInputText
 									type="text"
@@ -18,6 +17,7 @@
 									[(ngModel)]="searchText"
 									(input)="onInput()"
 								/>
+								<p-inputIcon class="pi pi-search" />
 							</p-iconField>
 						</div>
 					</div>
@@ -38,7 +38,7 @@
 											[emptyMessage]="'Nada encontrado'"
 										>
 											<ng-template
-												pTemplate="list"
+												#list
 												let-chats
 											>
 												@for (
@@ -94,7 +94,7 @@
 																chat.lastMessage
 															) {
 																<div
-																	class="lastMessage"
+																	class="last-message"
 																>
 																	<span>{{
 																		getLastMessageLabel(

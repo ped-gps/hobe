@@ -1,0 +1,117 @@
+<div id="chat">
+    <div class="header">
+        <div class="picture">
+            <img 
+                [src]="chat.chatPicture ? chat.chatPicture.path : '/assets/svgs/profile.svg'" 
+                alt="chat picture"
+            >
+        </div>
+
+        <div class="group">
+            <div class="name">
+                <span>{{chat.chatName}}</span>
+            </div>
+
+            <div class="status">
+                <span>{{chat.isOnline ? 'Online' : 'Offline'}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div 
+        class="content" 
+        (scroll)="onScroll($event)" 
+        (dragover)="onDragOver($event)" 
+        (drop)="onDrop($event)"
+    >
+        
+        @if (!isLoading) {
+
+            @if (messages && messages.length > 0) {
+
+                <div class="messages">
+                    
+                    @for (message of messages; track $index) {
+
+                        <div class="message" [ngClass]="isAuthor(message) ? 'is-author' : 'not-author'">
+                            <div class="content">
+                                
+                                @if (message.content) {
+                                    <p>{{message.content}}</p>
+                                }
+
+                                @if (message.files) {
+                                    <app-media
+                                        [files]="message.files"
+                                        [hasDownload]="true"
+                                    />
+                                }
+                            </div>
+
+                            <div class="status">
+                                <div class="date">
+                                    <p>{{message.createdDate! | relativeTime }}</p>
+                                </div>
+
+                                <div class="views">
+                                    
+                                    @if (isAuthor(message)) {
+                                    
+                                        @if (!message.createdByUser) {
+                                            <i class="pi pi-clock"></i>
+                                        } @else if (hasRecipientViewed(message)) {
+                                            <i class="pi pi-eye"></i>
+                                        } @else {
+                                            <i class="pi pi-check"></i>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            } @else {
+                
+            }
+        } @else {
+            <app-loading />
+        }
+    </div>
+
+    <div class="footer">
+        <p-inputGroup>
+            <input 
+                pInputText 
+                type="text" 
+                placeholder="Mensagem" 
+                [(ngModel)]="messageContent"
+                (keyup.enter)="onSubmit()"
+                [disabled]="isSubmitting"
+            />
+            <p-button 
+                icon="pi pi-paperclip"
+                class="button-icon button-transparent-gray"
+                [rounded]="true"
+                [text]="true"
+                [disabled]="isLoading || isSubmitting"
+                (onClick)="onSendFile()"
+            />
+            <p-button 
+                icon="pi pi-angle-right"
+                class="button-icon button-transparent-gray"
+                [rounded]="true"
+                [text]="true"
+                [disabled]="isLoading || isSubmitting"
+                (onClick)="onSubmit()"
+            />
+        </p-inputGroup>
+    </div>
+</div>
+
+<input 
+    type="file" 
+    id="chat-input-file" 
+    [multiple]="true" 
+    style="display: none"
+    (change)="onFileSelected($event)" 
+/>

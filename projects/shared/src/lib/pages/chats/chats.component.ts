@@ -1,11 +1,21 @@
-import { Location } from '@angular/common'; // Importar Location
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule, Location } from '@angular/common'; // Importar Location
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { DataViewModule } from 'primeng/dataview';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
 import { Subscription } from 'rxjs';
 
+import { ChatComponent } from "../../components/chat/chat.component";
+import { LoadingComponent } from '../../components/loading/loading.component';
+import { NoContentComponent } from "../../components/no-content/no-content.component";
+import { PageHeaderComponent } from '../../components/page-header/page-header.component';
 import { ModelAction } from '../../enums/model-action';
 import { ModelType } from '../../enums/model-type';
-import Chat from '../../models/chat';
+import { Chat } from '../../models/chat';
 import { Message } from '../../models/message';
 import { Notification } from '../../models/notification';
 import { User } from '../../models/user';
@@ -20,8 +30,22 @@ import { OperatorUtils } from '../../utils/operator.util';
 	selector: 'app-chats',
 	templateUrl: './chats.component.html',
 	styleUrl: './chats.component.scss',
+	imports: [
+		CommonModule,
+		ChatComponent,
+		DataViewModule,
+		FormsModule,
+		IconFieldModule,
+		InputIconModule,
+		InputTextModule,
+		LoadingComponent,
+		NoContentComponent,
+		PageHeaderComponent,
+		PaginatorModule,
+	]
 })
 export class ChatsComponent implements OnInit, OnDestroy {
+	
 	public chatSelected!: Chat;
 	public chatsToShow: Array<Chat> = [];
 	public user!: User;
@@ -40,6 +64,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
 	constructor(
 		private readonly _activatedRoute: ActivatedRoute,
 		private readonly _authenticationService: AuthenticationService,
+		private readonly _changeDetector: ChangeDetectorRef,
 		private readonly _chatService: ChatService,
 		private readonly _notificationService: NotificationService,
 		private readonly _webSocketService: WebsocketService,
@@ -106,15 +131,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
 		try {
 			this.user = await this._authenticationService.retrieveUser();
-			const chatsPage = await this._chatService.search(
-				-1,
-				-1,
-				'lastModifiedDate',
-				'desc',
-				{ memberId: this.user.id },
-			);
-			this._chats = chatsPage.content; // Armazena todos os chats
-			this.totalElements = this._chats.length;
+			await this._retrieveChats();
 			this._updateChatsToShow();
 
 			const id = this._activatedRoute.snapshot.paramMap.get('id');
@@ -123,6 +140,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
 				this.chatSelected = await this._chatService.findById(id);
 			}
 		} finally {
+			this._changeDetector.markForCheck();
 			this.isLoading = false;
 		}
 	}
@@ -131,6 +149,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
 		const start = this.first;
 		const end = this.first + this.rows;
 		this.chatsToShow = this._chats.slice(start, end);
+		this._changeDetector.markForCheck();
 	}
 
 	public async onPageChange(event: any): Promise<void> {
@@ -252,6 +271,15 @@ export class ChatsComponent implements OnInit, OnDestroy {
 			});
 
 		this._subscriptions.push(subscription);
+	}
+
+	private async _retrieveChats() {
+		const chatsPage = await this._chatService.search(-1, -1, 'lastModifiedDate', 'desc', { 
+			memberId: this.user.id 
+		});
+
+		this._chats = chatsPage.content; // Armazena todos os chats
+		this.totalElements = chatsPage.page.totalElements; // Atualiza o total de elementos
 	}
 
 	private _sortChats(): void {

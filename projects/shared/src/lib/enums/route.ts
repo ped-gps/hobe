@@ -1,5 +1,6 @@
 export enum Route {
 	CALLBACK = 'callback',
+	CHAT = 'chats/:id',
 	CHATS = 'chats',
 	CLIENTS = 'clients',
 	DASHBOARD = 'dashboard',

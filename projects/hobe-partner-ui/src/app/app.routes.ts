@@ -35,6 +35,14 @@ export const routes: Routes = [
 		canActivate: [authenticationGuard],
 		children: [
 			{
+				path: Route.CHAT,
+				loadComponent: () => import('@hobe/shared').then(m => m.ChatsComponent)
+			},
+			{
+				path: Route.CHATS,
+				loadComponent: () => import('@hobe/shared').then(m => m.ChatsComponent)
+			},
+			{
 				path: Route.DASHBOARD,
 				loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
 			},

@@ -4,6 +4,7 @@
 
 /* Components */
 export * from './lib/components/breadcrumb/breadcrumb.component';
+export * from './lib/components/chat/chat.component';
 export * from './lib/components/dialog-alert/dialog-alert.component';
 export * from './lib/components/dialog-appointment/dialog-appointment.component';
 export * from './lib/components/dialog-client/dialog-client.component';
@@ -16,6 +17,8 @@ export * from './lib/components/dialog-receptionist/dialog-receptionist.componen
 export * from './lib/components/hint/hint.component';
 export * from './lib/components/layout/layout.component';
 export * from './lib/components/loading/loading.component';
+export * from './lib/components/media/media.component';
+export * from './lib/components/no-content/no-content.component';
 export * from './lib/components/orders-list/orders-list.component';
 export * from './lib/components/page-header/page-header.component';
 export * from './lib/components/sidebar/sidebar.component';
@@ -109,6 +112,7 @@ export * from './lib/models/user';
 export * from './lib/models/vaccine';
 
 /* Pages */
+export * from './lib/pages/chats/chats.component';
 export * from './lib/pages/clients/clients.component';
 export * from './lib/pages/dashboard/dashboard.component';
 export * from './lib/pages/medical-appointments-extract/medical-appointments-extract.component';
@@ -126,6 +130,7 @@ export * from './lib/pipes/gender.pipe';
 export * from './lib/pipes/imc-category.pipe';
 export * from './lib/pipes/pharmaceutical-form.pipe';
 export * from './lib/pipes/phone.pipe';
+export * from './lib/pipes/relative-time.pipe';
 export * from './lib/pipes/time.pipe';
 export * from './lib/pipes/zipcode.pipe';
 
@@ -142,6 +147,8 @@ export * from './lib/services/health-professional.service';
 export * from './lib/services/medical-appointment.service';
 export * from './lib/services/medical-insurance.service';
 export * from './lib/services/medication.service';
+export * from './lib/services/message.service';
+export * from './lib/services/notification.service';
 export * from './lib/services/oauth.service';
 export * from './lib/services/order.service';
 export * from './lib/services/partner.service';
