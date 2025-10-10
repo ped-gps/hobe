@@ -1,9 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { ImageModule } from 'primeng/image';
 import { GalleriaModule } from 'primeng/galleria';
+import { ImageModule } from 'primeng/image';
 
 import { FileType } from '../../enums/file-type';
-import { File } from './../../models/file';
 import { FileLoaded } from './../../utils/file.util';
 
 @Component({
@@ -17,9 +16,10 @@ import { FileLoaded } from './../../utils/file.util';
 })
 export class MediaComponent {
 	
-	@Input({ required: false }) files: Array<File> = [];
-	@Input({ required: false }) medias: Array<FileLoaded> = [];
+	@Input({ required: false }) files: Array<FileLoaded> = [];
 	@Input({ required: false }) hasDownload: boolean = false;
-	
-	public FileType = FileType;
+	@Input({ required: false }) height: string = '100%';
+	@Input({ required: false }) width: string = '100%';
+
+	FileType = FileType;
 }

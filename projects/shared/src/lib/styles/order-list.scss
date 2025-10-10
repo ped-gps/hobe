@@ -1,0 +1,23 @@
+.p-orderlist {
+    .p-orderlist-controls {
+        .p-button {
+            background: var(--color-blue) !important;
+            border-radius: 999px !important;
+            border: 1px solid var(--color-blue) !important;
+            color: var(--color-white) !important;
+            padding: 8px !important;
+            height: 32px !important;
+            width: 32px !important;
+        }
+    }
+    .p-listbox {
+        background: transparent !important;
+        border: 1px solid var(--border-color) !important;
+        .p-listbox-option {
+            &:hover,
+            &.p-listbox-option-selected {
+                background: rgba($color: #475585, $alpha: 0.15) !important;
+            }
+        }
+    }
+}

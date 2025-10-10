@@ -20,9 +20,9 @@ export class WebsocketService {
 	private readonly maxBackoffMs = 30000;
 	private heartbeatTimer: any = null;
 
-	constructor(private readonly _auth: AuthenticationService) {
-		this._connect();
-	}
+	constructor(
+		private readonly _auth: AuthenticationService
+	) {}
 
 	getConnected() {
 		return this._connected$.asObservable();
@@ -36,6 +36,10 @@ export class WebsocketService {
 		return this._messages$.pipe(
 			filter((m: any) => (m as any)?.topic === topic),
 		);
+	}
+
+	init() {
+		this._connect();
 	}
 
 	async subscribe(topic: string) {

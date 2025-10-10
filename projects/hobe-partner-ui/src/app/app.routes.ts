@@ -31,20 +31,26 @@ export const routes: Routes = [
 	},
 	{
 		path: '',
-		loadComponent: () => import('@hobe/shared').then(m => m.LayoutComponent),
+		loadComponent: () =>
+			import('@hobe/shared').then((m) => m.LayoutComponent),
 		canActivate: [authenticationGuard],
 		children: [
 			{
 				path: Route.CHAT,
-				loadComponent: () => import('@hobe/shared').then(m => m.ChatsComponent)
+				loadComponent: () =>
+					import('@hobe/shared').then((m) => m.ChatsComponent),
 			},
 			{
 				path: Route.CHATS,
-				loadComponent: () => import('@hobe/shared').then(m => m.ChatsComponent)
+				loadComponent: () =>
+					import('@hobe/shared').then((m) => m.ChatsComponent),
 			},
 			{
 				path: Route.DASHBOARD,
-				loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
+				loadComponent: () =>
+					import('./pages/dashboard/dashboard.component').then(
+						(m) => m.DashboardComponent,
+					),
 			},
 			{
 				path: Route.FOLLOWERS,
@@ -75,10 +81,17 @@ export const routes: Routes = [
 					),
 			},
 			{
+				path: Route.PUBLICATIONS,
+				loadComponent: () =>
+					import('./pages/publications/publications.component').then(
+						(m) => m.PublicationsComponent,
+					),
+			},
+			{
 				path: Route.SCHEDULE,
 				loadComponent: () =>
 					import('@hobe/shared').then((m) => m.ScheduleComponent),
 			},
-		]
-	}
+		],
+	},
 ];

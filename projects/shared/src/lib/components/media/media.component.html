@@ -3,100 +3,70 @@
     @if (files && files.length > 0) {
 
         @if (files && files.length === 1) {
-    
-            <div class="container">
-                <div class="element">
-                    @if (files[0].type === FileType.AUDIO) {
-                        <audio controls style="max-width: 100%; width: 100%;">
-                            <source [src]="files[0].path" type="audio/mp3">
-                        </audio>
-                    }
-                
-                    @if (files[0].type === FileType.IMAGE) {
-                        <p-image [src]="files[0].path" [preview]="true" />
-                    }  
-                    
-                    @if (files[0].type === FileType.VIDEO) {
-                        <video controls style="max-width: 100%; width: 100%;">
-                            <source [src]="files[0].path" type="video/mp4">
-                        </video>
-                    }
-                    
-                    @if (files[0].type === FileType.OTHER) {
-                        <img src="/assets/svgs/file.svg">
-                    }
-                </div>
-
-                @if (hasDownload) {
-                    <div class="name">
-                        <p>{{files[0].originalName}}</p>
-                    </div>
-            
-                    <a [href]="files[0].path" [download]="files[0].originalName" target="_blank" class="download">
-                        <span>Baixar</span>
-                        <i class="pi pi-arrow-circle-down"></i>
-                    </a>
-                }
-            </div>
-    
-        } @else {            
+            <ng-container *ngTemplateOutlet="file; context: { $implicit: files[0] }" />
+        } @else {
             <p-galleria
                 [value]="files"
                 [showThumbnails]="false"
                 [showItemNavigators]="true"
             >
                 <ng-template pTemplate="item" let-file>
-                    @if (file.type === FileType.AUDIO) {
-                        <audio controls style="max-width: 100%; width: 100%;">
-                            <source [src]="file.path" type="audio/mp3">
-                        </audio>
-                    }
-                
-                    @if (file.type === FileType.IMAGE) {
-                        <p-image [src]="file.path" [preview]="true" />
-                    }  
-                    
-                    @if (file.type === FileType.VIDEO) {
-                        <video controls style="max-width: 100%; width: 100%;">
-                            <source [src]="file.path" type="video/mp4">
-                        </video>
-                    }
-    
-                    @if (file.type === FileType.OTHER) {
-                        <img src="/assets/svgs/file.svg">
-                    }
+                    <ng-container *ngTemplateOutlet="file; context: { $implicit: file }" />
                 </ng-template>
             </p-galleria>
         }
     }
-    
-    @if (medias && medias.length > 0) {
-          <p-galleria
-            [value]="medias"
-            indicatorsPosition="bottom"
-            [showIndicators]="true"
-            [showThumbnails]="false"
-            [showIndicatorsOnItem]="false"
-            [showItemNavigators]="true"
-            [showItemNavigatorsOnHover]="true"
-        >
-            <ng-template pTemplate="item" let-media>
-                @if (media.file?.type?.includes("audio")) {
-                    <audio controls style="max-width: 100%; width: 100%;">
-                        <source [src]="media.data" [type]="media.file?.type">
-                    </audio>
-                }
-                
-                @if (media.file?.type?.includes("image")) {
-                    <p-image [src]="media.data" [preview]="true" />
-                }
-                
-                @if (media.file?.type?.includes("video")) {
-                    <video controls style="max-width: 100%; width: 100%;">
-                        <source [src]="media.data" [type]="media.file?.type">
-                    </video>
-                }
-            </ng-template>
-        </p-galleria>
-    }
 </div>
+
+<ng-template #file let-file>
+    <div class="container">
+        <div class="element">
+            @if (file.type === FileType.AUDIO) {
+                <audio controls style="max-width: 100%; width: 100%;">
+                    <source [src]="file.path" type="audio/mp3">
+                </audio>
+            }
+        
+            @if (file.type === FileType.IMAGE) {
+                <p-image 
+                    [src]="file.path" 
+                    [preview]="true" 
+                    [height]="height" 
+                    [width]="width" 
+                />
+            }  
+            
+            @if (file.type === FileType.VIDEO) {
+                <video 
+                    controls 
+                    style="max-width: 100%; width: 100%;" 
+                    [height]="height" 
+                    [width]="width"
+                >
+                    <source [src]="file.path" type="video/mp4">
+                </video>
+            }
+            
+            @if (file.type === FileType.OTHER) {
+                <img 
+                    src="/assets/svgs/file.svg" 
+                    alt="file" 
+                    style="max-width: 100%; width: 100%;" 
+                    [height]="height" 
+                    [width]="width"
+                />
+            }
+        </div>
+
+        @if (hasDownload) {
+            <div class="name">
+                <p>{{file.originalName}}</p>
+            </div>
+    
+            <a [href]="file.path" [download]="file.originalName" target="_blank" class="download">
+                <span>Baixar</span>
+                <i class="pi pi-arrow-circle-down"></i>
+            </a>
+        }
+    </div>
+</ng-template>

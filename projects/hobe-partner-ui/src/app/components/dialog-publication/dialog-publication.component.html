@@ -1,0 +1,69 @@
+<div id="dialog-publication">
+    <main>
+		@if (form) {
+			<div class="form">
+				<form [formGroup]="form">
+                    <div class="responsive-row">
+                        <div class="responsive-col-12">
+                            <app-upload-files 
+                                (fileSelected)="onFileSelected($event)"
+                            />
+                        </div>
+                    </div>
+
+                    @if (filesLoaded && filesLoaded.length > 0) {
+                        <div class="responsive-row">
+                            <div class="responsive-col-12">
+                                <p-orderlist 
+                                    controlsPosition="left" 
+                                    scrollHeight="250px"
+                                    [value]="filesLoaded" 
+                                    [dragdrop]="true"
+                                >
+                                    <ng-template #item let-option>
+                                        <app-media 
+                                            [files]="[option]"
+                                            width="64px"
+                                        />
+                                    </ng-template>
+                                </p-orderlist>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="responsive-row">
+                        <div class="responsive-col-12">
+                            <div class="input-field">
+                                <label for="description">Descrição</label>
+                                <textarea 
+                                    pTextarea 
+                                    id="description" 
+                                    formControlName="description" 
+                                    placeholder="Descrição"
+                                    [cols]="30"
+                                    [rows]="5"
+                                    [autoResize]="true"
+                                ></textarea>
+                                <app-hint 
+                                    [isError]="true"
+                                    [message]="getErrorMessage(form, 'description')"
+                                    [visible]="hasError(form, 'description')"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+    </main>
+
+    <footer>
+		<p-button
+			label="Salvar"
+			class="button-green-white"
+			[loading]="isSubmitting"
+			[disabled]="!form || form.invalid"
+			(onClick)="onSubmit()"
+		/>
+	</footer>
+</div>

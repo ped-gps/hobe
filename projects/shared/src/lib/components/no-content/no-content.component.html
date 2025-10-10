@@ -1,3 +1,9 @@
 <div id="no-content">
-    <img src="/assets/svgs/no-content.svg" />
+    @if (type === 'DEFAULT') {
+        <img src="/assets/svgs/no-content.svg" />
+    }
+    
+    @if (type === 'PUBLICATION') {
+        <img src="/assets/svgs/no-publication.svg" />
+    }
 </div>

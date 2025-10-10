@@ -1,0 +1,33 @@
+<div id="comments">
+    <main class="content">
+        <div class="list">
+            @for (comment of comments; track $index) {
+                <div class="comment">
+                    <div class="picture">
+                        @if (comment.authorPicture) {
+                            <img [src]="comment.authorPicture.path" alt="author picture" />
+                        } @else {
+                            <img src="/assets/svgs/profile.svg" alt="author picture">
+                        }
+                    </div>
+
+                    <div class="details">
+                        <div class="author">
+                            <div class="name">
+                                <span class="text">{{comment.authorName}}</span>
+                            </div>
+    
+                            <div class="date">
+                                <span class="text">{{comment.createdDate! | relativeTime }}</span>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <span class="text">{{comment.content}}</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </main>
+</div>

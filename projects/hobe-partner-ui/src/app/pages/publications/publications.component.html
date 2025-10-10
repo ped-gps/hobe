@@ -1,0 +1,189 @@
+<div id="publications">
+
+    <header>
+        <app-page-header [title]="'Publicações'" />
+    </header>
+
+    <main class="content">
+        <div class="responsive-row">
+            <div class="responsive-col-5"></div>
+            <div class="responsive-col-2">
+                <p-select
+                    [options]="filterOptions"
+                    [(ngModel)]="selectedFilter"
+                    (onChange)="handleSituationFilterChange()"
+                    placeholder="Ordenar por"
+                    optionLabel="label"
+                    optionValue="value"
+                />
+            </div>
+            <div class="responsive-col-3">
+                <p-select
+                    [options]="directionOptions"
+                    [(ngModel)]="selectedDirection"
+                    (onChange)="handleDirectionChange()"
+                    placeholder="Direção"
+                    optionLabel="label"
+                    optionValue="value"
+                />
+            </div>
+            <div class="responsive-col-2">
+                <p-button
+                    icon="pi pi-plus-circle"
+                    iconPos="right"
+                    class="button-blue-white add-publication"
+                    label="Nova publicação"
+                    (click)="onAddPublicationPress()"
+                />
+            </div>
+        </div>
+
+        @if (isLoading) {
+            <div class="card">
+                <app-loading />
+            </div>
+        } @else {
+
+        <div class="responsive-row">
+            <div class="responsive-col-6">
+                <div class="card">
+                    @if (publications && publications.length > 0) {
+                        <div class="publications">
+                            @for (publication of publications; track $index) {
+                                <div 
+                                    class="publication" 
+                                    [ngClass]="isSelected(publication) ? 'selected' : ''"
+                                    (click)="onPublicationPress(publication)"
+                                >                                    
+                                    <div class="image">
+                                        @if (publication.files && publication.files.length > 0) {
+                                            <div class="image-center">
+                                                <app-media 
+                                                    [files]="[toFileLoaded(publication.files[0])]"
+                                                />
+                                            </div>
+                                        } @else {
+                                            <img src="/assets/svgs/no-image.svg" alt="no image" width="100%">
+                                        }
+                                    </div>
+
+                                    <div class="details">
+                                        <div class="description">
+                                            <p class="text">{{publication.description}}</p>
+                                        </div>
+
+                                        <div class="interactions-row">                                        <div class="interactions">
+                                            <div class="interaction like">
+                                                <span class="material-symbols-rounded">favorite</span>
+                                                <span>{{(publication.likesCount || 0) | interactionsCount}}</span>
+                                            </div>
+                                            <div class="interaction comment">
+                                                <span class="material-symbols-rounded">chat_bubble</span>
+                                                <span>{{(publication.commentsCount || 0) | interactionsCount}}</span>
+                                            </div>
+                                            <div class="interaction saved">
+                                                <span class="material-symbols-rounded">bookmark</span>
+                                                <span>{{(publication.saveCount || 0) | interactionsCount}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="date">
+                                            <p class="text">Publicado: {{publication.createdDate! | relativeTime}}</p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="paginator">
+                                <p-paginator
+                                    [first]="publicationPage * size" 
+                                    [rows]="size" 
+                                    [totalRecords]="totalElements"
+                                    (onPageChange)="onPageChange($event)"
+                                />
+                            </div>
+                        </div>
+                    } @else {
+                        <div class="no-content">
+                            <app-no-content type="PUBLICATION" />
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            @if (publicationSelected) {
+                <div class="responsive-col-6">
+                    <div class="card">
+                        <div class="publication-selected">
+                            <div class="header">
+                                <div class="profile">
+                                    <div class="image">
+                                        <app-user-picture 
+                                            [user]="partner" 
+                                            [height]="40"
+                                            [width]="40"
+                                        />
+                                    </div>
+                                    <div class="details">
+                                        <div class="name">
+                                            <span>{{ getPartnerName() }}</span>
+                                        </div>
+
+                                        <div class="date">
+                                            <p class="text">{{ publicationSelected.createdDate! | relativeTime }}</p>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="options">
+                                    <p-button 
+                                        class="button-icon button-transparent-black"
+                                        icon="pi pi-ellipsis-v"
+                                        (onClick)="menu.toggle($event)" 
+                                    />
+                                </div>
+                            </div>    
+                            <div class="description">
+                                <p class="text">{{publicationSelected.description}}</p>
+                            </div> 
+                            <div class="content">
+                                @if (publicationSelected.files && publicationSelected.files.length > 0) {
+                                    <div class="medias">
+                                        <app-media 
+                                            [files]="toFilesLoaded(publicationSelected.files)" 
+                                        />
+                                    </div>
+                                }
+
+                                <div class="interactions">
+                                    <div class="interaction like">
+                                        <span class="material-symbols-rounded">favorite</span>
+                                        <span>{{(publicationSelected.likesCount || 0) | interactionsCount}}</span>
+                                    </div>
+                                    <div class="interaction comment">
+                                        <span class="material-symbols-rounded">chat_bubble</span>
+                                        <span>{{(publicationSelected.commentsCount || 0) | interactionsCount}}</span>
+                                    </div>
+                                    <div class="interaction saved">
+                                        <span class="material-symbols-rounded">bookmark</span>
+                                        <span>{{(publicationSelected.saveCount || 0) | interactionsCount}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="comments">
+                                    <div class="title">
+                                        <span class="text">Comentários</span>
+                                    </div>
+
+                                    <app-comments [comments]="comments" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>           
+            }
+        </div>
+    }
+    </main>
+</div>
+
+<p-menu class="menu" #menu [model]="opt" [popup]="true" />

@@ -42,7 +42,7 @@
 
                                 @if (message.files) {
                                     <app-media
-                                        [files]="message.files"
+                                        [files]="toFilesLoaded(message.files)"
                                         [hasDownload]="true"
                                     />
                                 }

@@ -19,6 +19,7 @@ import { LoadingComponent } from '../loading/loading.component';
 import { MediaComponent } from '../media/media.component';
 import { User } from './../../models/user';
 import { FileLoaded, FileUtils } from './../../utils/file.util';
+import { File } from '@hobe/shared';
 
 @Component({
 	selector: 'app-chat',
@@ -192,6 +193,21 @@ export class ChatComponent implements OnInit, OnChanges {
 				this.isSubmitting = false;
 			}
 		}
+	}
+
+	toFileLoaded(file: File): FileLoaded {
+		return {
+			id: file.id,
+			name: file.name,
+			type: file.type,
+			path: file.path,
+			position: file.position,
+			saved: true,
+		} as FileLoaded;
+	}
+
+	toFilesLoaded(files: Array<File>): Array<FileLoaded> {
+		return files.map(this.toFileLoaded);
 	}
 
 	private async _fetchData() {

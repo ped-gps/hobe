@@ -15,6 +15,7 @@ import { ButtonModule } from 'primeng/button';
 	styleUrl: './upload-files.component.scss',
 })
 export class UploadFilesComponent {
+	
 	@ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 	@Output() fileSelected = new EventEmitter<FileList>();
 
