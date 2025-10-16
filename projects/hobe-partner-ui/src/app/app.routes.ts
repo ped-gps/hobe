@@ -9,6 +9,13 @@ export const routes: Routes = [
 		pathMatch: 'full',
 	},
 	{
+		path: Route.CALLBACK,
+		loadComponent: () =>
+			import(
+				'./pages/mercado-pago-callback/mercado-pago-callback.component'
+			).then((m) => m.MercadoPagoCallbackComponent),
+	},
+	{
 		path: Route.SIGN_IN,
 		loadComponent: () =>
 			import('./pages/sign-in/sign-in.component').then(
@@ -21,13 +28,6 @@ export const routes: Routes = [
 			import('./pages/sign-up/sign-up.component').then(
 				(m) => m.SignupComponent,
 			),
-	},
-	{
-		path: Route.CALLBACK,
-		loadComponent: () =>
-			import(
-				'./pages/mercado-pago-callback/mercado-pago-callback.component'
-			).then((m) => m.MercadoPagoCallbackComponent),
 	},
 	{
 		path: '',
@@ -60,6 +60,13 @@ export const routes: Routes = [
 					),
 			},
 			{
+				path: Route.MARKETPLACE,
+				loadComponent: () =>
+					import('./pages/marketplace/marketplace.component').then(
+						(m) => m.MarketplaceComponent,
+					),
+			},
+			{
 				path: Route.ORDER,
 				loadComponent: () =>
 					import('./pages/order/order.component').then(
@@ -71,6 +78,27 @@ export const routes: Routes = [
 				loadComponent: () =>
 					import('./pages/orders/orders.component').then(
 						(m) => m.OrdersComponent,
+					),
+			},
+			{
+				path: Route.PRODUCT_REGISTER,
+				loadComponent: () => 
+					import('./pages/product-form/product-form.component').then(
+						(m) => m.ProductFormComponent,
+					),
+			},
+			{
+				path: Route.PRODUCT_DETAILS,
+				loadComponent: () =>
+					import('./pages/product-details/product-details.component').then(
+						(m) => m.ProductDetailsComponent,
+					),
+			},
+			{
+				path: Route.PRODUCT_UPDATE,
+				loadComponent: () =>
+					import('./pages/product-form/product-form.component').then(
+						(m) => m.ProductFormComponent,
 					),
 			},
 			{

@@ -1,0 +1,71 @@
+#products {
+	.table {
+		.product {
+			cursor: pointer;
+
+			.index,
+			.value,
+			.sales-count,
+			.availability {
+				text-align: center;
+			}
+
+			.picture-details {
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+				gap: 8px;
+
+				.picture {
+					img {
+						border-radius: 10px;
+						height: 70px;
+						width: 70px;
+					}
+				}
+
+				.details {
+					.name {
+						word-break: break-all;
+					}
+				}
+			}
+
+			.average-rating {
+				.p-rating {
+					justify-content: center !important;
+				}
+			}
+
+			.availability {
+				&.available {
+					padding: 4px;
+					border-radius: 5px;
+					background-color: rgba(#6a7a56, $alpha: 0.1);
+					color: var(--color-green);
+					font-size: 14px;
+					font-weight: 600;
+				}
+
+				&.unavailable {
+					padding: 4px;
+					border-radius: 5px;
+					background-color: rgba(#af1717, $alpha: 0.1);
+					color: var(--color-red);
+					font-size: 14px;
+					font-weight: 600;
+				}
+			}
+		}
+	}
+}
+
+::ng-deep {
+	#products {
+		.add-product {
+			.p-button {
+				height: 41px !important;
+			}
+		}
+	}
+}

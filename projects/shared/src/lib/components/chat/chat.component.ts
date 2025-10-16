@@ -17,9 +17,9 @@ import { WebsocketService } from '../../services/websocket.service';
 import { OperatorUtils } from '../../utils/operator.util';
 import { LoadingComponent } from '../loading/loading.component';
 import { MediaComponent } from '../media/media.component';
+import { File } from './../../models/file';
 import { User } from './../../models/user';
 import { FileLoaded, FileUtils } from './../../utils/file.util';
-import { File } from '@hobe/shared';
 
 @Component({
 	selector: 'app-chat',

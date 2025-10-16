@@ -160,6 +160,7 @@ export * from './lib/services/oauth.service';
 export * from './lib/services/order.service';
 export * from './lib/services/partner.service';
 export * from './lib/services/procedure.service';
+export * from './lib/services/product.service';
 export * from './lib/services/publication.service';
 export * from './lib/services/receptionist.service';
 export * from './lib/services/service.service';

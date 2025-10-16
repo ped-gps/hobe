@@ -1,0 +1,27 @@
+<div id="marketplace">
+    <header>
+        <app-page-header [title]="'Marketplace'" />
+    </header>
+
+    <main>
+        <p-tabs [(value)]="tabIndex" (valueChange)="onTabChange()">
+            <p-tablist>
+                <p-tab [value]="0">Produtos</p-tab>
+                <p-tab [value]="1">Serviços</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                @if (tabIndex === 0) {
+                    <p-tabpanel [value]="0">
+                        <app-products />
+                    </p-tabpanel>
+                }
+
+                @if (tabIndex === 1) {
+                    <p-tabpanel [value]="1">
+                        
+                    </p-tabpanel>
+                }
+            </p-tabpanels>
+        </p-tabs>
+    </main>
+</div>

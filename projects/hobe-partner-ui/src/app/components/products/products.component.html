@@ -1,0 +1,111 @@
+<div id="products">
+    <div class="filters">
+        <div class="responsive-row">
+            <div class="responsive-col-9">
+                <p-iconField iconPosition="right">
+                    <input
+                        pInputText
+                        type="text"
+                        placeholder="Pesquisar"
+                        [(ngModel)]="searchText"
+                        (input)="onInput()"
+                    />
+                    <p-inputIcon class="pi pi-search" />
+                </p-iconField>
+            </div>
+
+            <div class="responsive-col-3">
+                <p-button
+                    class="button-blue-white add-product"
+                    label="Novo Produto"
+                    (click)="onAddPress()"
+                >
+                    <span class="material-symbols-rounded">add_circle</span>
+                </p-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table">
+        <p-table
+            [value]="products"
+            [rows]="size"
+            [totalRecords]="totalElements"
+            [lazy]="true"
+            [paginator]="true"
+            [scrollable]="true"
+            [loading]="isRefreshing"
+            [first]="(page * size)"
+            (onPage)="onPageChange($event)"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 05%; text-align: center;">
+                        #
+                    </th>
+                    <th style="width: 35%; text-align: left" pSortableColumn="name">
+                        Item <p-sortIcon field="name" />
+                    </th>
+                    <th style="width: 10%; text-align: center" pSortableColumn="value">
+                        Preço <p-sortIcon field="value" />
+                    </th>
+                    <th style="width: 15%; text-align: center" pSortableColumn="salesCount">
+                        Unidades vendidas <p-sortIcon field="salesCount" />
+                    </th>
+                    <th style="width: 20%; text-align: center" pSortableColumn="averageRating">
+                        Avaliação média <p-sortIcon field="averageRating" />
+                    </th>
+                    <th style="width: 15%; text-align: center">
+                        Status
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+                <tr class="product" (click)="onProductPress(product)">
+                    <td class="index">
+                        {{ rowIndex + 1 }}
+                    </td>
+                    <td class="picture-details">
+                        <div class="picture">
+                            <img
+                                [src]="getPicture(product)"
+                                alt="product picture"
+                            />
+                        </div>
+
+                        <div class="details">
+                            <span class="name">{{ product.name }}</span>
+                        </div>
+                    </td>
+                    <td class="value">
+                        <span>{{ product.value | currency }}</span>
+                    </td>
+                    <td class="sales-count">
+                        <span>{{ product.salesCount || 0 }}</span>
+                    </td>
+                    <td class="average-rating">
+                        <p-rating
+                            [ngModel]="product.averageRating || 0"
+                            [readonly]="true"
+                        />
+                    </td>
+                    <td class="availability">
+                        <div class="item">
+                            <span
+                                class="availability"
+                                [ngClass]="product.availability ? 'available' : 'unavailable'"
+                            >
+                                {{ product.availability ? "Disponível" : "Indisponível" }}
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="6" style="text-align: center;">Nenhum produto foi encontrado!</td>
+                </tr>
+            </ng-template>
+        </p-table>  
+    </div>
+</div>

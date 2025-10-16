@@ -6,8 +6,8 @@
 
     <main class="content">
         <div class="responsive-row">
-            <div class="responsive-col-5"></div>
-            <div class="responsive-col-2">
+            <div class="responsive-col-3"></div>
+            <div class="responsive-col-3">
                 <p-select
                     [options]="filterOptions"
                     [(ngModel)]="selectedFilter"
@@ -27,14 +27,14 @@
                     optionValue="value"
                 />
             </div>
-            <div class="responsive-col-2">
+            <div class="responsive-col-3">
                 <p-button
-                    icon="pi pi-plus-circle"
-                    iconPos="right"
                     class="button-blue-white add-publication"
                     label="Nova publicação"
                     (click)="onAddPublicationPress()"
-                />
+                >
+                    <span class="material-symbols-rounded">add_circle</span>
+                </p-button>
             </div>
         </div>
 
