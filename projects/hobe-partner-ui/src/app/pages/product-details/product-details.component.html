@@ -1,1 +1,133 @@
-<p>product-details works!</p>
+<div id="product-details">
+    <header>
+        <app-page-header [title]="'Produto'" />
+    </header>
+
+    <main>
+        @if (!isLoading) {
+            @if (product) {
+                <div id="product">
+                    <div class="header">
+                        <h1>{{ product.name }}</h1>
+                        <p-button 
+                            icon="pi pi-ellipsis-h" 
+                            class="button-icon"
+                            [rounded]="true"
+                            [text]="true"
+                            (onClick)="productMenuOptions.toggle($event)" 
+                        />
+                    </div>
+
+                    <div class="content">
+                        <div class="galleria">
+                            @if (product.pictures.length > 0) {
+                                <p-galleria 
+                                    thumbnailsPosition="bottom" 
+                                    [value]="product.pictures"
+                                    [numVisible]="4"
+                                >
+                                    <ng-template pTemplate="item" let-item>
+                                        <div class="image">
+                                            <img [src]="item.path" alt="product picture" />
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="thumbnail" let-item>
+                                        <div class="grid gap-4 justify-center">
+                                            <img [src]="item.path" style="width: 100%; display: block" />
+                                        </div>
+                                    </ng-template>
+                                </p-galleria>
+                            } @else {
+                                <div class="no-image">
+                                    <img src="assets/svgs/no-image.svg" alt="Sem imagem disponível" />
+                                </div>
+                            }
+                        </div>
+
+                        <div class="details">
+                            <div class="responsive-row">
+                                <div class="responsive-col-12">
+                                    <h3 class="title">Detalhes</h3>
+                                </div>
+                            </div>
+                            <div class="responsive-row">
+                                <span class="responsive-col-4">Produto:</span>
+                                <span class="responsive-col-8">{{product.name}}</span>
+                            </div>
+                            <div class="responsive-row">
+                                <span class="responsive-col-4">Preço:</span>
+                                <span class="responsive-col-8">{{product.value | currency}}</span>
+                            </div>
+                            <div class="responsive-row">
+                                <span class="responsive-col-4">Avaliação:</span>
+                                <span class="responsive-col-8">
+                                    <p-rating
+                                        [ngModel]="product.averageRating || 0"
+                                        [readonly]="true"
+                                    />
+                                </span>
+                            </div>
+                            <div class="responsive-row">
+                                <span class="responsive-col-4">Quantidade:</span>
+                                <span class="responsive-col-8">{{product.quantity}}</span>
+                            </div>
+                            <div class="responsive-row">
+                                <span class="responsive-col-4">Data de criação:</span>
+                                <span class="responsive-col-8">{{product.createdDate | date : 'dd MMM yyyy'}}</span>
+                            </div>
+                            <div class="responsive-row">
+                                <span class="responsive-col-4">Ultima de modificação:</span>
+                                <span class="responsive-col-8">{{product.lastModifiedDate | date : 'dd MMM yyyy'}}</span>
+                            </div>
+                            <div class="responsive-row">
+                                <span class="responsive-col-4">Disponibilidade:</span>
+                                <span class="responsive-col-8">
+                                    <p-tag 
+                                        [ngClass]="product.availability ? 'color-green' : 'color-orange'"
+                                    >
+                                        {{ product.availability ? 'Disponível' : 'Indisponível' }}
+                                    </p-tag>
+                                </span>
+                            </div>
+                            <div class="responsive-row">
+                                <span class="responsive-col-4">Categorias:</span>
+                                <span class="responsive-col-8">
+                                    <div class="categories">
+                                        @for (category of product.categories; track $index) {
+                                            <p-tag class="color-green">
+                                                {{ category.toLowerCase() }}
+                                            </p-tag>
+                                        }
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="responsive-row">
+                                <span class="responsive-col-4">Descrição:</span>
+                                <span class="responsive-col-8">{{ product.description }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            @if (comments && comments.length > 0) {
+                <div class="avaliation">
+                    <h3>Avaliações:</h3>
+                    <div class="comment" *ngFor="let comment of comments">
+                        <h3>{{ comment.authorName}}</h3>
+                        <span>{{comment.content}}</span>
+                    </div>
+                </div>
+            }
+        } @else {
+            <app-loading />
+        }
+    </main>
+</div>
+
+<p-menu 
+    #productMenuOptions 
+    class="menu" 
+    [model]="productOptions" 
+    [popup]="true" 
+/>

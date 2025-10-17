@@ -1,0 +1,11 @@
+.p-tag {
+    &.color-green {
+        background: rgb(from var(--color-green-rgb) r g b / 25%) !important;
+        color: var(--color-green) !important;
+    }
+
+    &.color-orange {
+        background: rgb(from var(--color-orange) r g b / 25%) !important;
+        color: var(--color-orange) !important;
+    }
+}

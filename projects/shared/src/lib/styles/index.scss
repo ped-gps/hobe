@@ -26,6 +26,7 @@
 @use "styles.scss";
 @use "table.scss";
 @use "tabs.scss";
+@use "tag.scss";
 
 /* Icons */
 @import "primeicons/primeicons.css";
@@ -41,9 +42,11 @@
 	--color-black: #292d32;
 	--color-blue: #475585;
 	--color-green: #6a7a56;
+	--color-green-rgb: rgb(106, 122, 86);
 	--color-gray: #626A6D;
 	--color-light-gray: #d9d9d9;
 	--color-orange: #df5436;
+	--color-orange-rgb: rgb(223, 84, 54);
 	--color-red: #af1717;
 	--color-white: #ffffff;
 	--color-yellow: #ffb555;
